@@ -1,0 +1,35 @@
+<div class="row">
+	<div class="col-xs-12 col-sm-3" style="text-align:center;">
+		<div class="btn-group-vertical" role="group" style="padding-top: 1rem;">
+			<button type="button" class="btn btn-primary" data-ng-click="getProducts()" style="text-align:left;"> Products </button>
+			<div class="btn-group" data-ng-repeat="(key,value) in categories">
+				<button type="button" data-toggle="dropdown" class="btn btn-primary dropdown-toggle" style="text-align:left;"> {{key}} <span class="caret"></span></button>
+				<ul class="dropdown-menu">
+				    <li data-ng-repeat="category in value"><a href="" data-ng-click="getProductsByCategoryId(category.id)"> {{category.name}} </a></li>
+				</ul>
+			</div>
+    	</div>
+	</div>
+	<div class="col-xs-12 col-sm-9">
+		<div class="row">
+	    	<div class="col-xs-12 col-sm-4" data-ng-repeat="product in products" style="text-align:center;">
+	    		<div class="btn-group-vertical" role="group" style="padding-bottom: 1rem; padding-top: 1rem; text-align:left;">
+	    			<a href="" data-ng-click="showProductsDetails(product)"><img src="http://{{host}}:90/images/{{product.id}}/1.jpg" class="img-responsive"/></a>
+	    			<div class="row">
+	    				<div class="col-xs-12 col-sm-12 col-md-12">
+	    					<h4 style="max-height: none; height: 4rem; font-size:2rem;">{{ product.name }}</h4>
+	    				</div>
+	    				<div class="col-xs-12 col-sm-12 col-md-12">
+	    					<h3 style="color: red;">{{ product.price }} RON</h3>
+	    				</div>
+	    				<div class="col-xs-12 col-sm-12 col-md-12">
+	    					<button type="button" class="btn btn-primary" data-ng-click="addToShoppingCart(product)">
+						<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Add to Cart
+					</button>
+	    				</div>
+	    			</div>
+	    		</div>
+	    	</div>
+	    </div>
+	</div>
+</div>

@@ -1,0 +1,18 @@
+<div class="row">
+	<div class="col-md-2">&nbsp;</div>
+	<div class="col-md-8" style="padding-top: 5%">
+	<table class="table borderless" data-ng-hide = "deliveries.length == 0">
+		<tbody>
+			<tr data-ng-repeat="delivery in deliveries">
+				<td>{{ delivery.product.name }}:</td>
+				<td><input type="text" class="" placeholder="Serial" data-ng-model="delivery.serial" value="{{ delivery.serial }}"></td>
+			</tr>
+		</tbody>
+		<tfoot >
+			<tr><th><button class="btn btn-xs btn-info" data-ng-click="update(deliveries)">Update</button></th>
+				<th><button class="btn btn-xs btn-info" data-ng-click="cancel()">Cancel</button></th>
+			</tr>
+		</tfoot>
+	</table>
+	</div>
+</div>

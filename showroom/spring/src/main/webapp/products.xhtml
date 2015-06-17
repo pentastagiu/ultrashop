@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<f:view locale="#{localeBean.locale}">
+	<h:head>
+		<title>Products</title>
+		<h:outputStylesheet library="css" name="style.css" />
+	</h:head>
+	<body>
+		<div id="header" class="header">
+			<ui:insert name="header" >
+			<ui:include src="header.xhtml" />
+			</ui:insert>
+		</div>
+		<div id="content" class="content">
+			<h:form id="productFilterForm">
+				<p:panelGrid columns="2" columnClasses="label, value" styleClass="noBorders">
+					<h:outputText value="#{message['product-name']}: " />
+					<p:panelGrid columns="1">
+						<p:inputText value="#{productBean.filterName}" />
+					</p:panelGrid>
+					<h:outputText value="#{message['product-price']}: " />
+					<p:panelGrid columns="3">
+						<p:inputText value="#{productBean.filterMinPrice}" style="text-align:right;"/>
+						-
+						<p:inputText value="#{productBean.filterMaxPrice}" style="text-align:right;"/>
+					</p:panelGrid>
+					<h:outputText />
+					<p:panelGrid columns="1">
+						<p:commandButton value="#{message['filter']}"
+							action="#{productBean.filter}" update=":productForm:productDT" />
+					</p:panelGrid>
+				</p:panelGrid>
+			</h:form>
+			<h:form id="productForm">
+				<p:dataTable class="table" id="productDT"
+					value="#{productBean.products}" var="products"
+					emptyMessage="No product found with given criteria"
+					rowKey="#{products.id}" paginator="true" rows="10"
+					paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+					rowsPerPageTemplate="5,10,15">
+					<p:column headerText="#{message['product-id']}"
+						sortBy="#{products.id}">
+						<h:outputText value="#{products.id}" style="float:right;"/>
+					</p:column>
+					<p:column headerText="#{message['product-name']}"
+						sortBy="#{products.name}">
+						<h:outputText value="#{products.name}" />
+					</p:column>
+					<p:column headerText="#{message['product-price']}"
+						sortBy="#{products.price}">
+						<h:outputText value="#{products.price}" style="float:right;"/>
+					</p:column>
+						<p:column headerText="#{message['actions']}">
+						<p:commandButton process="productDT" id="productDetail"
+						    icon="ui-icon-image"
+							action="#{productBean.showDetails}">
+							<f:setPropertyActionListener target="#{productBean.selectedProduct}"
+								value="${products}" />
+						</p:commandButton>
+						<p:tooltip for="productDetail"
+							value="#{message['productDetailButton']}" />
+					</p:column>
+				</p:dataTable>
+			</h:form>			
+		</div>
+		<div id="footer" class="footer">
+			<ui:insert name="footer">
+				<ui:include src="footer.xhtml" />
+			</ui:insert>
+		</div>
+	</body>
+</f:view>
+</html>

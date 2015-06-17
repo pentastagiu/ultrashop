@@ -1,0 +1,98 @@
+<div class="row">
+	<div class="col-xs-12 col-sm-6 col-md-6" style="text-align:center;">
+		<div id="myCarousel" class="carousel slide" data-interval="false">
+			<div class="carousel-inner" role="listbox">
+				<div class="item active">
+					<img src="http://{{host}}:90/images/{{product.id}}/1.jpg">
+				</div>
+				<div class="item" data-ng-repeat="imageSrc in imagesSrc">
+					<img src="{{imageSrc}}">
+				</div>
+			</div>
+			<a class="left carousel-control" href="" data-target="#myCarousel" role="button" data-slide="prev">
+				<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+				<span class="sr-only">Previous</span>
+			</a> 
+			<a class="right carousel-control" href="" data-target="#myCarousel" role="button" data-slide="next">
+				<span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+				<span class="sr-only">Next</span>
+			</a>
+		</div>
+	</div>
+	<div class="col-xs-12 col-sm-6 col-md-6">
+		<div class="row">
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<h2 style="max-height: none; height: 4rem; font-size:2rem;">{{ product.name }}</h2>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-12">
+				<div class="row">
+					<div class="col-xs-6 col-sm-6 col-md-6">
+						<h3 style="color: red;">{{ product.price }} RON</h3>
+					</div>
+					<div class="col-xs-6 col-sm-6 col-md-6" style="padding-top: 1.5rem;">
+		    			<button type="button" class="btn btn-primary" data-ng-click="addToShoppingCart(product)">
+							<span class="glyphicon glyphicon-shopping-cart" aria-hidden="true"></span> Add to Cart
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="col-xs-12 col-sm-12 col-md-12 hidden-xs hidden-sm">
+				<div class="row" data-ng-show="productDescription != null">
+					<div class="col-xs-12 col-sm-12 col-md-12">
+						<h4>Description</h4>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-12">
+						<h6>{{productDescription.description}}</h6>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row visible-xs visible-sm" data-ng-show="productDescription != null" >
+	<div class="col-xs-12 col-sm-12 col-md-12">
+		<h4>Description</h4>
+	</div>
+	<div class="col-xs-12 col-sm-12 col-md-12">
+		<h6>{{productDescription.description}}</h6>
+	</div>
+</div>
+<div class="row" data-ng-repeat="pP in productPresentation" style="padding-top: 1rem">
+	<div class="col-xs-12 col-sm-12 col-md-12">
+		<h4>{{ pP.title }}</h4>
+	</div>
+	<div class="col-xs-12 col-sm-6 col-md-6">
+		<div data-ng-bind-html="pP.left"></div>
+	</div>
+	<div class="col-xs-12 col-sm-6 col-md-6">
+		<div data-ng-bind-html="pP.right"></div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12">
+		<h3 style="max-height: none; height: 3rem">Specificatii</h3>
+	</div>
+</div>
+<div data-ng-repeat="pF in productFeatures">
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-12">
+			<h3 style="max-height: none; height: 3rem">{{pF.key}}</h3>
+		</div>
+	</div>
+	<div class="row" data-ng-repeat="f in pF.value">
+		<div class="col-xs-5 col-sm-5 col-md-5">
+			<h5 style="max-height: none; height: 3rem">{{f.feature.name}}</h5>
+		</div>
+		<div class="col-xs-1 col-sm-1 col-md-1">
+			<h5 style="max-height: none; height: 3rem">:</h5>
+		</div>
+		<div class="col-xs-6 col-sm-6 col-md-6">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12" data-ng-repeat="v in f.value">
+					<h5 style="max-height: none; height: 3rem">{{v}}</h5>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</div>

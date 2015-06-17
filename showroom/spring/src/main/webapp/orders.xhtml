@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<f:view locale="#{localeBean.locale}">
+	<h:head>
+		<title>Orders</title>
+		<h:outputStylesheet library="css" name="style.css" />
+	</h:head>
+	<body>
+		<div id="header" class="header">
+			<ui:insert name="header">
+				<ui:include src="header.xhtml" />
+			</ui:insert>
+		</div>
+		<div id="content" class="content">
+			<h:form id="orderFilterForm">
+				<p:panelGrid columns="2" columnClasses="label, value"
+					styleClass="noBorders">
+					<h:outputText value="#{message['customerId']}: " />
+					<p:panelGrid columns="1">
+						<p:inputText value="#{orderBean.filterCustomerId}"
+							style="text-align:right;" />
+					</p:panelGrid>
+					<h:outputText value="#{message['date']}: " />
+					<p:panelGrid columns="3">
+						<p:calendar id="minDate" value="#{orderBean.filterMinDate}">
+						</p:calendar>
+						-
+						<p:calendar id="maxDate" value="#{orderBean.filterMaxDate}">
+						</p:calendar>
+					</p:panelGrid>
+					<h:outputText value="#{message['quantum']}: " />
+					<p:panelGrid columns="3">
+						<p:inputText value="#{orderBean.filterMinQuantum}"
+							style="text-align:right;" />
+						-
+						<p:inputText value="#{orderBean.filterMaxQuantum}"
+							style="text-align:right;" />
+					</p:panelGrid>
+					<h:outputLabel for="statuses" value="#{message['status']}:" />
+					<p:panelGrid columns="1">
+						<p:selectCheckboxMenu id="statuses" value="#{orderBean.selectedStatuses}"
+							label="#{message['chooseStatus']}">
+							<f:selectItems value="#{orderBean.statuses}" var="status" itemLabel="#{localeBean.translateStatus(status)}" />
+						</p:selectCheckboxMenu>
+					</p:panelGrid>
+					<h:outputText />
+					<p:panelGrid columns="1">
+						<p:commandButton value="#{message['filter']}"
+							action="#{orderBean.filter}" update=":orderForm:orderDT" />
+					</p:panelGrid>
+				</p:panelGrid>
+			</h:form>
+			<h:form id="orderForm">
+				<p:dataTable class="table" id="orderDT" value="#{orderBean.orders}"
+					var="order" emptyMessage="No order found with given criteria"
+					rowKey="#{order.id}" paginator="true" rows="10"
+					paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+					rowsPerPageTemplate="5,10,15">
+					<p:column headerText="#{message['id']}" sortBy="#{order.id}">
+						<h:outputText value="#{order.id}" style="float:right;" />
+					</p:column>
+					<p:column headerText="#{message['customerId']}"
+						sortBy="#{order.customer.id}">
+						<h:outputText value="#{order.customer.id}" style="float:right;" />
+					</p:column>
+					<p:column headerText="#{message['date']}" sortBy="#{order.oDate}">
+						<h:outputText value="#{orderBean.convertDate(order.oDate)}" />
+					</p:column>
+					<p:column headerText="#{message['quantum']}"
+						sortBy="#{order.quantum}">
+						<h:outputText value="#{order.quantum}" style="float:right;" />
+					</p:column>
+					<p:column headerText="#{message['status']}"
+						sortBy="#{order.status}">
+						<div class="status-#{order.status}"></div>
+						<div class="statusText">
+							<h:outputText value="#{localeBean.translateStatus(order.status)}" />
+						</div>
+					</p:column>
+					<p:column headerText="#{message['actions']}">
+						<p:commandButton process="orderDT" id="ready"
+							icon="ui-icon-pencil" update=":orderForm:status"
+							oncomplete="PF('statusDialog').show()"
+							action="#{orderBean.getDeliveryStocksBySelectedProduct}">
+							<f:setPropertyActionListener target="#{orderBean.selectedOrder}"
+								value="${order}" />
+						</p:commandButton>
+						<p:tooltip for="ready" value="#{message['addProductSeries']}" />
+						<p:commandButton process="orderDT" id="sendDocument"
+							icon="ui-icon-mail-closed" action="#{orderBean.sendDocuments}">
+							<f:setPropertyActionListener target="#{orderBean.selectedOrder}"
+								value="${order}" />
+						</p:commandButton>
+						<p:tooltip for="sendDocument"
+							value="#{message['sendDocumentButton']}" />
+						<p:commandButton process="orderDT" id="cancelOrder"
+							update=":orderForm:orderDT" icon="ui-icon-cancel"
+							action="#{orderBean.setCanceledStatus}" ajax="true">
+							<f:setPropertyActionListener target="#{orderBean.selectedOrder}"
+								value="${order}" />
+						</p:commandButton>
+						<p:tooltip for="cancelOrder"
+							value="#{message['cancelOrderButton']}" />
+						<p:commandButton process="orderDT" id="deliverOrder"
+							update=":orderForm:orderDT" icon="ui-icon-check"
+							action="#{orderBean.setDeliveredStatus}" ajax="true">
+							<f:setPropertyActionListener target="#{orderBean.selectedOrder}"
+								value="${order}" />
+						</p:commandButton>
+						<p:tooltip for="deliverOrder"
+							value="#{message['deliverOrderButton']}" />
+					</p:column>
+				</p:dataTable>
+				<p:dialog header="#{message['addProductSeries']}"
+					widgetVar="statusDialog" modal="true" showEffect="fade"
+					hideEffect="explode" resizable="false">
+					<p:dataGrid id="status" value="#{orderBean.deliveryStocks}"
+						var="deliveryStock" columns="1">
+						<h:panelGrid columns="2" style="width:100%">
+							<h:outputText value="#{deliveryStock.product.name}:" />
+							<p:inputText value="#{deliveryStock.serial}" style="float:right;" />
+						</h:panelGrid>
+					</p:dataGrid>
+					<h:panelGrid columns="2" style="width:100%">
+						<p:commandButton action="#{orderBean.setReadyStatus}"
+							value="#{message['update']}" style="float:right;"
+							update=":orderForm:orderDT"
+							oncomplete="PF('statusDialog').hide()" ajax="true" />
+						<p:commandButton value="#{message['cancel']}"
+							onclick="PF('statusDialog').hide()" style="float:right;" />
+					</h:panelGrid>
+				</p:dialog>
+			</h:form>
+		</div>
+		<div id="footer" class="footer">
+			<ui:insert name="footer">
+				<ui:include src="footer.xhtml" />
+			</ui:insert>
+		</div>
+	</body>
+</f:view>
+</html>

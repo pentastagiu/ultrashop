@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<f:view locale="#{localeBean.locale}">
+	<h:head>
+		<title>Login</title>
+		<h:outputStylesheet library="css" name="style.css" />
+	</h:head>
+	<h:body>
+		<div id="header" class="header">
+			<ui:insert name="header">
+				<ui:include src="loginHeader.xhtml" />
+			</ui:insert>
+		</div>
+		<div id="content" class="content">
+
+			<div class="login-card">
+				<h1>#{message['login']}</h1>
+				<br/>
+					<form action="/showroom/j_spring_security_check" method="post">
+						<input type="text" name="j_username" placeholder="Username"/> 
+						<input type="password" name="j_password" placeholder="Password" />
+						<input type="submit" name="login" class="login login-submit" value="#{message['login']}" />
+					</form>
+					
+					<form action="/showroom/j_spring_openid_security_check" method="post">
+     				    <input name="openid_identifier" type="hidden" value="https://www.google.com/accounts/o8/id"/>
+						<input type="submit" value="Sign with Google"/>
+					</form>
+					
+			</div>
+		</div>
+		<div id="footer" class="footer">
+			<ui:insert name="footer">
+				<ui:include src="footer.xhtml" />
+			</ui:insert>
+		</div>
+	</h:body>
+</f:view>
+</html>

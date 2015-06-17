@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<f:view locale="#{localeBean.locale}">
+	<h:head>
+		<title>Search</title>
+		<h:outputStylesheet library="css" name="style.css" />
+	</h:head>
+	<body>
+		<div id="header" class="header">
+			<ui:insert name="header">
+				<ui:include src="header.xhtml" />
+			</ui:insert>
+		</div>
+		<div id="content" class="content">
+			<h:form id="searchForm">
+				<p:panelGrid columns="2" columnClasses="label, value"
+					styleClass="noBorders">
+					<h:outputText value="#{message['searchWord']} : " />
+					<p:panelGrid columns="2">
+						<p:inputText id="value" value="#{searchBean.value}" />
+						<p:commandButton action="#{searchBean.searchProduct}"
+							icon="ui-icon-search" update=":resultSet:searchProducts" />
+					</p:panelGrid>
+				</p:panelGrid>
+			</h:form>
+			<h:form id="resultSet">
+				<p:dataGrid styleClass="searchGrid" var="product"
+					value="#{searchBean.products}" columns="3" layout="grid" rows="12"
+					paginator="true" id="searchProducts"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="6,12,16">
+					<f:facet name="header">
+          		 Search results:
+      		  </f:facet>
+					<div class="result">
+						<h:commandLink action="#{searchBean.showDetails}">
+							<f:setPropertyActionListener
+								target="#{searchBean.selectedProduct}" value="${product}" />
+							<h:panelGrid columns="1" style="width:100%">
+								<img src="#{searchBean.getImage(product)}" width="100"
+									height="100" alt="No image found" />
+								<h:outputText value="#{product.name}" />
+								<h:outputText style="font-weight:bold;color:red;"
+									value="#{product.price} LEI" />
+							</h:panelGrid>
+						</h:commandLink>
+					</div>
+				</p:dataGrid>
+			</h:form>
+		</div>
+		<div id="footer" class="footer">
+			<ui:insert name="footer">
+				<ui:include src="footer.xhtml" />
+			</ui:insert>
+		</div>
+	</body>
+</f:view>
+</html>

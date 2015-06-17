@@ -1,0 +1,32 @@
+html {
+	position: relative;
+	min-height: 100%;
+}
+
+body {
+	margin: 0 0 15rem;;
+}
+
+.footer {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	border-top: 1px solid #dfdfdf;
+	padding: 0;
+	margin: 0 auto;
+	width: 100%;
+	color: #707070;
+	background-color: #f5f5f5;
+}
+
+.custumError {
+	margin-top: 1rem;
+	padding-left: 1.5rem; 
+	padding-right: 1.5rem;
+}
+
+.carousel-inner > .item > img,
+  .carousel-inner > .item > a > img {
+      width: 70%;
+      margin: auto;
+  }

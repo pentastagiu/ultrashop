@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<f:view locale="#{localeBean.locale}">
+	<h:head>
+		<title>Supplies</title>
+		<h:outputStylesheet library="css" name="style.css" />
+	</h:head>
+	<h:body>
+		<div id="header" class="header">
+			<ui:insert name="header">
+				<ui:include src="header.xhtml" />
+			</ui:insert>
+		</div>
+		<div id="content" class="content">
+			<h:form id="supplyFilterForm">
+				<p:panelGrid columns="2" columnClasses="label, value"
+					styleClass="noBorders">
+					<h:outputText value="#{message['product-name']}: " />
+					<p:panelGrid columns="1">
+						<p:inputText value="#{availabilityStockBean.filterName}" />
+					</p:panelGrid>
+					<h:outputText value="#{message['product-stock']}: " />
+					<p:panelGrid columns="3">
+						<p:inputText value="#{availabilityStockBean.filterMinStock}"
+							style="text-align:right;" />
+						-
+						<p:inputText value="#{availabilityStockBean.filterMaxStock}"
+							style="text-align:right;" />
+					</p:panelGrid>
+					<h:outputText />
+					<p:panelGrid columns="1">
+						<p:commandButton value="#{message['filter']}"
+							action="#{availabilityStockBean.filter}"
+							update=":supplyForm:supplyDT" />
+					</p:panelGrid>
+				</p:panelGrid>
+			</h:form>
+			<h:form id="supplyForm">
+				<p:dataTable class="table" id="supplyDT"
+					value="#{availabilityStockBean.availabilityStocks}"
+					var="availabilityStock"
+					emptyMessage="No product found with given criteria"
+					rowKey="#{availabilityStock.id}" paginator="true" rows="10"
+					paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+					rowsPerPageTemplate="5,10,15">
+					<p:column headerText="#{message['product-name']}"
+						sortBy="#{availabilityStock.product.name}">
+						<h:outputText value="#{availabilityStock.product.name}"></h:outputText>
+					</p:column>
+					<p:column headerText="#{message['product-stock']}"
+						sortBy="#{availabilityStock.stock}">
+						<h:outputText value="#{availabilityStock.stock}"
+							style="float:right;" />
+					</p:column>
+					<p:column headerText="#{message['actions']}">
+						<p:commandButton process="supplyDT" id="update"
+							icon="ui-icon-pencil" oncomplete="PF('supplyDialog').show()">
+							<f:setPropertyActionListener
+								target="#{availabilityStockBean.selectedAvailabilityStock}"
+								value="${availabilityStock}" />
+						</p:commandButton>
+						<p:tooltip for="update" value="#{message['addQuantityButton']}" />
+					</p:column>
+				</p:dataTable>
+				<p:dialog header="#{message['addDialogHeader']}"
+					widgetVar="supplyDialog" modal="true" showEffect="fade"
+					hideEffect="explode" resizable="false">
+					<h:panelGrid id="supply" columns="2">
+						<h:outputText value="#{message['quantity']}: " />
+						<p:inputText id="quantity"
+							value="#{availabilityStockBean.quantity}" required="true"
+							requiredMessage="Quantity is required"
+							converterMessage="Quantity must be a valid positive number."
+							style="text-align:right;">
+							<f:validateLongRange minimum="0" />
+						</p:inputText>
+						<p:commandButton action="#{availabilityStockBean.replenishSupply}"
+							value="#{message['addDialogHeader']}" style="float:right;"
+							update=":supplyForm:supplyDT"
+							oncomplete="PF('supplyDialog').hide()" ajax="true" />
+						<p:commandButton value="#{message['cancel']}"
+							onclick="PF('supplyDialog').hide()" style="float:right;" />
+					</h:panelGrid>
+				</p:dialog>
+			</h:form>
+		</div>
+		<div id="footer" class="footer">
+			<ui:insert name="footer">
+				<ui:include src="footer.xhtml" />
+			</ui:insert>
+		</div>
+	</h:body>
+</f:view>
+</html>

@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="
+      http://www.springframework.org/schema/beans
+      http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+      http://www.springframework.org/schema/tx
+      http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+      http://www.springframework.org/schema/aop 
+      http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+      http://www.springframework.org/schema/context 
+      http://www.springframework.org/schema/context/spring-context-3.0.xsd
+      http://www.springframework.org/schema/data/jpa 
+      http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+      http://www.springframework.org/schema/jdbc 
+      http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+      http://www.springframework.org/schema/mvc
+      http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+      http://www.springframework.org/schema/security
+      http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+
+	<context:component-scan base-package="com.pentalog.sr" />
+
+	<mvc:annotation-driven />
+	
+	<context:annotation-config />	
+	
+	<jpa:repositories base-package="com.pentalog.sr.dao" />
+
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+		<property name="persistenceXmlLocation" value="/WEB-INF/persistence.xml" />
+		<property name="dataSource" ref="dataSource" />
+		<property name="persistenceUnitName" value="showroom" />
+		<property name="jpaVendorAdapter">
+			<bean
+				class="org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter">
+				<property name="showSql" value="true" />
+				<property name="generateDdl" value="true" />
+				<property name="databasePlatform"
+					value="org.eclipse.persistence.platform.database.SQLServerPlatform" />
+			</bean>
+		</property>
+
+		<property name="jpaPropertyMap">
+			<props>
+				<prop key="eclipselink.weaving">false</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
+		<property name="username" value="showroom" />
+		<property name="password" value="showroom" />
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>resources/job/jobTimeConfig.properties</value>
+		</property>
+	</bean>	
+	
+	<bean id="job" class="com.pentalog.sr.job.JobFactory" />
+	
+	<bean id="sendMailJobBean"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="job" />
+		<property name="targetMethod" value="sendMailForReadyOrder" />
+	</bean>
+	<bean id="sendMailJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="sendMailJobBean" />
+		<property name="cronExpression" value="${showroom.ready.orders.send.mail}" />
+	</bean>
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="jobDetails">
+			<list>
+				<ref bean="sendMailJobBean" />
+			</list>
+		</property>
+		<property name="triggers">
+			<list>
+				<ref bean="sendMailJobTrigger" />
+			</list>
+		</property>
+	</bean>
+
+	<bean id="updateOrdersBean"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="job" />
+		<property name="targetMethod" value="updateStatusForWaitingOrders" />
+	</bean>
+	<bean id="updateOrdersTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="updateOrdersBean" />
+		<property name="cronExpression" value="${showroom.arrived.order.update}" />
+	</bean>
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="jobDetails">
+			<list>
+				<ref bean="updateOrdersBean" />
+			</list>
+		</property>
+		<property name="triggers">
+			<list>
+				<ref bean="updateOrdersTrigger" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="updatePlacedOrdersBean"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="job" />
+		<property name="targetMethod" value="updateStatusForPlacedOrders" />
+	</bean>
+	<bean id="updatePlacedOrdersTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="updatePlacedOrdersBean" />
+		<property name="cronExpression" value="${showroom.placed.order.update}" />
+	</bean>
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="jobDetails">
+			<list>
+				<ref bean="updatePlacedOrdersBean" />
+			</list>
+		</property>
+		<property name="triggers">
+			<list>
+				<ref bean="updatePlacedOrdersTrigger" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean id="updateSolrBean"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="job" />
+		<property name="targetMethod" value="updateSolrDocs" />
+	</bean>
+	<bean id="updateSolrTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="updateSolrBean" />
+		<property name="cronExpression" value="${showroom.solr.update}" />
+	</bean>
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="jobDetails">
+			<list>
+				<ref bean="updateSolrBean" />
+			</list>
+		</property>
+		<property name="triggers">
+			<list>
+				<ref bean="updateSolrTrigger" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix">
+			<value>/WEB-INF/pages/</value>
+		</property>
+		<property name="suffix">
+			<value>.xhtml</value>
+		</property>
+	</bean>
+    
+   <security:http pattern="/ws/resources/**" entry-point-ref="restAuthenticationEntryPoint"
+	use-expressions="true" auto-config="false" create-session="stateless">
+		<security:custom-filter ref="authenticationTokenProcessingFilter"
+			position="FORM_LOGIN_FILTER" />
+		<security:intercept-url pattern="/ws/resources/**"
+			access="isAuthenticated()" />
+		<security:logout />
+	</security:http>
+
+	<bean class="com.pentalog.sr.filter.TokenAuthenticationFilter"
+		id="authenticationTokenProcessingFilter">
+		<constructor-arg type="java.lang.String">
+			<value>/ws/resources/**</value>
+		</constructor-arg>
+	</bean> 
+
+    <security:http auto-config="true" >
+        <!-- Restrict URLs based on role -->
+        <security:intercept-url pattern="/orders" access="ROLE_ADMIN, ROLE_OPERATOR" />
+        <security:intercept-url pattern="/supplies" access="ROLE_ADMIN, ROLE_OPERATOR" />
+        <security:intercept-url pattern="/products" access="ROLE_USER, ROLE_ADMIN, ROLE_OPERATOR" />
+        <security:intercept-url pattern="/search" access="ROLE_USER, ROLE_ADMIN, ROLE_OPERATOR" />
+        
+        
+        <security:form-login authentication-failure-url="/error"
+        always-use-default-target="true" default-target-url="/products"/>
+
+		<security:openid-login login-page="/login"
+			authentication-failure-url="/error" 
+			user-service-ref="userOpenIdDetailsService"
+			always-use-default-target="true" default-target-url="/pages/products.xhtml">
+			<security:attribute-exchange>
+				<security:openid-attribute name="email"
+					type="http://axschema.org/contact/email" required="true" />
+				<security:openid-attribute name="oiContactEmail"
+					type="http://schema.openid.net/contact/email" required="true" />
+				<security:openid-attribute name="firstname"
+					type="http://axschema.org/namePerson/first" required="true" />
+				<security:openid-attribute name="lastname"
+					type="http://axschema.org/namePerson/last" required="true" />
+			</security:attribute-exchange>
+		</security:openid-login>
+    
+        <security:logout logout-success-url="/products" delete-cookies="jsessionid" invalidate-session="true"/>
+    </security:http>
+
+	<bean id="encoder" class="org.springframework.security.crypto.password.StandardPasswordEncoder" />
+	
+    <security:authentication-manager>
+   		 <security:authentication-provider
+			ref="customAuthenticationProvider" />	
+        <security:authentication-provider >
+            <security:jdbc-user-service data-source-ref="dataSource" />
+            <security:password-encoder ref="encoder" />
+        </security:authentication-provider>   
+    </security:authentication-manager>
+    
+    <bean id="adAuthenticationProvider"
+		class="org.springframework.security.ldap.authentication.ad.ActiveDirectoryLdapAuthenticationProvider">
+		<constructor-arg value="pentalog.com" />
+		<constructor-arg value="ldap://pentalog.com:389/" />
+	</bean>
+	
+	<bean id="userOpenIdDetailsService" name="userOpenIdAuthenticationProvider" class="com.pentalog.sr.security.AuthenticationWithOpenId">
+  	  <constructor-arg index="0" ref="userService"/>
+  	  <constructor-arg index="1" ref="authoritiesService" />
+  	  <constructor-arg index="2" ref="normalizedOpenIdAttributesBuilder"/>
+	</bean>        
+
+	<bean id="normalizedOpenIdAttributesBuilder" class="com.pentalog.sr.security.NormalizedOpenIdAttributesBuilder">
+	    <property name="emailAddressAttributeNames">
+	        <set value-type="java.lang.String">
+	            <value type="java.lang.String">email</value>
+	        </set>
+	    </property>
+	</bean>
+		
+	<security:global-method-security jsr250-annotations="enabled" pre-post-annotations="enabled" secured-annotations="enabled" />
+	
+</beans>

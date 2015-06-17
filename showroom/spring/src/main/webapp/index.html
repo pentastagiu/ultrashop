@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html data-ng-app="AngularAuthApp">
+<head>
+<meta content="IE=edge, chrome=1" http-equiv="X-UA-Compatible" />
+<title>Showroom Presentation Page</title>
+<link href="resources/css/bootstrap.min.css" rel="stylesheet" />
+
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<link href="resources/css/site.css" rel="stylesheet" />
+<link href="resources/css/progressBar.css" rel="stylesheet" />
+<link href="resources/css/loading-bar.css" rel="stylesheet" />
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body>
+	<div class="navbar navbar-inverse navbar-fixed-top"
+		data-role="navigation" data-ng-controller="indexController">
+		<div class="container">
+			<div class="navbar-header">
+				<button class="btn btn-success navbar-toggle" data-toggle="collapse"
+					data-ng-click="navbarExpanded = !navbarExpanded"
+					data-target="#target">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#/" data-translate>home</a>
+			</div>
+			<div class="collapse navbar-collapse" data-collapse="!navbarExpanded"
+				id="target">
+				<ul class="nav navbar-nav navbar-right">
+					<li data-ng-hide="!authentication.isAuth"><a href="#/products" data-translate>product</a></li>
+					<li data-ng-hide="!authentication.isAuth"><a href="#/orders" data-translate>order</a></li>
+					<li data-ng-hide="!authentication.isAuth"><a href=""
+						data-ng-click="logOut()" data-translate>logout</a></li>
+					<li data-ng-hide="authentication.isAuth"><a href="#/login" data-translate>login</a></li>
+					<li data-ng-hide="authentication.isAuth"><a href="#/signup" data-translate>sign-up</a></li>
+					<li><a data-ng-click="changeLanguage('ro')" class="flag-RO {{locale}}"></a></li>
+ 			   		<li><a data-ng-click="changeLanguage('en')" class="flag-GB {{locale}}"></a></li>
+   					<li><a data-ng-click="changeLanguage('fr')" class="flag-FR {{locale}}"></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-2">&nbsp;</div>
+	<div class="container">
+		<div data-loading-page>
+			<h1 class="text-center" style="padding-top: 15%">
+				<span class="fa fa-spinner fa-pulse fa-2x"></span> Loading...
+			</h1>
+		</div>
+		<div data-ng-view="" data-loading-content></div>
+	</div>
+	<div class="col-md-2">&nbsp;</div>
+	<div id="footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6">
+					<p>Pentalog &copy; 2015</p>
+				</div>
+				<div class="col-md-6">
+					<p>Tel : +400764478001</p>
+					<p>Iasi, Str Ciurchi nr 126-128 Romania</p>
+					<a href="http://www.pentalog.ro" target="_blank" data-translate>link</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 3rd party libraries -->
+	<script
+		src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+	<script
+		src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.min.js"></script>
+	<script src="scripts/angular-local-storage.min.js"></script>
+	<script src="http://code.angularjs.org/1.2.16/angular-resource.js"></script>
+	<script
+		src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.1.js"></script>
+<script src="//cdn.jsdelivr.net/angular-material-icons/0.4.0/angular-material-icons.min.js"></script> 
+	<script src="scripts/loading-bar.min.js"></script>
+	<script src="scripts/angular-translate.js"></script>
+	<script src="scripts/angular-translate-loader-static-files.js"></script>
+	<!-- Load app main script -->
+	<script src="app/app.js"></script>
+	<!-- Load services -->
+	<script src="app/services/authInterceptorService.js"></script>
+	<script src="app/services/authService.js"></script>
+	<script src="app/services/ordersService.js"></script>
+	<script src="app/services/productsService.js"></script>
+	<!-- Load controllers -->
+
+	<script src="app/controllers/indexController.js"></script>
+	<script src="app/controllers/homeController.js"></script>
+	<script src="app/controllers/loginController.js"></script>
+	<script src="app/controllers/signupController.js"></script>
+	<script src="app/controllers/ordersController.js"></script>
+	<script src="app/controllers/productsController.js"></script>
+	
+</body>
+</html>

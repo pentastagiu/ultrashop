@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.14/angular.min.js" />
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+	<title>Get products service consumed by angularJS</title>
+</head>
+<body data-ng-app="productsApp">
+	<h2>List of products:</h2>
+	<input type="text" data-ng-model="search" class="search-query" placeholder="Search" />
+	<div data-ng-controller="products">
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>Product name</th>
+					<th>Product price</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr data-ng-repeat="product in products| filter:search">
+					<td>{{ product.name }}</td>
+					<td>{{ product.price }}</td>
+				</tr>
+			</tbody>
+		</table>
+		<form novalidate="novalidate">
+    		Product name: <br/>
+    		<input type="text" data-ng-model="product.name"/><br/> 
+    		Product price: <br/>
+    		<input type="text" data-ng-model="product.price"/> <br/> <br/>
+    		<button data-ng-click="addNewProduct()">Add product!</button>
+   		</form>
+	</div>
+	<script>
+		var productApp = angular.module('productsApp', []);
+   
+		productApp.factory('productFactory',function($http) {
+			
+        	var factory = [];
+        	
+        	factory.getProducts = function() {				
+				return $http({
+          			method : 'GET',
+          			url : 'http://localhost:8080/showroom/ws/resources/products',
+          			success : "OK",
+          			headers : {
+             			'Authorization' : "showroom:1425303661183:c7db2f96ce3f463eeb4b1b724a2741beacbd44d3dd9e0b73faf4b379cae31d1d24e267fdbb08659775f7045631b909591a32d5bd3ddd6f1f1ae885d510d1e58f"
+              		}
+          		});
+        	}
+ 
+        	factory.addProducts = function(name, price) {
+         		$http({
+          			method : 'PUT',
+          			url : 'http://localhost:8080/showroom/ws/resources/products',
+          			data : '{"name":"' + name + '","price":' + price + '}',
+          			success : "OK",
+          			headers : {
+             			'Authorization' : "showroom:1425303661183:c7db2f96ce3f463eeb4b1b724a2741beacbd44d3dd9e0b73faf4b379cae31d1d24e267fdbb08659775f7045631b909591a32d5bd3ddd6f1f1ae885d510d1e58f",
+             			'Content-Type' : 'application/json'
+              		}
+          		});
+        	}
+        	return factory;
+		});
+ 
+		productApp.controller('products', function($scope, productFactory) {
+	   
+			loadProducts();
+		
+			function loadProducts() {
+				productFactory.getProducts().success(function(data) {
+					$scope.products = data.list;
+				});
+			}
+			
+			$scope.addNewProduct = function() {
+				productFactory.addProducts($scope.product.name,$scope.product.price);
+				loadProducts();
+			}
+   		});
+  </script>
+</body>
+</html>

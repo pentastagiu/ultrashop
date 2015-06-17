@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+	<title>Insert title here</title>
+</h:head>
+<h:body>
+	<ui:composition>
+		<h:form>						
+			<h:commandLink id="EN" styleClass="flag-GB #{localeBean.locale}"
+				actionListener="#{localeBean.setEnglish()}"
+				lang="en">
+			</h:commandLink>
+			<p:tooltip for="EN" value="English" />
+			<h:commandLink id="FR" styleClass="flag-FR #{localeBean.locale}"
+				actionListener="#{localeBean.setFrench()}"
+				lang="fr">
+			</h:commandLink>
+			<p:tooltip for="FR" value="Français" />
+			<h:commandLink id="RO" styleClass="flag-RO #{localeBean.locale}"
+				actionListener="#{localeBean.setRomanian()}"
+				lang="ro">	
+			</h:commandLink>
+			<p:tooltip for="RO" value="Română" />
+		</h:form>
+	</ui:composition>
+</h:body>
+</html>

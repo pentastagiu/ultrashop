@@ -1,0 +1,22 @@
+<div class="row">
+	<div class="col-md-2">&nbsp;</div>
+	<div class="col-md-8" style="padding-left:10%">
+		<ol class="progtrckr" data-ng-hide="orderInfo.canceled" style="padding-top:5%;padding-bottom: 5%">
+			<li class="item ng-class:{true: 'progtrckr-done', false: 'progtrckr-todo'}[orderInfo.placed]">Placed</li><!-- 
+			--><li class="item ng-class:{true: 'progtrckr-done', false: 'progtrckr-todo'}[orderInfo.waiting_arrival]">Waiting arrival</li><!--
+			--><li class="item ng-class:{true: 'progtrckr-done', false: 'progtrckr-todo'}[orderInfo.arrived]">Arrived</li><!--
+			--><li class="item ng-class:{true: 'progtrckr-done', false: 'progtrckr-todo'}[orderInfo.ready_for_pickup]">Ready for pickup</li><!--
+			--><li class="item ng-class:{true: 'progtrckr-done', false: 'progtrckr-todo'}[orderInfo.delivered]">Delivered</li>
+		</ol>
+		<ol class="canceled"  data-ng-show="orderInfo.canceled" style="padding-top:5%;padding-bottom: 5%;padding-left: 0px; margin-bottom: 0px;">
+			<li class="progtrckr-canceled"><strong style="padding-left:10%;" data-translate>CANCELED</strong></li>
+		</ol>
+		<p><span data-translate>customer-name</span>:<strong>{{orderInfo.customer}}</strong></p>
+		<p><span data-translate>date</span>:<strong>{{orderInfo.date | date:'MM/dd/yyyy @ h:mma'}}</strong></p>
+		<p><span data-translate>quantum</span>:<strong>{{orderInfo.quantum}} RON</strong></p>
+		<p><span data-translate>product</span>:</p>
+		<ul data-ng-repeat="product in orderInfo.products" style="padding-left:0px;">
+			<li style="display: inline-block;"><img src="http://{{host}}:90/images/{{product.id}}/1.jpg" class="img-rounded" style="height: 35%;width: 35%;padding-right: 5%"/>{{ product.name }} : {{ product.price }} RON</li>
+		</ul>
+	</div>
+</div>
