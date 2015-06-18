@@ -15,7 +15,7 @@
 			<version>3.8.1</version>
 			<scope>test</scope>
 		</dependency>
-		<!-- github push test-->
+
 		<!-- Servlet dependency -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -227,10 +227,6 @@
 
 	</dependencies>
 	<repositories>
-		<repository>
-			<id>com.pentalog.java</id>
-			<url>http://10.188.31.6:9090/nexus/content/repositories/com.pentalog.java</url>
-		</repository>
 		<repository>
 			<id>prime-repo</id>
 			<name>PrimeFaces Maven Repository</name>
