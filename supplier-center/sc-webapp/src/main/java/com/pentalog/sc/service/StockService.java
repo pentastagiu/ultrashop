@@ -17,15 +17,7 @@ public interface StockService {
 	 */
 	public List<Stock> getStocks();
 	
-//	
-//	/**
-//	 * finds all stocks from a supplier
-//	 * @param id - the supplier id
-//	 * @return list of stocks
-//	 */
-//	public List<Stock> getStocksBySupplier(int id);
-//	
-	
+
     /**
      * creates a new stockin database
      * @param stock - the new stock
