@@ -2,9 +2,13 @@ package com.pentalog.sc.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -21,7 +25,8 @@ public class Stock {
      * Product id
      */
     @Id
-    @GeneratedValue
+    @NotNull
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
     
     /**
@@ -34,8 +39,17 @@ public class Stock {
      * Count of product in stock.
      */
     private int amount;
-
-
+    
+    /**
+     * Supplier for the stock
+     */
+    @ManyToOne
+    @JoinColumn (name = "supplier_id")
+    private Supplier supplier;
+    
+    public Stock() {
+	}
+    
     public Integer getId() {
         return id;
     }
@@ -64,5 +78,16 @@ public class Stock {
     public void setAmount(int amount) {
         this.amount = amount;
     }
+
+
+	public Supplier getSupplier() {
+		return supplier;
+	}
+
+
+	public void setSupplier(Supplier supplier) {
+		this.supplier = supplier;
+	}
+  
     
 }

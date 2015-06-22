@@ -2,6 +2,7 @@ package com.pentalog.sc.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -20,7 +21,8 @@ public class Product {
      * Product id
      */
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @NotNull
     private Integer id;
     
     /**
@@ -34,6 +36,9 @@ public class Product {
      */
     @NotNull
     private double price;
+    
+    public Product() {
+	}
 
     public Integer getId() {
         return id;

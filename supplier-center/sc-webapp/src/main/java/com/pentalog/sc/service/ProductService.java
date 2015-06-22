@@ -15,4 +15,10 @@ public interface ProductService {
      * @return
      */
     public List<Product> getProducts();
+    
+    /**
+     * finds a product by id
+     * @return - the product
+     */
+    public Product findById(int id);
 }

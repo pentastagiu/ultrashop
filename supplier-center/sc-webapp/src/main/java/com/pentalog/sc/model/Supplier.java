@@ -1,12 +1,11 @@
 package com.pentalog.sc.model;
 
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -19,10 +18,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Supplier {
 
     /**
-     * Product id
+     * Supplier id
      */
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    @NotNull
     private Integer id;
     
     /**
@@ -31,16 +31,19 @@ public class Supplier {
     private String name;
     
     /**
-     * List of stocks the supplier has.
-     */
-    @OneToMany
-    private List<Stock> stocks;
-    
-    /**
      * Email of the supplier.
      */
     private String email;
-
+    
+    
+    /**
+     * Contact details for supplier
+     */
+    private String contactDetails;
+    
+    public Supplier() {
+	}
+    
     public Integer getId() {
         return id;
     }
@@ -57,14 +60,7 @@ public class Supplier {
         this.name = name;
     }
 
-    public List<Stock> getStocks() {
-        return stocks;
-    }
-
-    public void setStocks(List<Stock> stocks) {
-        this.stocks = stocks;
-    }
-
+    
     public String getEmail() {
         return email;
     }
@@ -72,5 +68,13 @@ public class Supplier {
     public void setEmail(String email) {
         this.email = email;
     }
+
+	public String getContactDetails() {
+		return contactDetails;
+	}
+
+	public void setContactDetails(String contactDetails) {
+		this.contactDetails = contactDetails;
+	}
     
 }

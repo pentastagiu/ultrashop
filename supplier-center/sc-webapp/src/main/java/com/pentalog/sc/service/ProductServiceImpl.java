@@ -23,5 +23,13 @@ public class ProductServiceImpl implements ProductService{
     public List<Product> getProducts() {
         return productDao.findAll();
     }
+
+    /**
+     * @see {link ProductService.findById}
+     */
+	@Override
+	public Product findById(int id) {
+		return productDao.findOne(id);
+	}
     
 }

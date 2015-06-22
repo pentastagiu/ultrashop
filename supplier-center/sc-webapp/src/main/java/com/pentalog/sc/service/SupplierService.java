@@ -11,4 +11,5 @@ import com.pentalog.sc.model.Supplier;
 public interface SupplierService {
 
     public List<Supplier> getSuppliers();
+
 }
