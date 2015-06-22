@@ -10,6 +10,42 @@ import com.pentalog.sc.model.Supplier;
  */
 public interface SupplierService {
 
+    /**
+     * Return a list with all products from database.
+     * 
+     * @return
+     */
     public List<Supplier> getSuppliers();
+
+    /**
+     * finds a product by id
+     * 
+     * @return - the product
+     */
+    public Supplier findById(int id);
+
+    /**
+     * Insert a product in database.
+     * 
+     * @param product
+     * @return
+     */
+    public Supplier create(Supplier supplier);
+
+    /**
+     * Updates a product in database.
+     * 
+     * @param product
+     * @return
+     */
+    public Supplier update(Supplier supplier);
+
+    /**
+     * Delete a product from database.
+     * 
+     * @param product
+     * @return
+     */
+    public Supplier delete(Supplier supplier);
 
 }
