@@ -17,11 +17,14 @@ app.controller('loginController', [ '$scope', '$location','$timeout','authServic
 							$scope.message="Username or password incorrect !";
 							$timeout(function() {
 								 $scope.message = "";
+								 $scope.savedSuccessfully = false;
 							    }, 3000);
 						}
 
 				}, function(err) {
 					$scope.message = err.error_description;
+					 $scope.savedSuccessfully = true;
+					
 				});
 			};
 

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html data-ng-app="AngularAuthApp">
+<head>
+<meta content="IE=edge, chrome=1" http-equiv="X-UA-Compatible" />
+<title>Supplier Center Presentation Page</title>
+<link href="app/css/bootstrap.min.css" rel="stylesheet" />
+<link href="app/css/site.css" rel="stylesheet" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body>
+	<div class="navbar navbar-inverse navbar-fixed-top"
+		data-role="navigation" data-ng-controller="indexController">
+		<div class="container">
+			<div class="navbar-header">
+				<button class="btn btn-success navbar-toggle" data-toggle="collapse"
+					data-ng-click="navbarExpanded = !navbarExpanded"
+					data-target="#target">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#/" data-translate>home</a>
+			</div>
+			<div class="collapse navbar-collapse" data-collapse="!navbarExpanded"
+				id="target">
+				<ul class="nav navbar-nav navbar-right">
+					<li data-ng-hide="!authentication.isAuth"><a href=""
+						data-ng-click="logOut()" data-translate>logout</a></li>
+					<li data-ng-hide="authentication.isAuth"><a href="#/signup"
+						data-translate>sign-up</a></li>
+					<li><a data-ng-click="changeLanguage('ro')"
+						class="flag-RO {{locale}}"></a></li>
+					<li><a data-ng-click="changeLanguage('en')"
+						class="flag-GB {{locale}}"></a></li>
+					<li><a data-ng-click="changeLanguage('fr')"
+						class="flag-FR {{locale}}"></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<form class="form-login" data-role="form">
+		<h2 class="form-login-heading">Login</h2>
+		<input type="text" class="form-control" placeholder="Username"
+			data-ng-model="loginData.userName" required autofocus> <input
+			type="password" class="form-control" placeholder="Password"
+			data-ng-model="loginData.password" required>
+		<button class="btn btn-lg btn-info btn-block" type="submit"
+			data-ng-click="login()">Login</button>	
+	</form>
+	<div id="footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6">
+					<p>Pentalog &copy; 2015</p>
+				</div>
+				<div class="col-md-6">
+					<p>Tel : +400764478001</p>
+					<p>Iasi, Str Ciurchi nr 126-128 Romania</p>
+					<a href="http://www.pentalog.ro" target="_blank" data-translate>link</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Load app main script -->
+	<script src="app/app.js"></script>
+</body>
+</html>

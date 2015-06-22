@@ -32,7 +32,9 @@ public class ProductController {
      */
     @RequestMapping(method = RequestMethod.GET)
     public @ResponseBody List<Product> getAllProducts() {
-        return productService.getProducts();
+         
+        List<Product> p=productService.getProducts();
+        return p;
     }
 
     /**
