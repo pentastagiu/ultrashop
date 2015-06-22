@@ -1,14 +1,15 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
-  <groupId>com.pentalog</groupId>
-  <artifactId>suppliercenter</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>war</packaging>
-  <name>suppliercenter</name>
-  <description>suppliercenter</description>
-  
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.pentalog</groupId>
+	<artifactId>suppliercenter</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+	<name>suppliercenter</name>
+	<description>suppliercenter</description>
+
 	<dependencies>
-	
+
 		<!-- JUnit dependency -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -24,14 +25,14 @@
 			<version>3.0.1</version>
 			<scope>provided</scope>
 		</dependency>
-	
-	<!-- Persistence dependencies -->
+
+		<!-- Persistence dependencies -->
 		<dependency>
 			<groupId>org.eclipse.persistence</groupId>
 			<artifactId>javax.persistence</artifactId>
 			<version>2.1.0</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
@@ -67,7 +68,7 @@
 			<artifactId>spring-context-support</artifactId>
 			<version>4.0.5.RELEASE</version>
 		</dependency>
-		
+
 		<!-- Spring Security dependencies -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -160,7 +161,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-	
+
 		<!-- Quartz dependencies -->
 		<dependency>
 			<groupId>quartz</groupId>
@@ -179,14 +180,14 @@
 			<artifactId>quartz-jobs</artifactId>
 			<version>2.2.1</version>
 		</dependency>
-	
+
 		<!-- Client dependencies -->
 		<dependency>
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-client</artifactId>
 			<version>1.18.3</version>
 		</dependency>
-		
+
 		<!-- Json dependencies -->
 		<dependency>
 			<groupId>com.sun.jersey</groupId>
@@ -194,7 +195,7 @@
 			<version>1.18.3</version>
 		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<finalName>suppliercenter</finalName>
 		<plugins>
@@ -217,9 +218,13 @@
 						</goals>
 						<configuration>
 							<tasks>
-								<delete dir="D:\servers\tomcat-instance-suppliercenter\webapps\suppliercenter" includeemptydirs="true" />
-								<delete file="D:\servers\tomcat-instance-suppliercenter\webapps\suppliercenter.war" />
-								<copy file="target/suppliercenter.war" tofile="D:\servers\tomcat-instance-suppliercenter\webapps\suppliercenter.war" />
+								<delete
+									dir="D:\servers\tomcat-instance-suppliercenter\webapps\suppliercenter"
+									includeemptydirs="true" />
+								<delete
+									file="D:\servers\tomcat-instance-suppliercenter\webapps\suppliercenter.war" />
+								<copy file="target/suppliercenter.war"
+									tofile="D:\servers\tomcat-instance-suppliercenter\webapps\suppliercenter.war" />
 							</tasks>
 						</configuration>
 					</execution>

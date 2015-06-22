@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html data-ng-app="supplierCenterApp">
+<head>
+<meta content="IE=edge, chrome=1" http-equiv="X-UA-Compatible" />
+<title>Supplier Center Presentation Page</title>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<link href="app/css/bootstrap.min.css" rel="stylesheet" />
+<link href="app/css/site.css" rel="stylesheet" />
+<link rel="stylesheet"
+	href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body>
+	<div class="navbar navbar-inverse navbar-fixed-top"
+		data-role="navigation">
+		<div class="container">
+			<div class="navbar-header">
+				<button class="btn btn-success navbar-toggle" data-toggle="collapse"
+					data-ng-click="navbarExpanded = !navbarExpanded"
+					data-target="#target">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#/" data-translate>home</a>
+			</div>
+			<div class="collapse navbar-collapse" data-collapse="!navbarExpanded"
+				id="target">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="" data-ng-click="logOut()" data-translate>logout</a></li>
+					<li><a href="#/products"
+						data-translate>products</a></li>
+						<li><a href="#/stocks" data-translate>stocks</a></li>
+						<li><a href="#/suppliers" data-translate>suppliers</a></li>
+					<li><a href="#/signup" data-translate>sign-up</a></li>
+					<li><a data-ng-click="changeLanguage('ro')"
+						class="flag-RO {{locale}}"></a></li>
+					<li><a data-ng-click="changeLanguage('en')"
+						class="flag-GB {{locale}}"></a></li>
+					<li><a data-ng-click="changeLanguage('fr')"
+						class="flag-FR {{locale}}"></a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<br />
+	<br />
+	<br />
+	<br />
+	<div class="container">
+		<div data-ng-view=""></div>
+	</div>
+	<div id="footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6">
+					<p>Pentalog &copy; 2015</p>
+				</div>
+				<div class="col-md-6">
+					<p>Tel : +400764478001</p>
+					<p>Iasi, Str Ciurchi nr 126-128 Romania</p>
+					<a href="http://www.pentalog.ro" target="_blank" data-translate>link</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 3rd party libraries -->
+	<script
+		src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+	<script
+		src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.min.js"></script>
+	<script
+		src="http://code.angularjs.org/1.0.0rc10/angular-cookies-1.0.0rc10.js"></script>
+	<script src="app/scripts/angular-local-storage.min.js"></script>
+	<script src="http://code.angularjs.org/1.2.16/angular-resource.js"></script>
+	<script
+		src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.1.js"></script>
+	<script
+		src="//cdn.jsdelivr.net/angular-material-icons/0.4.0/angular-material-icons.min.js"></script>
+	<script src="app/scripts/loading-bar.min.js"></script>
+	<script src="app/scripts/angular-translate.js"></script>
+	<script src="app/scripts/angular-translate-loader-static-files.js"></script>
+	<script
+		src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.0-rc.1/angular-sanitize.js"></script>
+
+
+	<!-- Load app main script -->
+	<script src="app/app.js"></script>
+	<!-- Load services -->
+	<script src="app/services/productFactory.js"></script>
+	<script src="app/services/stockFactory.js"></script>
+	<script src="app/services/supplierFactory.js"></script>
+	<!-- Load controllers -->
+	<script src="app/controllers/productController.js"></script>
+	<script src="app/controllers/stockController.js"></script>
+	<script src="app/controllers/supplierController.js"></script>
+</body>
+</html>
