@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans 
-	xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:mvc="http://www.springframework.org/schema/mvc" 
-	xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:jpa="http://www.springframework.org/schema/data/jpa" 
-	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jpa="http://www.springframework.org/schema/data/jpa" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
 	xmlns:security="http://www.springframework.org/schema/security"
 	xsi:schemaLocation="
 		http://www.springframework.org/schema/beans
@@ -20,26 +16,31 @@
 		http://www.springframework.org/schema/tx
 		http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
 		http://www.springframework.org/schema/jdbc 
-		http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd">
+		http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+		http://www.springframework.org/schema/security
+        http://www.springframework.org/schema/security/spring-security-3.2.xsd">
 
 	<context:component-scan base-package="com.pentalog.sc" />
-	
+
 	<mvc:annotation-driven />
-	
+
 	<context:annotation-config />
 
 	<jpa:repositories base-package="com.pentalog.sc.dao" />
 
 
-	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+	<bean id="entityManagerFactory"
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
 		<property name="persistenceXmlLocation" value="/WEB-INF/persistence.xml" />
 		<property name="dataSource" ref="dataSource" />
 		<property name="persistenceUnitName" value="suppliercenter" />
 		<property name="jpaVendorAdapter">
-			<bean class="org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter">
+			<bean
+				class="org.springframework.orm.jpa.vendor.EclipseLinkJpaVendorAdapter">
 				<property name="showSql" value="true" />
 				<property name="generateDdl" value="true" />
-				<property name="databasePlatform" value="org.eclipse.persistence.platform.database.SQLServerPlatform" />
+				<property name="databasePlatform"
+					value="org.eclipse.persistence.platform.database.SQLServerPlatform" />
 			</bean>
 		</property>
 		<property name="jpaPropertyMap">
@@ -48,8 +49,9 @@
 			</props>
 		</property>
 	</bean>
-	
-	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="oracle.jdbc.OracleDriver" />
 		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe" />
 		<property name="username" value="SupplierCenter" />
@@ -62,9 +64,68 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 
-	<bean id="persistenceExceptionTranslationPostProcessor" class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+	<bean id="persistenceExceptionTranslationPostProcessor"
+		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
 
-	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="false" />
+	<tx:annotation-driven transaction-manager="transactionManager"
+		proxy-target-class="false" />
+
+	<!-- Security login -->
+
+<!--  
+	<security:http pattern="/ws/**" entry-point-ref="restAuthenticationEntryPoint"
+		use-expressions="true" auto-config="false" create-session="stateless">
+		<security:custom-filter ref="authenticationTokenProcessingFilter"
+			position="FORM_LOGIN_FILTER" />
+		<security:intercept-url pattern="/ws/**"
+			access="isAuthenticated()" />
+		<security:logout />
+	</security:http>
+
+	<bean class="com.pentalog.sc.filter.TokenAuthenticationFilter" id="authenticationTokenProcessingFilter">
+		<constructor-arg type="java.lang.String">
+			<value>/ws/**</value>
+		</constructor-arg>
+	</bean>
+
+	<security:http auto-config="true">
+-->
+		<!-- Restrict URLs based on role -->
+		<!-- <security:intercept-url pattern="/login" access="IS_AUTHENTICATED_ANONYMOUSLY"/> -->
+<!-- 
+		<security:intercept-url pattern="/products"
+			access="ROLE_OPERATOR, ROLE_ADMIN" />
+		<security:intercept-url pattern="/suppliers"
+			access="ROLE_OPERATOR, ROLE_ADMIN" />
+		<security:intercept-url pattern="/stocks"
+			access="ROLE_OPERATOR, ROLE_ADMIN" />
+
+		<security:form-login authentication-failure-url="/error"
+			always-use-default-target="true" default-target-url="/products" />
+ -->
+		<!-- <security:form-login login-page='/login' default-target-url='/products'/> -->
+<!-- 
+		<security:logout logout-success-url="/products"
+			delete-cookies="jsessionid" invalidate-session="true" />
+	</security:http>
+
+	<bean id="encoder"
+		class="org.springframework.security.crypto.password.StandardPasswordEncoder" />
+
+	<security:authentication-manager>
+		<security:authentication-provider
+			ref="customAuthenticationProvider" />
+		<security:authentication-provider>
+			<security:jdbc-user-service
+				data-source-ref="dataSource" />
+			<security:password-encoder ref="encoder" />
+		</security:authentication-provider>
+	</security:authentication-manager>
+ -->
+	<!-- <security:global-method-security
+		jsr250-annotations="enabled" pre-post-annotations="enabled"
+		secured-annotations="enabled" /> -->
+		
 	
-	
+
 </beans>
