@@ -13,5 +13,14 @@ app.config(['$routeProvider',function ($routeProvider) {
 		controller: "supplierController",
 		templateUrl: "/suppliercenter/app/views/suppliers.html"
 	});  
-	$routeProvider.otherwise({ redirectTo: "/products" });
+	$routeProvider.when("/addProduct", {
+		controller: "productController",
+		templateUrl: "/suppliercenter/app/views/addProduct.html"
+	});
+	$routeProvider.when("/products/edit", {
+		controller: "editProductController",
+		templateUrl: "/suppliercenter/app/views/editProduct.html"
+	});  
+	
+//	$routeProvider.otherwise({ redirectTo: "/products" });
 }]);

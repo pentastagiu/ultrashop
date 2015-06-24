@@ -96,3 +96,8 @@ body {
 .flag-FR.fr {
 	background-color: rgb(91, 199, 245);
 }
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+}
