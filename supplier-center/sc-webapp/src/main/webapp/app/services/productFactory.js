@@ -28,6 +28,22 @@ app.factory('productFactory', [ '$http', function($http) {
 	productFactory.getProduct = function() {
 		return productFactory.product;
 	};
+	
+	productFactory.setStock = function(stock) {
+		productFactory.stock = stock;
+	};
+
+	productFactory.getStock = function() {
+		return productFactory.stock;
+	};
+	
+	productFactory.setSupplier = function(supplier) {
+		productFactory.supplier = supplier;
+	};
+
+	productFactory.getSupplier = function() {
+		return productFactory.supplier;
+	};
 
 	return productFactory;
 } ]);

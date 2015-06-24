@@ -1,23 +1,24 @@
-app.controller('editProductController', [
+app.controller('editStockController', [
 		'$scope',
 		'$location',
 		'productFactory',
 		function($scope, $location, productFactory) {
-			$scope.product = productFactory.getProduct();
+			$scope.stock = productFactory.getStock();
 
 			function updateProduct() {
-				productFactory.updateProduct($scope.product).success(
+				productFactory.updateStock($scope.stock).success(
 						function() {
-							$location.path('/products');
+							$location.path('/stocks');
 						}).error(function() {
+					alert('error');
 				});
 			}
 			;
-			$scope.updateProduct = function() {
+			$scope.updateStock = function() {
 				updateProduct();
 			};
 			$scope.cancel = function() {
-				$location.path('/products');
+				$location.path('/stocks');
 			};
 
 		} ]);

@@ -3,13 +3,12 @@ app.controller('productController', [
 		'$location',
 		'$routeParams',
 		'productFactory',
-		// 'editFactory',
 		function($scope, $location, $routeParams, productFactory) {
 
 			$scope.products = [];
 			$scope.product = {
 				'name' : '',
-				'price' : 0
+				'price' : ''
 			};
 			getProducts();
 			function getProducts() {
@@ -27,7 +26,6 @@ app.controller('productController', [
 							getProducts();
 							$location.path('/products');
 						}).error(function() {
-					alert('error');
 				});
 			}
 			;
@@ -42,5 +40,8 @@ app.controller('productController', [
 			;
 			$scope.setProduct = function(product) {
 				setProduct(product);
+			};
+			$scope.cancel = function() {
+				$location.path('/products');
 			};
 		} ]);

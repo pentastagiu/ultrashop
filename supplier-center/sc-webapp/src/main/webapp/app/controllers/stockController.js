@@ -2,6 +2,7 @@ app.controller('stockController', [ '$scope', 'stockFactory',
 		function($scope, stockFactory) {
 
 			$scope.stocks = [];
+			$scope.stocks = {};
 			getStocks();
 
 			function getStocks() {
@@ -12,5 +13,8 @@ app.controller('stockController', [ '$scope', 'stockFactory',
 			;
 			$scope.getStocks = function() {
 				getStocks();
-			}
+			};
+			
+			
+			
 		} ]);

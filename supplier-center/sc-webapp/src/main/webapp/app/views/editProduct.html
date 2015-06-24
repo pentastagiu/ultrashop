@@ -1,24 +1,24 @@
-
-<form novalidate="novalidate" class="form-horizontal">
-	<div class="control-group">
-		<label class="control-label" for="inputFirstName">Name:</label>
-		<div class="controls">
-			<input type="text" id="inputFirstName" data-ng-model="product.name" />
-		</div>
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		<form class="form-signin">
+			<h2 class="form-signin-heading">Edit product</h2>
+			<h4 class="form-signin-heading">Name:</h4>
+			<input type="text" data-ng-model="product.name" class="form-control"
+				placeholder="Name" data-required="" data-autofocus="">
+				<h4 class="form-signin-heading">Price:</h4> <input
+				type="text" data-ng-model="product.price" class="form-control"
+				placeholder="Price" data-ng-required="number">
+			<div class="control-group">
+				<label class="control-label" for="button1id"></label>
+				<div class="controls">
+					<a data-ng-click="updateProduct()" class="btn btn-info">Update
+						product</a> <a data-ng-click="cancel()" class="btn btn-info">Cancel</a>
+				</div>
+			</div>
+		</form>
+		<span data-pagination data-ng-click="pageChanged(currentPage)"
+			data-total-items="totalItems" data-ng-model="currentPage"
+			data-max-size="10" data-boundary-links="true"
+			data-items-per-page="numPerPage" class="pagination-sm"> </span>
 	</div>
-	<div class="control-group">
-		<label class="control-label" for="inputLastName">Price:</label>
-		<div class="controls">
-			<input type="text" id="inputLastName" data-ng-model="product.price" />
-		</div>
-	</div>
-	<div class="control-group">
-		<div class="controls">
-			<!-- user-detail.html: -->
-			<a data-ng-click="updateProduct()" class="btn btn-small btn-primary">update
-				user</a> <a data-ng-click="cancel()" class="btn btn-small btn-primary">cancel</a>
-
-
-		</div>
-	</div>
-</form>
+</div>

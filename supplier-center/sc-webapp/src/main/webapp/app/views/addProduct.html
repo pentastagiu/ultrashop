@@ -1,12 +1,20 @@
 <div class="row">
 	<div class="col-md-6 col-md-offset-3">
-		<form class="form-signin" data-ng-submit="addProduct()">
+		<form class="form-signin">
 			<h2 class="form-signin-heading">Add product</h2>
+			<h4 class="form-signin-heading">Name:</h4>
 			<input type="text" data-ng-model="product.name" class="form-control"
-				placeholder="Name" data-required="" data-autofocus=""> <input
-				type="text" data-ng-model="product.price" class="form-control"
-				placeholder="Price" data-required=""> <input type="submit"
-				class="btn btn-small btn-primary" value="Add">
+				placeholder="Insert Name" data-required="" data-autofocus="">
+			<h4 class="form-signin-heading">Price:</h4>
+			<input type="text" data-ng-model="product.price" class="form-control"
+				placeholder="Insert Price" data-ng-required="number">
+			<div class="control-group">
+				<label class="control-label" for="button1id"></label>
+				<div class="controls">
+					<a data-ng-click="addProduct()" class="btn btn-info">Add
+						product</a> <a data-ng-click="cancel()" class="btn btn-info">Cancel</a>
+				</div>
+			</div>
 		</form>
 		<span data-pagination data-ng-click="pageChanged(currentPage)"
 			data-total-items="totalItems" data-ng-model="currentPage"
@@ -14,3 +22,4 @@
 			data-items-per-page="numPerPage" class="pagination-sm"> </span>
 	</div>
 </div>
+
