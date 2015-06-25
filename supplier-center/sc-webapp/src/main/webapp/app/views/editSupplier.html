@@ -1,0 +1,29 @@
+
+
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		<form class="form-signin">
+			<h2 class="form-signin-heading">Edit supplier</h2>
+			<h4 class="form-signin-heading">Name:</h4>
+			<input type="text" data-ng-model="supplier.name" class="form-control"
+				placeholder="Name" data-required="" data-autofocus="">
+			<h4 class="form-signin-heading">Contact Details:</h4>
+			<input type="text" data-ng-model="supplier.contactDetails"
+				class="form-control" placeholder="Contact Details" data-required="">
+			<h4 class="form-signin-heading">Email:</h4>
+			<input type="text" data-ng-model="supplier.email"
+				class="form-control" placeholder="Email" data-required="">
+			<div class="control-group">
+				<label class="control-label" for="button1id"></label>
+				<div class="controls">
+					<a data-ng-click="updateSupplier()" class="btn btn-info">Update supplier</a>
+					<a data-ng-click="cancel()" class="btn btn-info">Cancel</a>
+				</div>
+			</div>
+		</form>
+		<span data-pagination data-ng-click="pageChanged(currentPage)"
+			data-total-items="totalItems" data-ng-model="currentPage"
+			data-max-size="10" data-boundary-links="true"
+			data-items-per-page="numPerPage" class="pagination-sm"> </span>
+	</div>
+</div>

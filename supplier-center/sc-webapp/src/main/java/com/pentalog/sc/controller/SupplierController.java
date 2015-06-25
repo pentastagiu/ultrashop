@@ -3,6 +3,7 @@ package com.pentalog.sc.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,6 +31,7 @@ public class SupplierController {
      * 
      * @return
      */
+    @Secured({"ROLE_OPERATOR", "ROLE_ADMIN"})
     @RequestMapping(method = RequestMethod.GET)
     public @ResponseBody List<Supplier> getAllSuppliers() {
         return supplierService.getSuppliers();
@@ -43,6 +45,7 @@ public class SupplierController {
      * @param id
      * @return
      */
+    @Secured({"ROLE_OPERATOR", "ROLE_ADMIN"})
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public @ResponseBody Supplier readProduct(@PathVariable int id) {
         return supplierService.findById(id);
@@ -51,6 +54,7 @@ public class SupplierController {
     /**
      * Method that inserts in database a product.
      */
+    @Secured({"ROLE_OPERATOR", "ROLE_ADMIN"})
     @RequestMapping(method = RequestMethod.PUT)
     public @ResponseBody Supplier create(@RequestBody Supplier supplier) {
         return supplierService.create(supplier);
@@ -59,6 +63,7 @@ public class SupplierController {
     /**
      * Method that updates a product.
      */
+    @Secured({"ROLE_OPERATOR", "ROLE_ADMIN"})
     @RequestMapping(method = RequestMethod.POST)
     public @ResponseBody Supplier update(@RequestBody Supplier supplier) {
         return supplierService.update(supplier);
@@ -70,6 +75,7 @@ public class SupplierController {
      * @param stock
      * @return
      */
+    @Secured({"ROLE_OPERATOR", "ROLE_ADMIN"})
     @RequestMapping(method = RequestMethod.DELETE)
     public @ResponseBody Supplier deleteSupplier(@RequestBody Supplier supplier) {
         return supplierService.delete(supplier);

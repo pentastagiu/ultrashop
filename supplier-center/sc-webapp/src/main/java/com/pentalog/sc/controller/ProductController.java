@@ -3,6 +3,7 @@ package com.pentalog.sc.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,6 +31,7 @@ public class ProductController {
      * 
      * @return
      */
+    @Secured({"ROLE_OPERATOR", "ROLE_ADMIN"})
     @RequestMapping(method = RequestMethod.GET)
     public @ResponseBody List<Product> getAllProducts() {
          
@@ -44,6 +46,7 @@ public class ProductController {
      * @param id
      * @return
      */
+    @Secured({"ROLE_OPERATOR", "ROLE_ADMIN"})
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public @ResponseBody Product readProduct(@PathVariable int id) {
         return productService.findById(id);
@@ -52,6 +55,7 @@ public class ProductController {
     /**
      * Method that inserts in database a product.
      */
+    @Secured({"ROLE_OPERATOR", "ROLE_ADMIN"})
     @RequestMapping(method = RequestMethod.PUT)
     public @ResponseBody Product create(@RequestBody Product product) {
         return productService.create(product);
@@ -60,6 +64,7 @@ public class ProductController {
     /**
      * Method that updates a product.
      */
+    @Secured({"ROLE_OPERATOR", "ROLE_ADMIN"})
     @RequestMapping(method = RequestMethod.POST)
     public @ResponseBody Product update(@RequestBody Product product) {
         return productService.update(product);
@@ -71,6 +76,7 @@ public class ProductController {
      * @param stock
      * @return
      */
+    @Secured({"ROLE_OPERATOR", "ROLE_ADMIN"})
     @RequestMapping(method = RequestMethod.DELETE)
     public @ResponseBody Product deleteProduct(@RequestBody Product product) {
         return productService.delete(product);
