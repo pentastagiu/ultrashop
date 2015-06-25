@@ -133,12 +133,4 @@ public class ProductBean {
 	public String page() {
 		return "products?faces-redirect=true";
 	}
-
-	/**
-	 * Navigate to product description
-	 * @return
-	 */
-	public String showDetails(){
-		return "product-detail?faces-redirect=true productid=" + selectedProduct.getId();
-	}
 }

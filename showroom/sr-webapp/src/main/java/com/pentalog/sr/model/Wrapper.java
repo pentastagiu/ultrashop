@@ -13,24 +13,24 @@ import javax.xml.bind.annotation.XmlSeeAlso;
  * @param <T>
  */
 @XmlRootElement(name = "list")
-@XmlSeeAlso({Product.class, Order.class,Feature.class,ProductDescription.class,FeatureDescription.class,Users.class,Authorities.class})
+@XmlSeeAlso({Product.class, Order.class,Feature.class,FeatureDescription.class,Users.class,Authorities.class})
 public class Wrapper <T> {
 
-	/**
-	 * The list of objects
-	 */
-	private List<T> list;
-	
-	public Wrapper() {
-		list = new ArrayList<T>();
-	}
+    /**
+     * The list of objects
+     */
+    private List<T> list;
+    
+    public Wrapper() {
+        list = new ArrayList<T>();
+    }
 
-	@XmlAnyElement(lax=true)
-	public List<T> getList() {
-		return list;
-	}
+    @XmlAnyElement(lax=true)
+    public List<T> getList() {
+        return list;
+    }
 
-	public void setList(List<T> list) {
-		this.list = list;
-	}
+    public void setList(List<T> list) {
+        this.list = list;
+    }
 }
