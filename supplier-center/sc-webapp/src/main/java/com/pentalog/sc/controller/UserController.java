@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pentalog.sc.model.User;
+import com.pentalog.sc.model.WrapperUser;
 import com.pentalog.sc.service.AuthoritiesService;
 import com.pentalog.sc.service.UserService;
 
@@ -47,12 +48,24 @@ public class UserController {
 	/**
 	 * Verify the username and password given for login
 	 * 
-	 * @param the
-	 *            string that contains the username and password
+	 * @param wrapper
+	 *            user
 	 * @return the token of username (if success) else return "error"
 	 */
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
-	public @ResponseBody String login(@RequestBody String usernameAndPassword) {
-		return userService.authenticate(usernameAndPassword);
+	public @ResponseBody String login(@RequestBody WrapperUser wUser) {
+		return userService.authenticate(wUser);
+	}
+
+	/**
+	 * Register a new user
+	 * 
+	 * @param wrapper
+	 *            user that contains username and password
+	 * @return the new user
+	 */
+	@RequestMapping(value="/register", method = RequestMethod.PUT)
+	public @ResponseBody User register (@RequestBody WrapperUser wUser){
+		return userService.createUser(wUser);
 	}
 }

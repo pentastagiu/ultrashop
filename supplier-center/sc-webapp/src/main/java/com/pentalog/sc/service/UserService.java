@@ -1,8 +1,7 @@
 package com.pentalog.sc.service;
 
-import java.util.List;
-
 import com.pentalog.sc.model.User;
+import com.pentalog.sc.model.WrapperUser;
 
 /**
  * The user service
@@ -39,23 +38,24 @@ public interface UserService {
 	 * @param - the user
 	 * @return - the user
 	 */
-	User registerUser(List<Object> objects);
+	User registerUser(User user);
 
 	/**
 	 * creates an user having username, password and authoritys
 	 * 
 	 * @param authority
-	 * @param username
-	 * @param password
+	 * @param wrapper
+	 *            user that contains username and password
 	 */
-	void createUser(String username, String password);
+	User createUser(WrapperUser wUser);
 
 	/**
+	 * Authenticate user
 	 * 
-	 * @param username
-	 * @param password
+	 * @param wrapper
+	 *            user that contains username and password
 	 * @return - the token
 	 */
-	String authenticate(String usernameAndPassword);
+	String authenticate(WrapperUser wUser);
 
 }

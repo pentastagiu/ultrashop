@@ -1,7 +1,5 @@
 package com.pentalog.sc.service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +8,9 @@ import org.springframework.stereotype.Service;
 
 import com.pentalog.sc.dao.UserDAO;
 import com.pentalog.sc.model.Authorities;
+import com.pentalog.sc.model.Authorities.Authority;
 import com.pentalog.sc.model.User;
+import com.pentalog.sc.model.WrapperUser;
 import com.pentalog.sc.util.Md5Util;
 
 /**
@@ -55,17 +55,16 @@ public class UserServiceImpl implements UserService {
 	 * @see {@link UserService.createUser}
 	 */
 	@Override
-	public void createUser(String username, String password) {
-		Authorities authorities;
-		List<Object> objects = new ArrayList<>();
-		String token = "", userToken = "";
+	public User createUser(WrapperUser wUser) {
+		String token = "", userToken = "", username="", password="";
 		String userSalt = generateUserSalt();
-		String applicationSalt = "";
-
 		User newUser = new User();
+		
+		username = wUser.getUsername();
+		password = wUser.getPassword();
+		
 		newUser.setUsername(username);
-		token = username.concat(password).concat(userSalt)
-				.concat(applicationSalt);
+		token = username.concat(password).concat(userSalt);
 		try {
 			userToken = md5Util.generateMd5(token);
 		} catch (Exception e) {
@@ -74,22 +73,18 @@ public class UserServiceImpl implements UserService {
 		newUser.setToken(userToken);
 		newUser.setUsersalt(userSalt);
 
-		authorities = new Authorities();
-		authorities.setUsername(username);
-
-		objects.add(newUser);
-		objects.add(authorities);
-		registerUser(objects);
+		return registerUser(newUser);
 	}
 
 	/**
 	 * @see {@link UserService.registerWsUser}
 	 */
 	@Override
-	public User registerUser(List<Object> objects) {
-		User user = (User) objects.get(0);
-		Authorities authorities = (Authorities) objects.get(1);
+	public User registerUser(User user) {
+		Authorities authorities = new Authorities();
 		authorities.setUsername(user.getUsername());
+		authorities.setAuthority(Authority.OPERATOR);
+		
 		authoritiesService.createAuthority(authorities);
 		return userDao.save(user);
 	}
@@ -97,11 +92,11 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * @see {@link UserService.authenticate}
 	 */
-	public String authenticate(String usernameAndPassword)
+	public String authenticate(WrapperUser wUser)
 			throws AuthenticationException {
-		String[] nameAndPass = usernameAndPassword.split("\\.");
-		String username = nameAndPass[0];
-		String password = nameAndPass[1];
+		String username = wUser.getUsername();
+		String password = wUser.getPassword();
+		
 		String runtimeToken = "";
 		User user = getUserByUsername(username);
 
