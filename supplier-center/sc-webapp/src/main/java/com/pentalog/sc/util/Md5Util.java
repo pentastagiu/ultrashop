@@ -1,7 +1,6 @@
 package com.pentalog.sc.util;
 
 import java.io.IOException;
-
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
@@ -44,10 +43,9 @@ public class Md5Util {
 	public String readAppSalt() throws IOException {
 		// Get the inputStream-->This time we have specified the folder name
 		// too.
+		Properties properties = new Properties();
 		InputStream inputStream = this.getClass().getClassLoader()
 				.getResourceAsStream("properties/application.properties");
-		Properties properties = new Properties();
-
 		// load the inputStream using the Properties
 		properties.load(inputStream);
 		// get the value of the property

@@ -3,7 +3,6 @@ package com.pentalog.sc.service;
 import java.util.List;
 
 import com.pentalog.sc.model.User;
-import com.pentalog.sc.model.Authorities.Authority;
 
 /**
  * The user service
@@ -49,7 +48,7 @@ public interface UserService {
 	 * @param username
 	 * @param password
 	 */
-	void createUser(Authority authority, String username, String password);
+	void createUser(String username, String password);
 
 	/**
 	 * 
@@ -57,6 +56,6 @@ public interface UserService {
 	 * @param password
 	 * @return - the token
 	 */
-	String authenticate(String username, String password);
+	String authenticate(String usernameAndPassword);
 
 }

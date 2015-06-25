@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import com.pentalog.sc.dao.UserDAO;
 import com.pentalog.sc.model.Authorities;
-import com.pentalog.sc.model.Authorities.Authority;
 import com.pentalog.sc.model.User;
 import com.pentalog.sc.util.Md5Util;
 
@@ -57,7 +56,7 @@ public class UserServiceImpl implements UserService {
 	 * @see {@link UserService.createUser}
 	 */
 	@Override
-	public void createUser(Authority authority, String username, String password) {
+	public void createUser(String username, String password) {
 		Authorities authorities;
 		List<Object> objects = new ArrayList<>();
 		String token = "", userToken = "";
@@ -83,7 +82,6 @@ public class UserServiceImpl implements UserService {
 
 		authorities = new Authorities();
 		authorities.setUsername(username);
-		authorities.setAuthority(authority);
 
 		objects.add(newUser);
 		objects.add(authorities);
@@ -105,17 +103,15 @@ public class UserServiceImpl implements UserService {
 	/**
 	 * @see {@link UserService.authenticate}
 	 */
-	public String authenticate(String username, String password)
+	public String authenticate(String usernameAndPassword)
 			throws AuthenticationException {
-		String applicationSalt = "", runtimeToken = "";
-		User user = userDao.findByUsername(username);
-		try {
-			applicationSalt = md5Util.readAppSalt();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		String token = username.concat(password).concat(user.getUsersalt())
-				.concat(applicationSalt);
+		String [] nameAndPass =  usernameAndPassword.split("\\.");
+		String username = nameAndPass[0];
+		String password = nameAndPass[1];
+		String runtimeToken = "";
+		User user = getUserByUsername(username);
+
+		String token = username.concat(password).concat(user.getUsersalt());
 		try {
 			runtimeToken = md5Util.generateMd5(token);
 		} catch (Exception e) {
@@ -124,7 +120,7 @@ public class UserServiceImpl implements UserService {
 		if (runtimeToken.equals(user.getToken())) {
 			return runtimeToken;
 		}
-		return "";
+		return "error";
 	}
 
 	/**

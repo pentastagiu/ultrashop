@@ -1,5 +1,7 @@
 package com.pentalog.sc.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +33,28 @@ public class AuthoritiesServiceImpl implements AuthoritiesService {
 	@Override
 	public Authorities getAuthorityByUsername(String username) {
 		return authoritiesDao.findByUsername(username);
+	}
+
+	/**
+	 * @see {@link authoritiesService.getAuthorities}
+	 */
+	@Override
+	public List<Authorities> getAuthorities() {
+		return authoritiesDao.findAll();
+	}
+
+	/**
+	 * @see {@link authoritiesService.updateAuthorities}
+	 */
+	@Override
+	public Authorities updateAuthorities(Authorities authorities) {
+		Authorities authoritiesToUpdate = authoritiesDao.findOne(authorities.getId());
+		if(authoritiesToUpdate!= null){
+			authoritiesToUpdate.setAuthority(authorities.getAuthority());
+			authoritiesToUpdate.setUsername(authorities.getUsername());
+		}
+		authoritiesDao.save(authoritiesToUpdate);
+		return authoritiesToUpdate;
 	}
 
 }
