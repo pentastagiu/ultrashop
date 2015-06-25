@@ -22,63 +22,63 @@ import com.pentalog.sc.service.ProductService;
 @RequestMapping("/products")
 public class ProductController {
 
-    @Autowired
-    ProductService productService;
+	@Autowired
+	ProductService productService;
 
-    /**
-     * Method that returns a string in json format, that contains all the
-     * products from database.
-     * 
-     * @return
-     */
-    @Secured({"ROLE_OPERATOR", "ROLE_ADMIN"})
-    @RequestMapping(method = RequestMethod.GET)
-    public @ResponseBody List<Product> getAllProducts() {
-         
-        List<Product> p=productService.getProducts();
-        return p;
-    }
+	/**
+	 * Method that returns a string in json format, that contains all the
+	 * products from database.
+	 * 
+	 * @return
+	 */
+	@Secured({ "ROLE_OPERATOR", "ROLE_ADMIN" })
+	@RequestMapping(method = RequestMethod.GET)
+	public @ResponseBody List<Product> getAllProducts() {
 
-    /**
-     * Method that returns a string in json format, that contains the product
-     * with id in url.
-     * 
-     * @param id
-     * @return
-     */
-    @Secured({"ROLE_OPERATOR", "ROLE_ADMIN"})
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public @ResponseBody Product readProduct(@PathVariable int id) {
-        return productService.findById(id);
-    }
+		List<Product> p = productService.getProducts();
+		return p;
+	}
 
-    /**
-     * Method that inserts in database a product.
-     */
-    @Secured({"ROLE_OPERATOR", "ROLE_ADMIN"})
-    @RequestMapping(method = RequestMethod.PUT)
-    public @ResponseBody Product create(@RequestBody Product product) {
-        return productService.create(product);
-    }
+	/**
+	 * Method that returns a string in json format, that contains the product
+	 * with id in url.
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@Secured({ "ROLE_OPERATOR", "ROLE_ADMIN" })
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public @ResponseBody Product readProduct(@PathVariable int id) {
+		return productService.findById(id);
+	}
 
-    /**
-     * Method that updates a product.
-     */
-    @Secured({"ROLE_OPERATOR", "ROLE_ADMIN"})
-    @RequestMapping(method = RequestMethod.POST)
-    public @ResponseBody Product update(@RequestBody Product product) {
-        return productService.update(product);
-    }
+	/**
+	 * Method that inserts in database a product.
+	 */
+	@Secured({ "ROLE_OPERATOR", "ROLE_ADMIN" })
+	@RequestMapping(method = RequestMethod.PUT)
+	public @ResponseBody Product create(@RequestBody Product product) {
+		return productService.create(product);
+	}
 
-    /**
-     * Delete a product from database.
-     * 
-     * @param stock
-     * @return
-     */
-    @Secured({"ROLE_OPERATOR", "ROLE_ADMIN"})
-    @RequestMapping(method = RequestMethod.DELETE)
-    public @ResponseBody Product deleteProduct(@RequestBody Product product) {
-        return productService.delete(product);
-    }
+	/**
+	 * Method that updates a product.
+	 */
+	@Secured({ "ROLE_OPERATOR", "ROLE_ADMIN" })
+	@RequestMapping(method = RequestMethod.POST)
+	public @ResponseBody Product update(@RequestBody Product product) {
+		return productService.update(product);
+	}
+
+	/**
+	 * Delete a product from database.
+	 * 
+	 * @param stock
+	 * @return
+	 */
+	@Secured({ "ROLE_OPERATOR", "ROLE_ADMIN" })
+	@RequestMapping(method = RequestMethod.DELETE)
+	public @ResponseBody Product deleteProduct(@RequestBody Product product) {
+		return productService.delete(product);
+	}
 }

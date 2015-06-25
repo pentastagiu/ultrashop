@@ -15,7 +15,7 @@ import com.pentalog.sc.service.AuthoritiesService;
 
 /**
  * 
- *The controller for authorities 
+ * The controller for authorities
  */
 @Controller
 @RequestMapping("/authorities")
@@ -23,25 +23,52 @@ public class AuthoritiesController {
 
 	@Autowired
 	AuthoritiesService authoritiesService;
-	
-	@RequestMapping(value="/{username}", method=RequestMethod.GET)
-	public @ResponseBody Authorities getAuthorityByUsername(@PathVariable String username){
+
+	/**
+	 * Gets authorities for a user
+	 * 
+	 * @param username
+	 *            for user
+	 * @return the authorities
+	 */
+	@RequestMapping(value = "/{username}", method = RequestMethod.GET)
+	public @ResponseBody Authorities getAuthorityByUsername(
+			@PathVariable String username) {
 		return authoritiesService.getAuthorityByUsername(username);
 	}
-	
-	@RequestMapping(method=RequestMethod.GET)
-	public @ResponseBody List<Authorities> getAuthorities(){
+
+	/**
+	 * Gets all authorities
+	 * 
+	 * @return list of authorities
+	 */
+	@RequestMapping(method = RequestMethod.GET)
+	public @ResponseBody List<Authorities> getAuthorities() {
 		return authoritiesService.getAuthorities();
 	}
-	
+
+	/**
+	 * Updates authorities
+	 * 
+	 * @param authorities
+	 * @return new authorities
+	 */
 	@RequestMapping(method = RequestMethod.POST)
-	public @ResponseBody Authorities updateAuthorities (@RequestBody Authorities authorities){
+	public @ResponseBody Authorities updateAuthorities(
+			@RequestBody Authorities authorities) {
 		return authoritiesService.updateAuthorities(authorities);
 	}
-	
-	@RequestMapping(method=RequestMethod.PUT)
-	public @ResponseBody Authorities createAuthorities(@RequestBody Authorities authorities){
+
+	/**
+	 * Add new authorities in database
+	 * 
+	 * @param authorities
+	 * @return new authorities
+	 */
+	@RequestMapping(method = RequestMethod.PUT)
+	public @ResponseBody Authorities createAuthorities(
+			@RequestBody Authorities authorities) {
 		return authoritiesService.createAuthority(authorities);
 	}
-	
+
 }

@@ -1,6 +1,5 @@
 package com.pentalog.sc.service;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -62,11 +61,6 @@ public class UserServiceImpl implements UserService {
 		String token = "", userToken = "";
 		String userSalt = generateUserSalt();
 		String applicationSalt = "";
-		try {
-			applicationSalt = md5Util.readAppSalt();
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
 
 		User newUser = new User();
 		newUser.setUsername(username);
@@ -105,7 +99,7 @@ public class UserServiceImpl implements UserService {
 	 */
 	public String authenticate(String usernameAndPassword)
 			throws AuthenticationException {
-		String [] nameAndPass =  usernameAndPassword.split("\\.");
+		String[] nameAndPass = usernameAndPassword.split("\\.");
 		String username = nameAndPass[0];
 		String password = nameAndPass[1];
 		String runtimeToken = "";

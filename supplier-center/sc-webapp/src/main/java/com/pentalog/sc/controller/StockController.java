@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.pentalog.sc.model.Stock;
 import com.pentalog.sc.service.StockService;
 
-
 /**
  * Controller for web services
  * 
@@ -23,42 +22,81 @@ import com.pentalog.sc.service.StockService;
 @RequestMapping("/stocks")
 public class StockController {
 
+	/**
+	 * The stock service
+	 */
 	@Autowired
 	StockService stockService;
-	
-	@Secured({"ROLE_OPERATOR", "ROLE_ADMIN"})
-	@RequestMapping(method= RequestMethod.GET)
-	public @ResponseBody List<Stock> getAllStocks(){
+
+	/**
+	 * Gets all stocks from database
+	 * 
+	 * @return the list of all stocks
+	 */
+	@Secured({ "ROLE_OPERATOR", "ROLE_ADMIN" })
+	@RequestMapping(method = RequestMethod.GET)
+	public @ResponseBody List<Stock> getAllStocks() {
 		return stockService.getStocks();
 	}
-	
-	@Secured({"ROLE_OPERATOR", "ROLE_ADMIN"})
+
+	/**
+	 * Add a new stock in database
+	 * 
+	 * @param stock
+	 * @return the new stock
+	 */
+	@Secured({ "ROLE_OPERATOR", "ROLE_ADMIN" })
 	@RequestMapping(method = RequestMethod.PUT)
-	public @ResponseBody Stock createStock(@RequestBody Stock stock){
+	public @ResponseBody Stock createStock(@RequestBody Stock stock) {
 		return stockService.create(stock);
 	}
-	
-	@Secured({"ROLE_OPERATOR", "ROLE_ADMIN"})
-	@RequestMapping(value= "/{id}", method = RequestMethod.GET)
-	public @ResponseBody Stock readStock(@PathVariable int id){
+
+	/**
+	 * Finds a stock by id
+	 * 
+	 * @param id
+	 * @return the stock
+	 */
+	@Secured({ "ROLE_OPERATOR", "ROLE_ADMIN" })
+	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	public @ResponseBody Stock readStock(@PathVariable int id) {
 		return stockService.findById(id);
 	}
-	
-	@Secured({"ROLE_OPERATOR", "ROLE_ADMIN"})
-	@RequestMapping(value= "/supplier/{id}", method = RequestMethod.GET)
-	public @ResponseBody List<Stock> readStockBySupplierId(@PathVariable int id){
+
+	/**
+	 * Gets all stocks from a supplier
+	 * 
+	 * @param id
+	 *            - the supplier id
+	 * @return list of stocks
+	 */
+	@Secured({ "ROLE_OPERATOR", "ROLE_ADMIN" })
+	@RequestMapping(value = "/supplier/{id}", method = RequestMethod.GET)
+	public @ResponseBody List<Stock> readStockBySupplierId(@PathVariable int id) {
 		return stockService.findBySupplierId(id);
 	}
-	
-	@Secured({"ROLE_OPERATOR", "ROLE_ADMIN"})
-	@RequestMapping(method= RequestMethod.POST)
-	public @ResponseBody Stock updateStock(@RequestBody Stock stock){
+
+	/**
+	 * Updates a stock
+	 * 
+	 * @param stock
+	 * @return the new stock
+	 */
+	@Secured({ "ROLE_OPERATOR", "ROLE_ADMIN" })
+	@RequestMapping(method = RequestMethod.POST)
+	public @ResponseBody Stock updateStock(@RequestBody Stock stock) {
 		return stockService.update(stock);
 	}
-	
-	@Secured({"ROLE_OPERATOR", "ROLE_ADMIN"})
+
+	/**
+	 * Delete a stock
+	 * 
+	 * @param stock
+	 * @return
+	 */
+	@Secured({ "ROLE_OPERATOR", "ROLE_ADMIN" })
 	@RequestMapping(method = RequestMethod.DELETE)
-	public @ResponseBody Stock deleteStock(@RequestBody Stock stock){
+	public @ResponseBody Stock deleteStock(@RequestBody Stock stock) {
 		return stockService.delete(stock);
 	}
 

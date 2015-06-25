@@ -1,13 +1,11 @@
 package com.pentalog.sc.util;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.Properties;
 
 import org.springframework.stereotype.Component;
+
 @Component
 public class Md5Util {
 
@@ -35,22 +33,15 @@ public class Md5Util {
 		}
 	}
 
+	/**
+	 * Encrypt a string with md5
+	 * 
+	 * @param input
+	 * @return
+	 */
 	public String generateMd5(String input) throws Exception {
 		String str = hashString(input, "MD5");
 		return str;
-	}
-
-	public String readAppSalt() throws IOException {
-		// Get the inputStream-->This time we have specified the folder name
-		// too.
-		Properties properties = new Properties();
-		InputStream inputStream = this.getClass().getClassLoader()
-				.getResourceAsStream("properties/application.properties");
-		// load the inputStream using the Properties
-		properties.load(inputStream);
-		// get the value of the property
-		String propValue = properties.getProperty("applicationSalt");
-		return propValue;
 	}
 
 }

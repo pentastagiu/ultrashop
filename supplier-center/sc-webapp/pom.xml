@@ -219,12 +219,12 @@
 						<configuration>
 							<tasks>
 								<delete
-									dir="E:\servers\tomcat-instance-suppliercenter\webapps\suppliercenter"
+									dir="D:\servers\tomcat-instance-suppliercenter\webapps\suppliercenter"
 									includeemptydirs="true" />
 								<delete
-									file="E:\servers\tomcat-instance-suppliercenter\webapps\suppliercenter.war" />
+									file="D:\servers\tomcat-instance-suppliercenter\webapps\suppliercenter.war" />
 								<copy file="target/suppliercenter.war"
-									tofile="E:\servers\tomcat-instance-suppliercenter\webapps\suppliercenter.war" />
+									tofile="D:\servers\tomcat-instance-suppliercenter\webapps\suppliercenter.war" />
 							</tasks>
 						</configuration>
 					</execution>
