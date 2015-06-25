@@ -4565,7 +4565,7 @@ textarea.input-group-sm>.form-control, textarea.input-group-sm>.input-group-addo
 
 .navbar-nav>li>a {
 	padding-top: 10px;
-	padding-bottom: 10px;
+	padding-bottom: opx;
 	line-height: 21px
 }
 
@@ -4582,7 +4582,7 @@ textarea.input-group-sm>.form-control, textarea.input-group-sm>.input-group-addo
 	}
 	.navbar-nav .open .dropdown-menu>li>a, .navbar-nav .open .dropdown-menu .dropdown-header
 		{
-		padding: 5px 15px 5px 25px
+		padding: 5px 15px 0px 25px
 	}
 	.navbar-nav .open .dropdown-menu>li>a {
 		line-height: 21px
@@ -4603,7 +4603,7 @@ textarea.input-group-sm>.form-control, textarea.input-group-sm>.input-group-addo
 	}
 	.navbar-nav>li>a {
 		padding-top: 12px;
-		padding-bottom: 12px
+		padding-bottom: -15px
 	}
 }
 

@@ -14,7 +14,7 @@
 			</thead>
 			<tbody>
 				<tr data-ng-repeat="product in products">
-					<td>{{ product.id }}</td>
+					<td>{{ $index+1}}</td>
 					<td>{{ product.name }}</td>
 					<td>{{ product.price }}</td>
 					<td><a data-ng-click="setProduct(product)"
