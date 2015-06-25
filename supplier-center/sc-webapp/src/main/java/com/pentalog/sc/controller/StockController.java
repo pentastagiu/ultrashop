@@ -19,7 +19,7 @@ import com.pentalog.sc.service.StockService;
  * 
  */
 @Controller
-@RequestMapping("/stocks")
+@RequestMapping("/resources/stocks")
 public class StockController {
 
 	/**

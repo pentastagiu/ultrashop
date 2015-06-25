@@ -18,7 +18,7 @@ import com.pentalog.sc.service.AuthoritiesService;
  * The controller for authorities
  */
 @Controller
-@RequestMapping("/authorities")
+@RequestMapping("/resources/authorities")
 public class AuthoritiesController {
 
 	@Autowired

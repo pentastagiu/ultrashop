@@ -19,7 +19,7 @@ import com.pentalog.sc.service.SupplierService;
  *
  */
 @Controller
-@RequestMapping("/suppliers")
+@RequestMapping("/resources/suppliers")
 public class SupplierController {
 
 	@Autowired

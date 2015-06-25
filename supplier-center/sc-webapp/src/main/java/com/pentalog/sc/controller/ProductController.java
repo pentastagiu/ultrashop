@@ -19,7 +19,7 @@ import com.pentalog.sc.service.ProductService;
  *
  */
 @Controller
-@RequestMapping("/products")
+@RequestMapping("/resources/products")
 public class ProductController {
 
 	@Autowired

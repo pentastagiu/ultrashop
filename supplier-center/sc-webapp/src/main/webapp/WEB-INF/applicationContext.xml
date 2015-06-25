@@ -72,27 +72,26 @@
 
 	<!-- Security login -->
 
-<!--  
-	<security:http pattern="/ws/**" entry-point-ref="restAuthenticationEntryPoint"
+  <!-- 
+	<security:http pattern="/ws/resources/**" entry-point-ref="restAuthenticationEntryPoint"
 		use-expressions="true" auto-config="false" create-session="stateless">
 		<security:custom-filter ref="authenticationTokenProcessingFilter"
 			position="FORM_LOGIN_FILTER" />
-		<security:intercept-url pattern="/ws/**"
+		<security:intercept-url pattern="/ws/resources/**"
 			access="isAuthenticated()" />
 		<security:logout />
 	</security:http>
 
 	<bean class="com.pentalog.sc.filter.TokenAuthenticationFilter" id="authenticationTokenProcessingFilter">
 		<constructor-arg type="java.lang.String">
-			<value>/ws/**</value>
+			<value>/ws/resources/**</value>
 		</constructor-arg>
 	</bean>
 
 	<security:http auto-config="true">
--->
+ -->
 		<!-- Restrict URLs based on role -->
-		<!-- <security:intercept-url pattern="/login" access="IS_AUTHENTICATED_ANONYMOUSLY"/> -->
-<!-- 
+<!-- 	
 		<security:intercept-url pattern="/products"
 			access="ROLE_OPERATOR, ROLE_ADMIN" />
 		<security:intercept-url pattern="/suppliers"
@@ -102,9 +101,7 @@
 
 		<security:form-login authentication-failure-url="/error"
 			always-use-default-target="true" default-target-url="/products" />
- -->
-		<!-- <security:form-login login-page='/login' default-target-url='/products'/> -->
-<!-- 
+
 		<security:logout logout-success-url="/products"
 			delete-cookies="jsessionid" invalidate-session="true" />
 	</security:http>
@@ -121,11 +118,11 @@
 			<security:password-encoder ref="encoder" />
 		</security:authentication-provider>
 	</security:authentication-manager>
- -->
-	<!-- <security:global-method-security
+
+	 <security:global-method-security
 		jsr250-annotations="enabled" pre-post-annotations="enabled"
-		secured-annotations="enabled" /> -->
+		secured-annotations="enabled" /> 
 		
-	
+	 -->
 
 </beans>
