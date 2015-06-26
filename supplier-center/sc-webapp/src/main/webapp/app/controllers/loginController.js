@@ -1,29 +1,36 @@
-app.controller('loginController', [ '$scope', '$location', '$timeout',
-		'authService', function($scope, $location, $timeout, authService) {
-			$scope.test=123;
+app.controller('loginController', [
+		'$scope',
+		'$location',
+		'$timeout',
+		'authService',
+		function($scope, $location, $timeout, authService) {
 			$scope.loginData = {
 				userName : "",
-				password : ""			
+				password : ""
 			};
 			$scope.message = "";
 			$scope.savedSuccessfully = false;
 			$scope.login = function() {
-				authService.login($scope.loginData).then(function(response) {
-					if (response != "")
-						$location.path('/products');
-					else {
-						$scope.message = "Username or password incorrect !";
-						$timeout(function() {
-							$scope.message = "";
-							$scope.savedSuccessfully = false;
-						}, 3000);
-					}
+				authService.login($scope.loginData).then(
+						function(response) {
 
-				}, function(err) {
-					$scope.message = err.error_description;
-					$scope.savedSuccessfully = true;
+							if (response != "Incorrect username!"
+									&& response != "Incorrect password!"
+									&& response != "")
+								$location.path('/products');
+							else {
+								$scope.message = response;
+								$timeout(function() {
+									$scope.message = "";
+									$scope.savedSuccessfully = false;
+								}, 3000);
+							}
 
-				});
+						}, function(err) {
+							$scope.message = err.error_description;
+							$scope.savedSuccessfully = true;
+
+						});
 			};
 
 		} ]);

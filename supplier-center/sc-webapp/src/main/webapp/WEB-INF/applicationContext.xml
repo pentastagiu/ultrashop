@@ -72,7 +72,7 @@
 
 	<!-- Security login -->
 
-  <!-- 
+  
 	<security:http pattern="/ws/resources/**" entry-point-ref="restAuthenticationEntryPoint"
 		use-expressions="true" auto-config="false" create-session="stateless">
 		<security:custom-filter ref="authenticationTokenProcessingFilter"
@@ -89,9 +89,9 @@
 	</bean>
 
 	<security:http auto-config="true">
- -->
+
 		<!-- Restrict URLs based on role -->
-<!-- 	
+	
 		<security:intercept-url pattern="/products"
 			access="ROLE_OPERATOR, ROLE_ADMIN" />
 		<security:intercept-url pattern="/suppliers"
@@ -123,6 +123,6 @@
 		jsr250-annotations="enabled" pre-post-annotations="enabled"
 		secured-annotations="enabled" /> 
 		
-	 -->
+	
 
 </beans>

@@ -12,7 +12,7 @@ app.factory('authService', [
 				userName : "",
 				token : ""
 			};
-
+			
 			var _saveRegistration = function(registration) {
 
 				_logOut();
@@ -34,6 +34,7 @@ app.factory('authService', [
 			};
 
 			var _login = function(loginData) {
+			
 				var data = "{\"username\":\"" + loginData.userName
 						+ "\",\"password\":\"" + loginData.password
 						+ "\",\"enabled\":1}";
@@ -51,7 +52,7 @@ app.factory('authService', [
 						userName : loginData.userName
 
 					});
-
+					
 					if(response!="" && response !=null){
 					_authentication.isAuth = true;
 					_authentication.userName = loginData.userName;

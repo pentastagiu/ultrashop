@@ -45,7 +45,11 @@ app.config([ '$routeProvider', function($routeProvider) {
 	$routeProvider.otherwise({
 		redirectTo : "/products"
 	});
-	app.run([ 'authService', function(authService) {
-		authService.fillAuthData();
-	} ]);
 } ]);
+app.run([ 'authService', function(authService) {
+	authService.fillAuthData();
+} ]);
+app.config(function ($httpProvider) {
+
+    $httpProvider.interceptors.push('authInterceptorService');
+});

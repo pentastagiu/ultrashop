@@ -20,7 +20,7 @@
 </head>
 <body>
 	<div class="navbar navbar-inverse navbar-fixed-top"
-		data-role="navigation">
+		data-role="navigation" data-ng-controller="indexController">
 		<div class="container">
 			<div class="navbar-header">
 				<button class="btn btn-success navbar-toggle" data-toggle="collapse"
@@ -101,12 +101,13 @@
 	<!-- Load app main script -->
 	<script src="app/app.js"></script>
 	<!-- Load services -->
-	<script src="app/services/authService.js"></script>
 	<script src="app/services/authInterceptorService.js"></script>
+	<script src="app/services/authService.js"></script>
 	<script src="app/services/productFactory.js"></script>
 	<script src="app/services/stockFactory.js"></script>
 	<script src="app/services/supplierFactory.js"></script>
 	<!-- Load controllers -->
+	<script src="app/controllers/indexController.js"></script>
 	<script src="app/controllers/loginController.js"></script>
 	<script src="app/controllers/productController.js"></script>
 	<script src="app/controllers/stockController.js"></script>

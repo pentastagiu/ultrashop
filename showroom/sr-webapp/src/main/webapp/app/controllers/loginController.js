@@ -9,6 +9,7 @@ app.controller('loginController', [ '$scope', '$location','$timeout','authServic
 			$scope.savedSuccessfully = false;
 
 			$scope.login = function() {
+				
 				authService.login($scope.loginData).then(function(response) {
 					if(response!="")
 						$location.path('/products');
