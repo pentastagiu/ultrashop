@@ -3,6 +3,8 @@ package com.pentalog.sc.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -90,5 +92,19 @@ public class SupplierServiceImpl implements SupplierService {
 
     public List<Supplier> findByActive(Boolean active) {
         return supplierDao.findByActive(active);
+    }
+
+    @Override
+    public long countByActive(Boolean active) {
+        return supplierDao.countByActive(active);
+    }
+
+    @Override
+    public List<Supplier> readSuppliersByPage(int pageIndex, int offset) {
+
+        PageRequest request = new PageRequest(pageIndex, offset);
+        Page<Supplier> page = supplierDao.findAll(request);
+        return page.getContent();
+
     }
 }

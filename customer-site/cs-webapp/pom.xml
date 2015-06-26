@@ -129,6 +129,13 @@
 			<artifactId>eclipselink</artifactId>
 			<version>2.5.0</version>
 		</dependency>
+		
+		  <!-- Solrj dependencies -->
+        <dependency>
+            <groupId>org.apache.solr</groupId>
+            <artifactId>solr-solrj</artifactId>
+            <version>4.10.3</version>
+        </dependency>
 
 		<!-- OJDBC dependencies -->
 		<dependency>

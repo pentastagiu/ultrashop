@@ -55,4 +55,18 @@ public interface StockService {
 	 * @return list of stocks
 	 */
     public List<Stock> findBySupplierId(int id);
+    
+    /**
+     * Return the number of entities from database.
+     * @return
+     */
+    public long count();
+    
+    /**
+     * Return a list of stocks coresponding to pageIndex and offset.
+     * @param pageIndex
+     * @param offset
+     * @return
+     */
+    public List<Stock> readStocksByPage(int pageIndex, int offset);
 }
