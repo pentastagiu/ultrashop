@@ -1,5 +1,7 @@
 package com.pentalog.us.model;
 
+import java.sql.Timestamp;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -35,6 +37,8 @@ public class Product {
 	 */
 	@NotNull
 	private double price;
+	
+	private Timestamp timeStamp;
 
 	public Integer getId() {
 		return id;
@@ -59,4 +63,8 @@ public class Product {
 	public void setPrice(double price) {
 		this.price = price;
 	}
+	
+    public Timestamp getTimeStamp() {
+        return timeStamp;
+    }
 }

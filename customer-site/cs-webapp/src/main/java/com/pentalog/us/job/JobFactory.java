@@ -19,4 +19,11 @@ public class JobFactory {
 	public void syncOrders() {
 		orderService.syncOrdes();
 	}
+	
+    /**
+     * Method used for updating solr document
+     */
+    public void updateSolrDocs() {
+        productService.updateSolrDocs();
+    }
 }

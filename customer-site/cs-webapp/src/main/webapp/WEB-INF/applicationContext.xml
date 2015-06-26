@@ -95,6 +95,28 @@
 		</property>
 	</bean>
 	
+	<bean id="updateSolrBean"
+        class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="job" />
+        <property name="targetMethod" value="updateSolrDocs" />
+    </bean>
+    <bean id="updateSolrTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+        <property name="jobDetail" ref="updateSolrBean" />
+        <property name="cronExpression" value="${ultrashop.solr.update}" />
+    </bean>
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="jobDetails">
+            <list>
+                <ref bean="updateSolrBean" />
+            </list>
+        </property>
+        <property name="triggers">
+            <list>
+                <ref bean="updateSolrTrigger" />
+            </list>
+        </property>
+    </bean>
+	
 	<bean id="syncOrdersBean"
 		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject" ref="job" />
