@@ -2,7 +2,7 @@ app.factory('productFactory', [ '$http', function($http) {
 
 	var productFactory = {};
 
-	var productUrlBase = '/suppliercenter/ws/products';
+	var productUrlBase = '/suppliercenter/ws/resources/products';
 	productFactory.getProducts = function() {
 		return $http.get(productUrlBase);
 	};
