@@ -18,4 +18,11 @@ public interface SupplierDAO extends JpaRepository<Supplier, Integer> {
      * @return
      */
     public List<Supplier> findByActive(Boolean active);
+    
+    /**
+     * Return the number of entities from database filtered by active.
+     * @param active
+     * @return
+     */
+    public long countByActive(Boolean active);
 }

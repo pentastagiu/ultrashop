@@ -47,7 +47,7 @@ public class SupplierController {
      */
     @Secured({ "ROLE_OPERATOR", "ROLE_ADMIN" })
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public @ResponseBody Supplier readSupplier(@PathVariable int id) {  
+    public @ResponseBody Supplier readSupplier(@PathVariable int id) {
         return supplierService.findById(id);
     }
 
@@ -66,6 +66,9 @@ public class SupplierController {
     @Secured({ "ROLE_OPERATOR", "ROLE_ADMIN" })
     @RequestMapping(method = RequestMethod.POST)
     public @ResponseBody Supplier update(@RequestBody Supplier supplier) {
+        if (supplier.isActive().equals(Boolean.FALSE)) {
+            return supplierService.delete(supplier);
+        }
         return supplierService.update(supplier);
     }
 
@@ -79,5 +82,40 @@ public class SupplierController {
     @RequestMapping(method = RequestMethod.DELETE)
     public @ResponseBody Supplier deleteSupplier(@RequestBody Supplier supplier) {
         return supplierService.delete(supplier);
+    }
+
+    /**
+     * Count the entitites that are active.
+     * 
+     * @return
+     */
+    @Secured({ "ROLE_OPERATOR", "ROLE_ADMIN" })
+    @RequestMapping(value = "/count-active", method = RequestMethod.GET)
+    public @ResponseBody long countActive() {
+        return supplierService.countByActive(Boolean.TRUE);
+    }
+
+    /**
+     * Count the entitites that are inactive.
+     * 
+     * @return
+     */
+    @Secured({ "ROLE_OPERATOR", "ROLE_ADMIN" })
+    @RequestMapping(value = "/count-inactive", method = RequestMethod.GET)
+    public @ResponseBody long countInactive() {
+        return supplierService.countByActive(Boolean.FALSE);
+    }
+
+    /**
+     * Return the entities according to url parameters.
+     * 
+     * @return
+     */
+    @Secured({ "ROLE_OPERATOR", "ROLE_ADMIN" })
+    @RequestMapping(value = "/pageIndex={pageIndex}/offset={offset}", method = RequestMethod.GET)
+    public @ResponseBody List<Supplier> readSuppliersByPage(
+            @PathVariable("pageIndex") int pageIndex,
+            @PathVariable("offset") int offset) {
+        return supplierService.readSuppliersByPage(pageIndex, offset);
     }
 }
