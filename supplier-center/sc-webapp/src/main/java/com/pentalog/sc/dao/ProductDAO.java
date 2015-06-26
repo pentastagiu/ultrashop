@@ -1,5 +1,7 @@
 package com.pentalog.sc.dao;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.pentalog.sc.model.Product;
@@ -9,4 +11,11 @@ import com.pentalog.sc.model.Product;
  *
  */
 public interface ProductDAO extends JpaRepository<Product, Integer> {
+    
+    /**
+     * 
+     * @param id
+     * @return
+     */
+    List<Product> findBySupplierId(int id);
 }

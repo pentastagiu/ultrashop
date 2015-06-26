@@ -47,4 +47,9 @@ public interface ProductService {
      * @return
      */
     public Product delete(Product product);
+    
+    /**
+     * Return the products of a supplier.
+     */
+    public List<Product> findBySupplierId(int id);
 }

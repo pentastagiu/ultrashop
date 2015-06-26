@@ -22,62 +22,62 @@ import com.pentalog.sc.service.SupplierService;
 @RequestMapping("/resources/suppliers")
 public class SupplierController {
 
-	@Autowired
-	SupplierService supplierService;
+    @Autowired
+    SupplierService supplierService;
 
-	/**
-	 * Method that returns a string in json format, that contains all the
-	 * products from database.
-	 * 
-	 * @return
-	 */
-	@Secured({ "ROLE_OPERATOR", "ROLE_ADMIN" })
-	@RequestMapping(method = RequestMethod.GET)
-	public @ResponseBody List<Supplier> getAllSuppliers() {
-		return supplierService.getSuppliers();
+    /**
+     * Method that returns a string in json format, that contains all the
+     * suppliers from database.
+     * 
+     * @return
+     */
+    @Secured({ "ROLE_OPERATOR", "ROLE_ADMIN" })
+    @RequestMapping(method = RequestMethod.GET)
+    public @ResponseBody List<Supplier> getAllSuppliers() {
+        return supplierService.findByActive(Boolean.TRUE);
 
-	}
+    }
 
-	/**
-	 * Method that returns a string in json format, that contains the product
-	 * with id in url.
-	 * 
-	 * @param id
-	 * @return
-	 */
-	@Secured({ "ROLE_OPERATOR", "ROLE_ADMIN" })
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
-	public @ResponseBody Supplier readProduct(@PathVariable int id) {
-		return supplierService.findById(id);
-	}
+    /**
+     * Method that returns a string in json format, that contains the supplier
+     * with id in url.
+     * 
+     * @param id
+     * @return
+     */
+    @Secured({ "ROLE_OPERATOR", "ROLE_ADMIN" })
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public @ResponseBody Supplier readSupplier(@PathVariable int id) {  
+        return supplierService.findById(id);
+    }
 
-	/**
-	 * Method that inserts in database a product.
-	 */
-	@Secured({ "ROLE_OPERATOR", "ROLE_ADMIN" })
-	@RequestMapping(method = RequestMethod.PUT)
-	public @ResponseBody Supplier create(@RequestBody Supplier supplier) {
-		return supplierService.create(supplier);
-	}
+    /**
+     * Method that inserts in database a supplier.
+     */
+    @Secured({ "ROLE_OPERATOR", "ROLE_ADMIN" })
+    @RequestMapping(method = RequestMethod.PUT)
+    public @ResponseBody Supplier create(@RequestBody Supplier supplier) {
+        return supplierService.create(supplier);
+    }
 
-	/**
-	 * Method that updates a product.
-	 */
-	@Secured({ "ROLE_OPERATOR", "ROLE_ADMIN" })
-	@RequestMapping(method = RequestMethod.POST)
-	public @ResponseBody Supplier update(@RequestBody Supplier supplier) {
-		return supplierService.update(supplier);
-	}
+    /**
+     * Method that updates a supplier.
+     */
+    @Secured({ "ROLE_OPERATOR", "ROLE_ADMIN" })
+    @RequestMapping(method = RequestMethod.POST)
+    public @ResponseBody Supplier update(@RequestBody Supplier supplier) {
+        return supplierService.update(supplier);
+    }
 
-	/**
-	 * Delete a product from database.
-	 * 
-	 * @param stock
-	 * @return
-	 */
-	@Secured({ "ROLE_OPERATOR", "ROLE_ADMIN" })
-	@RequestMapping(method = RequestMethod.DELETE)
-	public @ResponseBody Supplier deleteSupplier(@RequestBody Supplier supplier) {
-		return supplierService.delete(supplier);
-	}
+    /**
+     * Set a supplier's active to false.
+     * 
+     * @param stock
+     * @return
+     */
+    @Secured({ "ROLE_OPERATOR", "ROLE_ADMIN" })
+    @RequestMapping(method = RequestMethod.DELETE)
+    public @ResponseBody Supplier deleteSupplier(@RequestBody Supplier supplier) {
+        return supplierService.delete(supplier);
+    }
 }

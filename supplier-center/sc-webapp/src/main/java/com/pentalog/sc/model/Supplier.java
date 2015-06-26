@@ -1,5 +1,6 @@
 package com.pentalog.sc.model;
 
+import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
+
+import com.pentalog.sc.converter.BooleanTFConverter;
 
 /**
  * The supplier java database model
@@ -40,6 +43,12 @@ public class Supplier {
      * Contact details for supplier
      */
     private String contactDetails;
+    
+    /**
+     * Status of the supplier.
+     */
+    @Convert(converter=BooleanTFConverter.class)
+    private Boolean active;
     
     public Supplier() {
 	}
@@ -76,5 +85,13 @@ public class Supplier {
 	public void setContactDetails(String contactDetails) {
 		this.contactDetails = contactDetails;
 	}
+
+    public Boolean isActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
     
 }

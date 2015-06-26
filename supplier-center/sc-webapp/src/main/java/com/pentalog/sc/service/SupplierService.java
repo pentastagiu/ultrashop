@@ -48,4 +48,10 @@ public interface SupplierService {
      */
     public Supplier delete(Supplier supplier);
 
+    /**
+     * Return a list of suppliers filtered by active.
+     * @param active
+     * @return
+     */
+    public List<Supplier> findByActive(Boolean active);
 }

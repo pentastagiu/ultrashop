@@ -37,6 +37,11 @@ public class Product {
     @NotNull
     private double price;
     
+    /**
+     * Owner of the product.
+     */
+    private Supplier supplier;
+    
     public Product() {
 	}
 
@@ -62,5 +67,13 @@ public class Product {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public Supplier getSupplier() {
+        return supplier;
+    }
+
+    public void setSupplier(Supplier supplier) {
+        this.supplier = supplier;
     }
 }

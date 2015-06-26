@@ -49,6 +49,7 @@ public class ProductServiceImpl implements ProductService {
         Product productToUpdate = productDao.findOne(product.getId());
         if (productToUpdate != null) {
             productToUpdate.setName(product.getName());
+            productToUpdate.setSupplier(product.getSupplier());
             productToUpdate.setPrice(product.getPrice());
         }
         return productToUpdate;
@@ -64,8 +65,16 @@ public class ProductServiceImpl implements ProductService {
         productToDelete.setId(product.getId());
         productToDelete.setName(product.getName());
         productToDelete.setPrice(product.getPrice());
+        productToDelete.setSupplier(product.getSupplier());
         productDao.delete(productToDelete);
 
         return productToDelete;
+    }
+
+    @Override
+    public List<Product> findBySupplierId(int id) {
+        List<Product> products;
+        products = productDao.findBySupplierId(id);
+        return products;
     }
 }

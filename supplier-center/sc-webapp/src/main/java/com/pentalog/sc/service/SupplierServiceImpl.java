@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pentalog.sc.dao.SupplierDAO;
+import com.pentalog.sc.model.Product;
+import com.pentalog.sc.model.Stock;
 import com.pentalog.sc.model.Supplier;
 
 /**
@@ -18,6 +20,12 @@ public class SupplierServiceImpl implements SupplierService {
 
     @Autowired
     private SupplierDAO supplierDao;
+
+    @Autowired
+    private StockService stockService;
+
+    @Autowired
+    private ProductService productService;
 
     public List<Supplier> getSuppliers() {
         return supplierDao.findAll();
@@ -48,6 +56,7 @@ public class SupplierServiceImpl implements SupplierService {
         Supplier supplierToUpdate = supplierDao.findOne(supplier.getId());
         if (supplierToUpdate != null) {
             supplierToUpdate.setName(supplier.getName());
+            supplierToUpdate.setActive(supplier.isActive());
             supplierToUpdate.setEmail(supplier.getEmail());
             supplierToUpdate.setContactDetails(supplier.getContactDetails());
         }
@@ -60,13 +69,26 @@ public class SupplierServiceImpl implements SupplierService {
     @Override
     @Transactional
     public Supplier delete(Supplier supplier) {
-        Supplier supplierToDelete = new Supplier();
-        supplierToDelete.setId(supplier.getId());
-        supplierToDelete.setName(supplier.getName());
-        supplierToDelete.setEmail(supplier.getEmail());
-        supplierToDelete.setContactDetails(supplier.getContactDetails());
-        supplierDao.delete(supplierToDelete);
+        Supplier supplierToDelete = supplierDao.findOne(supplier.getId());
+        supplierToDelete.setActive(Boolean.FALSE);
+        List<Stock> stocks = stockService.findBySupplierId(supplier.getId());
+        List<Product> products = productService.findBySupplierId(supplier
+                .getId());
+        if (stocks != null) {
+            for (Stock stock : stocks) {
+                stockService.delete(stock);
+            }
+        }
+        if (products != null) {
+            for (Product product : products) {
+                productService.delete(product);
+            }
+        }
 
         return supplierToDelete;
+    }
+
+    public List<Supplier> findByActive(Boolean active) {
+        return supplierDao.findByActive(active);
     }
 }
