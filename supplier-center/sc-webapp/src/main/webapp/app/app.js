@@ -10,6 +10,10 @@ app.config([ '$routeProvider', function($routeProvider) {
 		controller : "loginController",
 		templateUrl : "/suppliercenter/app/views/login.html"
 	});
+	$routeProvider.when("/signup", {
+		controller : "signupController",
+		templateUrl : "/suppliercenter/app/views/signup.html"
+	});
 	$routeProvider.when("/products", {
 		controller : "productController",
 		templateUrl : "/suppliercenter/app/views/products.html"

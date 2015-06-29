@@ -8,7 +8,6 @@
 
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<link href="app/css/site.css" rel="stylesheet" />
 <link rel="stylesheet"
 	href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <link rel="stylesheet"
@@ -16,7 +15,7 @@
 <link href="app/css/bootstrap.min.css" rel="stylesheet" />
 <link rel="stylesheet"
 	href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-
+<link href="app/css/site.css" rel="stylesheet" />
 </head>
 <body>
 	<div class="navbar navbar-inverse navbar-fixed-top"
@@ -54,6 +53,8 @@
 					<li data-ng-hide="!authentication.isAuth"><a href=""
 						data-ng-click="logOut()" data-translate><span
 							class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;logout</a></li>
+					<li><a class="disabled">
+							{{authentication.userName}}</a></li>
 					<li><a data-ng-click="changeLanguage('ro')"
 						class="flag-RO {{locale}}"></a></li>
 					<li><a data-ng-click="changeLanguage('en')"
@@ -118,6 +119,7 @@
 	<script src="app/controllers/homeController.js"></script>
 	<script src="app/controllers/indexController.js"></script>
 	<script src="app/controllers/loginController.js"></script>
+	<script src="app/controllers/signupController.js"></script>
 	<script src="app/controllers/productController.js"></script>
 	<script src="app/controllers/stockController.js"></script>
 	<script src="app/controllers/supplierController.js"></script>

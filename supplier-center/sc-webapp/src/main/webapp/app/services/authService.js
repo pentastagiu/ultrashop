@@ -4,7 +4,6 @@ app.factory('authService', [
 		'$location',
 		'localStorageService',
 		function($http, $q, $location, localStorageService) {
-
 			var serviceBase = $location.url();
 			var authServiceFactory = {};
 			var _authentication = {
@@ -19,8 +18,9 @@ app.factory('authService', [
 
 				var data = "{\"username\":\"" + registration.userName
 						+ "\",\"password\":\"" + registration.password
-						+ "\",\"enabled\":1}";
-				return $http.put(serviceBase + '/showroom/ws/users/signup',
+						+ "\"}";
+				serviceBase = "";
+				return $http.put(serviceBase + '/suppliercenter/ws/register',
 						data, {
 							headers : {
 								'Content-Type' : 'application/json'
