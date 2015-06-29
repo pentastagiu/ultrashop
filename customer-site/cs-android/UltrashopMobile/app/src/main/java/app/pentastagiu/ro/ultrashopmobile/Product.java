@@ -2,7 +2,7 @@ package app.pentastagiu.ro.ultrashopmobile;
 
 /**
  * Created by Razvan on 19/06/2015.
- * The products wrapper.
+ * The model for the product wrapper.
  */
 public class Product {
 
