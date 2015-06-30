@@ -1,15 +1,26 @@
 package com.pentalog.us.service.impl;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Properties;
 
+import org.apache.solr.client.solrj.SolrQuery;
+import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.impl.HttpSolrServer;
+import org.apache.solr.client.solrj.response.QueryResponse;
+import org.apache.solr.common.SolrDocument;
+import org.apache.solr.common.SolrDocumentList;
+import org.apache.solr.common.SolrInputDocument;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.pentalog.us.model.Feature;
 import com.pentalog.us.dao.ProductDAO;
 import com.pentalog.us.model.Product;
 import com.pentalog.us.model.ProductDescription;
@@ -90,6 +101,19 @@ public class ProductServiceImpl implements ProductService {
 	public void deleteProduct(Product product) {
 		productDao.delete(product);
 	}
+	
+    /**
+     * @see {@link ProductService.getAllProducts_List}
+     */
+    @Override
+    public List<Product> getAllProducts_List() {
+        return productDao.findAll();
+    }
+    
+    /**
+     * The solr server instance
+     */
+    HttpSolrServer solrServer;
 	
 	@Override
 	public void syncProduct() {
@@ -284,4 +308,126 @@ public class ProductServiceImpl implements ProductService {
 			throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
 		}
 	}
+
+	  /**
+     * @see {@link ProductService.updateSolrDocs}
+     */
+    @Override
+    public void updateSolrDocs() {
+        List<Product> products = getAllProducts_List();
+        List<SolrInputDocument> docs = new ArrayList<SolrInputDocument>();
+        SolrInputDocument doc = null;
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE) - 2);
+        Timestamp timeStamp = new Timestamp(calendar.getTimeInMillis());
+        if (solrServer == null) {
+            solrServer = initializeServer();
+        }
+        try {
+            for (Product p : products) {
+                if (p.getTimeStamp().compareTo(timeStamp) >= 0) {
+                    doc = new SolrInputDocument();
+                    doc.addField("id", p.getId());
+                    doc.addField("name", p.getName());
+                    doc.addField("price", p.getPrice());
+                    doc.addField("type", "product");
+                    docs.add(doc);
+                }
+            }
+
+            if (docs.size() > 0) {
+                solrServer.add(docs);
+                solrServer.commit();
+            }
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        } catch (SolrServerException e1) {
+            e1.printStackTrace();
+        }
+    }
+
+    private HttpSolrServer initializeServer() {
+        Properties sorlProp = new Properties();
+        try {
+            sorlProp.load(Thread.currentThread().getContextClassLoader()
+                    .getResourceAsStream("config/solrConfig.properties"));
+        } catch (IOException e1) {
+            throw new RuntimeException(e1);
+        }
+        solrServer = new HttpSolrServer(
+                sorlProp.getProperty("ultrashop.solr.URL"));
+        return solrServer;
+    }
+    
+    /**
+     * Method that verifies if a given string is a numeric sequence
+     * @param str - the given string
+     * @return
+     */
+    private static boolean isNumeric(String str) {
+        return str.matches("\\d+(\\.\\d+)?");
+    }
+    
+    /**
+     * @see {@link ProductService.searchProduct}
+     */
+    @Override
+    public List<Product> searchProduct(String value) {
+        List<Product> products = new ArrayList<>();
+        Product product = null;
+        String queryString = "";
+        boolean ok = true;
+        if (solrServer == null) {
+            solrServer = initializeServer();
+        }
+        SolrQuery query = new SolrQuery();
+        Properties sorlQueryProp = new Properties();
+        try {
+            sorlQueryProp.load(Thread.currentThread().getContextClassLoader()
+                    .getResourceAsStream("config/solrQueryConfig.properties"));
+        } catch (IOException e1) {
+            throw new RuntimeException(e1);
+        }
+        
+        queryString = String.format(sorlQueryProp.getProperty("ultrashop.solr.query"), value);
+        
+        if (isNumeric(value)) {
+            queryString += String.format(sorlQueryProp.getProperty("ultrashop.solr.query.price"), value);
+        }
+        query.setQuery(queryString);
+        QueryResponse rsp = null;
+        try {
+            rsp = solrServer.query(query);
+        } catch (SolrServerException e1) {
+            e1.printStackTrace();
+        }
+        SolrDocumentList docsList = rsp.getResults();
+        for (SolrDocument doc : docsList) {
+            ok = true;
+            String type = (String) doc.getFieldValue("type");
+            String id = (String) doc.getFieldValue("id");
+            if (type.equals("product")) {
+                product = getProductById(Integer.parseInt(id));
+                products.add(product);
+            } else {
+                switch (type) {
+
+               default:
+                    break;
+                }
+                if (products.size() == 0) {
+                    products.add(product);
+                } else {
+                    for (Product p : products) {
+                        if (product.getId().equals(p.getId()))
+                            ok = false;
+                    }
+                    if (ok == true) {
+                        products.add(product);
+                    }
+                }
+            }
+        }
+        return products;
+    }
 }

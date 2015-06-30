@@ -18,4 +18,5 @@ public interface ProductDAO extends JpaRepository<Product, Integer> {
      * @return
      */
     List<Product> findBySupplierId(int id);
+
 }

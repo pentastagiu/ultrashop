@@ -4,7 +4,6 @@ app.factory('authService', [
 		'$location',
 		'localStorageService',
 		function($http, $q, $location, localStorageService) {
-
 			var serviceBase = $location.url();
 			var authServiceFactory = {};
 			var _authentication = {
@@ -19,8 +18,9 @@ app.factory('authService', [
 
 				var data = "{\"username\":\"" + registration.userName
 						+ "\",\"password\":\"" + registration.password
-						+ "\",\"enabled\":1}";
-				return $http.put(serviceBase + '/showroom/ws/users/signup',
+						+ "\"}";
+				serviceBase = "";
+				return $http.put(serviceBase + '/suppliercenter/ws/register',
 						data, {
 							headers : {
 								'Content-Type' : 'application/json'
@@ -42,18 +42,21 @@ app.factory('authService', [
 					headers : {
 						'Content-Type' : 'application/json'
 					}
-				}).success(function(response) {
-					localStorageService.set('authorizationData', {
-						token : response,
-						userName : loginData.userName
-					});
-					if (response != "" && response != null) {
-						_authentication.isAuth = true;
-						_authentication.userName = loginData.userName;
-						_authentication.token = response;
-					}
-					deferred.resolve(response);
-				}).error(function(err, status) {
+				}).success(
+						function(response) {
+							localStorageService.set('authorizationData', {
+								token : response,
+								userName : loginData.userName
+							});
+							if (response != "Incorrect username!"
+									&& response != "Incorrect password!"
+									&& response != null && response != "") {
+								_authentication.isAuth = true;
+								_authentication.userName = loginData.userName;
+								_authentication.token = response;
+							}
+							deferred.resolve(response);
+						}).error(function(err, status) {
 					_logOut();
 					deferred.reject(err);
 				});

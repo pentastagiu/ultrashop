@@ -54,15 +54,4 @@ public class LoginController {
         return userService.authenticate(wUser);
     }
 
-    /**
-     * Register a new user
-     * 
-     * @param wrapper
-     *            user that contains username and password
-     * @return the new user
-     */
-    @RequestMapping( method = RequestMethod.PUT)
-    public @ResponseBody User register (@RequestBody WrapperUser wUser){
-        return userService.createUser(wUser);
-    }
 }

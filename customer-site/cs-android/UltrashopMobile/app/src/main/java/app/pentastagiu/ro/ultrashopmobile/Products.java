@@ -2,15 +2,20 @@ package app.pentastagiu.ro.ultrashopmobile;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -55,7 +60,7 @@ public class Products extends Activity {
             }
         });
         // populate the products list using JSON request.
-        new GetProducts().execute();
+        new GetProducts().execute("http://192.168.108.218:8080/ultrashop/ws/products");
     }
 
     @Override
@@ -111,7 +116,7 @@ public class Products extends Activity {
     /**
      * Async task class to get json objects by making HTTP calls
      */
-    private class GetProducts extends AsyncTask<Void, Void, Void> {
+    private class GetProducts extends AsyncTask<String, Void, Void> {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -123,9 +128,9 @@ public class Products extends Activity {
         }
 
         @Override
-        protected Void doInBackground(Void... arg0) {
+        protected Void doInBackground(String... args) {
             try {
-                JSONArray url = getJSONfromURL("http://192.168.108.213:8080/ultrashop/ws/products");
+                JSONArray url = getJSONfromURL(args[0]);
                 if (url != null) {
                     productList = parseFromJson(url);
                 }
@@ -141,12 +146,6 @@ public class Products extends Activity {
             //dismiss the progress dialog
             if (pDialog.isShowing())
                 pDialog.dismiss();
-            /**
-             * Updating parsed JSON data into ListView
-             * */
-           /* ListView listView = (ListView) findViewById(R.id.listView);
-            productAdapter = new ProductAdapter(productList, Products.this);
-            listView.setAdapter(productAdapter);*/
             GridView gridView = (GridView) findViewById(R.id.gridView);
             productAdapter = new ProductAdapter(productList, Products.this);
             gridView.setAdapter(productAdapter);

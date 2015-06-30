@@ -95,4 +95,28 @@ public class ProductController {
     public @ResponseBody Product deleteProduct(@RequestBody Product product) {
         return productService.delete(product);
     }
+
+    /**
+     * Count the entitites that are inactive.
+     * 
+     * @return
+     */
+    @Secured({ "ROLE_OPERATOR", "ROLE_ADMIN" })
+    @RequestMapping(value = "/count", method = RequestMethod.GET)
+    public @ResponseBody long count() {
+        return productService.count();
+    }
+
+    /**
+     * Return the entities according to url parameters.
+     * 
+     * @return
+     */
+    @Secured({ "ROLE_OPERATOR", "ROLE_ADMIN" })
+    @RequestMapping(value = "/pageIndex={pageIndex}/offset={offset}", method = RequestMethod.GET)
+    public @ResponseBody List<Product> readProductsByPage(
+            @PathVariable("pageIndex") int pageIndex,
+            @PathVariable("offset") int offset) {
+        return productService.readProductsByPage(pageIndex, offset);
+    }
 }

@@ -4,10 +4,10 @@ app.factory('authInterceptorService', [ '$q', '$location',
 			var authInterceptorServiceFactory = {};
 
 			var _request = function(config) {
-
 				config.headers = config.headers || {};
 
 				var authData = localStorageService.get('authorizationData');
+				
 				if (authData) {
 
 					config.headers.Authorization = authData.token;
@@ -22,7 +22,6 @@ app.factory('authInterceptorService', [ '$q', '$location',
 				}
 				return $q.reject(rejection);
 			}
-
 			authInterceptorServiceFactory.request = _request;
 			authInterceptorServiceFactory.responseError = _responseError;
 

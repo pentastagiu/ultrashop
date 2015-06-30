@@ -50,8 +50,25 @@ public interface SupplierService {
 
     /**
      * Return a list of suppliers filtered by active.
+     * 
      * @param active
      * @return
      */
     public List<Supplier> findByActive(Boolean active);
+
+    /**
+     * Return the number of entities from database filtered by active.
+     * 
+     * @return
+     */
+    public long countByActive(Boolean active);
+
+    /**
+     * Return a list of suppliers coresponding to pageIndex and offset.
+     * 
+     * @param pageIndex
+     * @param offset
+     * @return
+     */
+    public List<Supplier> readSuppliersByPage(int pageIndex, int offset);
 }

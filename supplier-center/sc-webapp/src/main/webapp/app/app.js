@@ -1,10 +1,18 @@
 var app = angular.module('supplierCenterApp',
 		[ 'ngRoute', 'LocalStorageModule' ]);
 app.config([ '$routeProvider', function($routeProvider) {
-
+	
+	$routeProvider.when("/home", {
+		controller : "homeController",
+		templateUrl : "/suppliercenter/app/views/home.html"
+	});
 	$routeProvider.when("/login", {
 		controller : "loginController",
 		templateUrl : "/suppliercenter/app/views/login.html"
+	});
+	$routeProvider.when("/signup", {
+		controller : "signupController",
+		templateUrl : "/suppliercenter/app/views/signup.html"
 	});
 	$routeProvider.when("/products", {
 		controller : "productController",
@@ -44,9 +52,13 @@ app.config([ '$routeProvider', function($routeProvider) {
 	});
 
 	$routeProvider.otherwise({
-		redirectTo : "/products"
+		redirectTo : "/home"
 	});
-	app.run([ 'authService', function(authService) {
-		authService.fillAuthData();
-	} ]);
 } ]);
+app.run([ 'authService', function(authService) {
+	authService.fillAuthData();
+} ]);
+app.config(function($httpProvider) {
+
+	$httpProvider.interceptors.push('authInterceptorService');
+});

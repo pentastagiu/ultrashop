@@ -47,9 +47,19 @@ public interface ProductService {
      * @return
      */
     public Product delete(Product product);
-    
+
     /**
      * Return the products of a supplier.
      */
     public List<Product> findBySupplierId(int id);
+
+    /**
+     * Return the number of entities from database.
+     */
+    public long count();
+
+    /**
+     * Read products by page.
+     */
+    public List<Product> readProductsByPage(int pageIndex, int offset);
 }
