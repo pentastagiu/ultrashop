@@ -34,8 +34,8 @@ app
 															$scope.message = "User with the same username already exists";
 														} else {
 															$scope.savedSuccessfully = true;
-															$scope.message = "User has been registered successfully, you will be redicted to login page in 2 seconds.";
-															startTimer();
+															$scope.message = "Operator has been registered successfully";
+						
 														}
 
 													},

@@ -9,18 +9,17 @@ app.factory('authService', [
 			var _authentication = {
 				isAuth : false,
 				userName : "",
-				token : ""
+				token : "",
+				regRight:false
 			};
 
 			var _saveRegistration = function(registration) {
-
-				_logOut();
 
 				var data = "{\"username\":\"" + registration.userName
 						+ "\",\"password\":\"" + registration.password
 						+ "\"}";
 				serviceBase = "";
-				return $http.put(serviceBase + '/suppliercenter/ws/register',
+				return $http.put(serviceBase + '/suppliercenter/ws/resources/register',
 						data, {
 							headers : {
 								'Content-Type' : 'application/json'
@@ -54,6 +53,7 @@ app.factory('authService', [
 								_authentication.isAuth = true;
 								_authentication.userName = loginData.userName;
 								_authentication.token = response;
+								_register(response);
 							}
 							deferred.resolve(response);
 						}).error(function(err, status) {
@@ -70,8 +70,18 @@ app.factory('authService', [
 
 				_authentication.isAuth = false;
 				_authentication.userName = "";
+				_authentication.regRight=false;
 			};
-
+			//aflare rol user pentru optiunea de register
+			var _register=	function(token){
+				return $http.post(serviceBase + '/suppliercenter/ws/resources/authorities/isAdmin',
+						token).then(function(regResponse) {
+						debugger;
+				if (regResponse.data.authority == "ADMIN")
+					_authentication.regRight=true;
+			});
+			}
+			
 			var _fillAuthData = function() {
 
 				var authData = localStorageService.get('authorizationData');
