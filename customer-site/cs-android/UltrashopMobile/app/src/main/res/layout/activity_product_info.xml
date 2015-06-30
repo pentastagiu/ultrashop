@@ -64,9 +64,17 @@
                 android:id="@+id/pInfoImageList"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" />
+                android:orientation="horizontal"
+                android:visibility="gone" />
 
         </HorizontalScrollView>
+
+        <ListView
+            android:id="@+id/pInfoListView"
+            android:layout_width="match_parent"
+            android:layout_height="300sp"
+            android:layout_below="@+id/pInfoDescription"
+            android:visibility="gone" />
 
     </RelativeLayout>
 </ScrollView>

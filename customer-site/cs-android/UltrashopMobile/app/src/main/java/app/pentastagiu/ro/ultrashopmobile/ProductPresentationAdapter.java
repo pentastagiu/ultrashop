@@ -1,13 +1,7 @@
 package app.pentastagiu.ro.ultrashopmobile;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-import android.text.Layout;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,31 +11,30 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.InputStream;
 import java.util.List;
 
 /**
- * Created by Razvan on 19/06/2015.
- * Class for adapting the products grid view.
+ * Created by Razvan on 30/06/2015.
+ * Class for adapting the product presentation view.
  */
-public class ProductAdapter extends ArrayAdapter<Product> {
+public class ProductPresentationAdapter extends ArrayAdapter<ProductPresentation> {
 
-    private List<Product> productList;
+    private List<ProductPresentation> productPresentations;
     private Context context;
     private static Toast mToast;
 
-    public ProductAdapter(List<Product> productList, Context context) {
-        super(context, R.layout.row_layout, productList);
-        this.productList = productList;
+    public ProductPresentationAdapter(List<ProductPresentation> productPresentations, Context context) {
+        super(context, R.layout.row_layout_list, productPresentations);
+        this.productPresentations = productPresentations;
         this.context = context;
     }
 
     public int getSize() {
-        return productList.size();
+        return productPresentations.size();
     }
 
-    public Product getProduct(int position) {
-        return productList.get(position);
+    public ProductPresentation getProductPresentation(int position) {
+        return productPresentations.get(position);
     }
 
     @Override
@@ -53,26 +46,25 @@ public class ProductAdapter extends ArrayAdapter<Product> {
         if (convertView == null) {
             //this is a new view we inflate the new layout
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = inflater.inflate(R.layout.row_layout, null);
+            view = inflater.inflate(R.layout.row_layout_list, null);
             // now we can fill the layout with the right values
-            TextView productNameView = (TextView) view.findViewById(R.id.name);
-            TextView productPriceView = (TextView) view.findViewById(R.id.price);
+            TextView presentationTitle = (TextView) view.findViewById(R.id.ppTitle);
+            TextView presentationDescription = (TextView) view.findViewById(R.id.ppDescription);
             ImageView imageView = (ImageView) view.findViewById(R.id.imgProduct);
             Button btnAddToCart = (Button) view.findViewById(R.id.btnAddToCart);
 
-            holder.productNameView = productNameView;
-            holder.priceView = productPriceView;
+            holder.title = presentationTitle;
+            holder.description = presentationDescription;
             holder.imageView = imageView;
-            holder.btnAddToCart = btnAddToCart;
 
             view.setTag(holder);
         } else {
             holder = (ProductHolder) view.getTag();
         }
 
-        Product product = productList.get(position);
+        ProductPresentation productPresentation = productPresentations.get(position);
         // Go to product info activity on image click
-        holder.imageView.setTag(product.getId());
+        holder.imageView.setTag(productPresentation.getId());
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,29 +74,26 @@ public class ProductAdapter extends ArrayAdapter<Product> {
             }
         });
 
-        holder.btnAddToCart.setTag(product.getId());
-        holder.btnAddToCart.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(context, "Cart tag = " + v.getTag().toString(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        holder.productNameView.setText(product.getName());
-        holder.priceView.setText("" + product.getPrice());
-        holder.productId = product.getId();
-        new DownloadImageTask(holder.imageView).execute("http://192.168.108.218:90/images/" + product.getId() + "/1.jpg");
+        holder.title.setText(productPresentation.getTitle());
+        holder.description.setText(productPresentation.getDescription());
+        holder.imageSrc = productPresentation.getImageSrc();
+        new DownloadImageTask(holder.imageView).execute("http://192.168.108.218:90/images/" + productPresentation.getProduct().getId() + "/" + holder.imageSrc);
         return view;
     }
 
-    public void swapProductList(List<Product> products) {
+    public void swapProductPresentationList(List<ProductPresentation> products) {
         clear();
 
-        for (Product object : products) {
+        for (ProductPresentation object : products) {
             add(object);
         }
 
         notifyDataSetChanged();
+    }
+
+    @Override
+    public boolean isEnabled(int position) {
+        return false;
     }
 
     /* *********************************
@@ -112,10 +101,9 @@ public class ProductAdapter extends ArrayAdapter<Product> {
 	 * It makes the view faster and avoid finding the component
 	 * **********************************/
     protected static class ProductHolder {
-        public Button btnAddToCart;
         public ImageView imageView;
-        public TextView productNameView;
-        public TextView priceView;
-        public Integer productId;
+        public TextView title;
+        public TextView description;
+        public String imageSrc;
     }
 }
