@@ -56,16 +56,6 @@
 						sortBy="#{products.price}">
 						<h:outputText value="#{products.price}" style="float:right;"/>
 					</p:column>
-						<p:column headerText="#{message['actions']}">
-						<p:commandButton process="productDT" id="productDetail"
-						    icon="ui-icon-image"
-							action="#{productBean.showDetails}">
-							<f:setPropertyActionListener target="#{productBean.selectedProduct}"
-								value="${products}" />
-						</p:commandButton>
-						<p:tooltip for="productDetail"
-							value="#{message['productDetailButton']}" />
-					</p:column>
 				</p:dataTable>
 			</h:form>			
 		</div>
