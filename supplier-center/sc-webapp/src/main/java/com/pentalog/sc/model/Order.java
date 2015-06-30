@@ -13,7 +13,10 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
 import com.pentalog.sc.converter.StatusConverter;
+import com.pentalog.sc.util.CustomDateSerializer;
 
 /**
  * Model class for Order.
@@ -51,9 +54,11 @@ public class Order {
      */
     @NotNull
     @Temporal(TemporalType.DATE)
+    // @JsonSerialize(using = CustomDateSerializer.class)
     private Date expectedDate;
 
     @Temporal(TemporalType.DATE)
+    // @JsonSerialize(using = CustomDateSerializer.class)
     private Date deliveredDate;
 
     @NotNull
@@ -107,6 +112,7 @@ public class Order {
         this.quantity = quantity;
     }
 
+    @JsonSerialize(using = CustomDateSerializer.class)
     public Date getExpectedDate() {
         return expectedDate;
     }
@@ -115,6 +121,7 @@ public class Order {
         this.expectedDate = expectedDate;
     }
 
+    @JsonSerialize(using = CustomDateSerializer.class)
     public Date getDeliveredDate() {
         return deliveredDate;
     }
