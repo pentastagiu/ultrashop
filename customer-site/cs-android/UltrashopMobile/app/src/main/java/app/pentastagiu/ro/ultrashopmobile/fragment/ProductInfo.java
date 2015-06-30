@@ -1,20 +1,20 @@
-package app.pentastagiu.ro.ultrashopmobile;
+package app.pentastagiu.ro.ultrashopmobile.fragment;
 
+import android.app.Activity;
+import android.app.Fragment;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
@@ -36,67 +36,53 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.pentastagiu.ro.ultrashopmobile.ProductPresentation;
+import app.pentastagiu.ro.ultrashopmobile.ProductPresentationAdapter;
+import app.pentastagiu.ro.ultrashopmobile.R;
+import app.pentastagiu.ro.ultrashopmobile.model.Product;
+import app.pentastagiu.ro.ultrashopmobile.model.ProductDescription;
 
-public class ProductInfo extends ActionBarActivity {
-
+/**
+ * Created by deni on 6/30/2015.
+ */
+public class ProductInfo extends Fragment {
     private ProductPresentationAdapter productAdapter;
     private ProgressDialog pDialog;
     private ProductDescription productDescription;
-    private Integer pId;
     private Integer pImageCount;
+    private Integer pId;
+    String productId;
     private List<ProductPresentation> productPresentations;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_product_info);
-        Intent intent = getIntent();
-        String tag = intent.getStringExtra("id");
-        pId = Integer.parseInt(tag);
-        /*TextView text = (TextView) findViewById(R.id.pInfo);
-        text.setText("Product id is: " + tag);*/
-        Button btnBack = (Button) findViewById(R.id.btnBack);
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        new GetProductDescription().execute("http://192.168.108.218:8080/ultrashop/ws/products/descriptions/product/" + tag,
-                "http://192.168.108.218:8080/ultrashop/ws/products/images/product/" + tag,
-                "http://192.168.108.218:8080/ultrashop/ws/products/presentations/product/" + tag);
+    public ProductInfo(String id) {
+        productId = id;
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_product_info, menu);
-        return true;
+    public View onCreateView(LayoutInflater layoutInflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = layoutInflater.inflate(R.layout.activity_product_info, container, false);
+        new GetProductDescription(getActivity()).execute("http://192.168.108.218:8080/ultrashop/ws/products/descriptions/product/" + productId,
+                "http://192.168.108.218:8080/ultrashop/ws/products/images/product/" + productId,
+                "http://192.168.108.218:8080/ultrashop/ws/products/presentations/product/" + productId);
+        return rootView;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
     /**
      * Async task class to get json objects by making HTTP calls
      */
     private class GetProductDescription extends AsyncTask<String, Void, Void> {
+        Activity context;
+
+        public GetProductDescription(Activity context) {
+            this.context = context;
+        }
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
             //Showing progress dialog
-            pDialog = new ProgressDialog(ProductInfo.this);
+            pDialog = new ProgressDialog(context);
             pDialog.setMessage("Loading...");
             pDialog.setCancelable(false);
             pDialog.show();
@@ -110,16 +96,15 @@ public class ProductInfo extends ActionBarActivity {
                 JSONArray urlProductPresentations = getJSONArrayFromURL(args[2]);
                 if (urlProductDescription != null) {
                     if (!urlProductDescription.toString().isEmpty()) {
+                        pId=Integer.parseInt(productId);
                         productDescription = parseDescriptionFromJson(urlProductDescription);
                         pImageCount = parseImageCountFromJson(urlImgCount);
                         productPresentations = parsePresentationsFromJson(urlProductPresentations);
-                        LinearLayout layout = (LinearLayout) findViewById(R.id.pInfoImageList);
+                        LinearLayout layout = (LinearLayout) context.findViewById(R.id.pInfoImageList);
                         for (int i = 1; i <= pImageCount; i++) {
-                            ImageView imageView = new ImageView(ProductInfo.this);
+                            ImageView imageView = new ImageView(context);
                             imageView.setId(i);
                             imageView.setPadding(4, 2, 4, 2);
-                            //imageView.setImageBitmap(BitmapFactory.decodeResource(getResources(), R.mipmap.ic_launcher));
-                            //new DownloadImageTask(imageView).execute("http://192.168.108.218:90/images/" + pId + "/" + i + ".jpg");
                             String urldisplay = "http://192.168.108.218:90/images/" + pId + "/" + i + ".jpg";
                             Bitmap productImage = null;
                             try {
@@ -133,8 +118,8 @@ public class ProductInfo extends ActionBarActivity {
                             imageView.setAdjustViewBounds(true);
                             addLayoutImageView(layout, imageView);
                         }
-                        ListView listView = (ListView) findViewById(R.id.pInfoListView);
-                        productAdapter = new ProductPresentationAdapter(productPresentations, ProductInfo.this);
+                        ListView listView = (ListView) context.findViewById(R.id.pInfoListView);
+                        productAdapter = new ProductPresentationAdapter(productPresentations, context);
                         addListDescriptionsView(listView, productAdapter);
                     } else {
                         productDescription = new ProductDescription();
@@ -151,7 +136,7 @@ public class ProductInfo extends ActionBarActivity {
         }
 
         private void addLayoutImageView(final LinearLayout layout, final ImageView imageView) {
-            runOnUiThread(new Runnable() {
+            context.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     layout.addView(imageView);
@@ -160,7 +145,7 @@ public class ProductInfo extends ActionBarActivity {
         }
 
         private void addListDescriptionsView(final ListView view, final ProductPresentationAdapter adapter) {
-            runOnUiThread(new Runnable() {
+            context.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     view.setAdapter(adapter);
@@ -211,15 +196,15 @@ public class ProductInfo extends ActionBarActivity {
             //dismiss the progress dialog
             if (pDialog.isShowing())
                 pDialog.dismiss();
-            TextView productInfoView = (TextView) ProductInfo.this.findViewById(R.id.pInfo);
-            TextView productDescriptionView = (TextView) ProductInfo.this.findViewById(R.id.pInfoDescription);
+            TextView productInfoView = (TextView) context.findViewById(R.id.pInfo);
+            TextView productDescriptionView = (TextView) context.findViewById(R.id.pInfoDescription);
             if (!productDescription.getDescription().equals("No description available.")) {
                 productInfoView.setText(productDescription.getProduct().getName() + "\n" + productDescription.getProduct().getPrice());
                 productDescriptionView.setText("Description:\n" + productDescription.getDescription());
                 productInfoView.setVisibility(View.VISIBLE);
-                ProductInfo.this.findViewById(R.id.pInfoBtnAddToCart).setVisibility(View.VISIBLE);
+                context.findViewById(R.id.pInfoBtnAddToCart).setVisibility(View.VISIBLE);
                 productDescriptionView.setVisibility(View.VISIBLE);
-                ProductInfo.this.findViewById(R.id.pInfoImageList).setVisibility(View.VISIBLE);
+                context.findViewById(R.id.pInfoImageList).setVisibility(View.VISIBLE);
             } else {
                 productDescriptionView.setVisibility(View.VISIBLE);
                 productDescriptionView.setText(productDescription.getDescription());
@@ -234,8 +219,6 @@ public class ProductInfo extends ActionBarActivity {
                 try {
                     HttpClient httpclient = new DefaultHttpClient();
                     HttpGet httppget = new HttpGet(url);
-                    //httppost.addHeader(new BasicHeader("Content-Type", "application/json"));
-                    //httppost.addHeader(new BasicHeader("Accept", "application/json"));
                     httppget.setHeader("Content-Type", "application/JSON");
                     httppget.setHeader("Accept", "application/JSON");
                     HttpResponse response = httpclient.execute(httppget);
@@ -279,8 +262,6 @@ public class ProductInfo extends ActionBarActivity {
                 try {
                     HttpClient httpclient = new DefaultHttpClient();
                     HttpGet httppget = new HttpGet(url);
-                    //httppost.addHeader(new BasicHeader("Content-Type", "application/json"));
-                    //httppost.addHeader(new BasicHeader("Accept", "application/json"));
                     httppget.setHeader("Content-Type", "application/JSON");
                     httppget.setHeader("Accept", "application/JSON");
                     HttpResponse response = httpclient.execute(httppget);
@@ -318,7 +299,6 @@ public class ProductInfo extends ActionBarActivity {
 
         private ProductDescription parseDescriptionFromJson(JSONObject jsonObject) throws JSONException {
             ProductDescription productDescription = new ProductDescription();
-            //JSONArray jsonObjects = jsonObject.getJSONArray("products");
 
             Integer id = jsonObject.getInt("id");
             String description = jsonObject.getString("description");

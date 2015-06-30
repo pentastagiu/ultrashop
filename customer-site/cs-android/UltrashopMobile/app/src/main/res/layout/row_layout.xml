@@ -22,7 +22,8 @@
         android:layout_below="@id/imgProduct"
         android:text="Product name"
         android:textSize="18sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textColor="#ff000000" />
 
 
     <TextView
@@ -34,7 +35,8 @@
         android:gravity="center"
         android:text="Price"
         android:textSize="14sp"
-        android:textStyle="italic" />
+        android:textStyle="italic"
+        android:textColor="#ff020202" />
 
     <Button
         android:id="@+id/btnAddToCart"

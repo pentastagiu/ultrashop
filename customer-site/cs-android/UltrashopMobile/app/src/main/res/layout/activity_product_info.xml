@@ -5,19 +5,13 @@
     android:fillViewport="false"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:scrollbars="vertical">
+    android:scrollbars="vertical"
+    android:background="#ffffffff">
 
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         tools:context="app.pentastagiu.ro.ultrashopmobile.ProductInfo">
-
-        <Button
-            android:id="@+id/btnBack"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Back"
-            android:textSize="20sp" />
 
 
         <TextView
@@ -28,7 +22,8 @@
             android:layout_below="@id/scrollView"
             android:text="Product Name \nPrice"
             android:textSize="30sp"
-            android:visibility="gone" />
+            android:visibility="gone"
+            android:textColor="#ff020202" />
 
         <TextView
             android:id="@+id/pInfoDescription"
@@ -38,7 +33,8 @@
             android:layout_marginTop="10sp"
             android:text="Description of product should be here !"
             android:textSize="20sp"
-            android:visibility="gone" />
+            android:visibility="gone"
+            android:textColor="#ff010101" />
 
 
         <Button
@@ -57,7 +53,6 @@
             android:id="@+id/scrollView"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/btnBack"
             android:paddingTop="5sp">
 
             <LinearLayout

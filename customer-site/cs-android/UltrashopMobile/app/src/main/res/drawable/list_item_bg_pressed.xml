@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+<gradient
+    android:startColor="#fff4fff0"
+    android:endColor="#ff44ffff"
+    android:angle="90"/>
+</shape>
+<!--@color/list_background_pressed-->

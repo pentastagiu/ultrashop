@@ -1,7 +1,10 @@
 package app.pentastagiu.ro.ultrashopmobile;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +15,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.List;
+
+import app.pentastagiu.ro.ultrashopmobile.fragment.ProductInfo;
 
 /**
  * Created by Razvan on 30/06/2015.
@@ -67,10 +72,16 @@ public class ProductPresentationAdapter extends ArrayAdapter<ProductPresentation
         holder.imageView.setTag(productPresentation.getId());
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View v) {/*
                 Intent intent = new Intent(context, ProductInfo.class);
                 intent.putExtra("id", v.getTag().toString());
-                context.startActivity(intent);
+                context.startActivity(intent);*/
+
+                Fragment fragment = new ProductInfo(v.getTag().toString());
+                FragmentManager fragmentManager = ((ActionBarActivity) context).getFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.frame_container, fragment).commit();
+                ((ActionBarActivity) context).setTitle("...");
             }
         });
 

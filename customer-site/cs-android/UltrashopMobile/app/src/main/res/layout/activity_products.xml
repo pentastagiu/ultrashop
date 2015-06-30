@@ -4,60 +4,12 @@
     android:layout_height="match_parent"
     android:background="#ffffffff"
     android:orientation="vertical"
-    tools:context=".Products">
-
-    <!-- Header aligned to top -->
-    <RelativeLayout
-        android:id="@+id/header"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:background="#ffc6f1ff"
-        android:gravity="center">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:text="Fixed Header"
-            android:textColor="#000"
-            android:textSize="30sp" />
-    </RelativeLayout>
-
-    <!-- Footer aligned to bottom -->
-    <RelativeLayout
-        android:id="@+id/footer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="#ffc6f1ff"
-        android:gravity="center">
-
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:layout_toRightOf="@+id/btnExit"
-            android:text="Fixed Footer"
-            android:textColor="#000"
-            android:textSize="30sp" />
-
-        <Button
-            android:id="@+id/btnExit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Exit"
-            android:textSize="25sp"
-            android:textStyle="bold" />
-    </RelativeLayout>
+    tools:context=".MainActivity">
 
     <GridView xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/gridView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/footer"
-        android:layout_below="@id/header"
         android:columnWidth="130sp"
         android:gravity="center"
         android:horizontalSpacing="10dp"

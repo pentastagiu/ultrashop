@@ -1,4 +1,4 @@
-package app.pentastagiu.ro.ultrashopmobile;
+package app.pentastagiu.ro.ultrashopmobile.model;
 
 /**
  * Created by Razvan on 19/06/2015.

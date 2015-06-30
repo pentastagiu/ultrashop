@@ -1,12 +1,15 @@
-package app.pentastagiu.ro.ultrashopmobile;
+package app.pentastagiu.ro.ultrashopmobile.adapter;
 
-import android.app.ProgressDialog;
+import android.app.ActionBar;
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.text.Layout;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +22,11 @@ import android.widget.Toast;
 
 import java.io.InputStream;
 import java.util.List;
+
+import app.pentastagiu.ro.ultrashopmobile.DownloadImageTask;
+import app.pentastagiu.ro.ultrashopmobile.R;
+import app.pentastagiu.ro.ultrashopmobile.fragment.ProductInfo;
+import app.pentastagiu.ro.ultrashopmobile.model.Product;
 
 /**
  * Created by Razvan on 19/06/2015.
@@ -70,15 +78,17 @@ public class ProductAdapter extends ArrayAdapter<Product> {
             holder = (ProductHolder) view.getTag();
         }
 
-        Product product = productList.get(position);
+        final Product product = productList.get(position);
         // Go to product info activity on image click
         holder.imageView.setTag(product.getId());
         holder.imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(context, ProductInfo.class);
-                intent.putExtra("id", v.getTag().toString());
-                context.startActivity(intent);
+                Fragment fragment = new ProductInfo(v.getTag().toString());
+                FragmentManager fragmentManager = ((ActionBarActivity) context).getFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.frame_container, fragment).commit();
+                ((ActionBarActivity) context).setTitle(product.getName());
             }
         });
 

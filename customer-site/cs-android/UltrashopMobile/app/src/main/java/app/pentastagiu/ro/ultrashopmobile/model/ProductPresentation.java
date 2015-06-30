@@ -1,5 +1,7 @@
 package app.pentastagiu.ro.ultrashopmobile;
 
+import app.pentastagiu.ro.ultrashopmobile.model.Product;
+
 /**
  * Created by Razvan on 30/06/2015.
  * The model for the product presentation wrapper..

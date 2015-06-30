@@ -1,33 +1,21 @@
-package app.pentastagiu.ro.ultrashopmobile;
+package app.pentastagiu.ro.ultrashopmobile.fragment;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.ProgressDialog;
-import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.Button;
+import android.view.ViewGroup;
 import android.widget.GridView;
-import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.AdapterView.OnItemClickListener;
-
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicHeader;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,91 +26,43 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+import app.pentastagiu.ro.ultrashopmobile.model.Product;
+import app.pentastagiu.ro.ultrashopmobile.adapter.ProductAdapter;
+import app.pentastagiu.ro.ultrashopmobile.R;
 
-public class Products extends Activity {
-
-    //The data to show
+/**
+ * Created by deni on 6/29/2015.
+ */
+public class Products extends Fragment {
+    ProgressDialog pDialog;
     private List<Product> productList = new ArrayList<Product>();
     private ProductAdapter productAdapter;
-    private ProgressDialog pDialog;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_products);
-        // exit button
-        Button btnExit = (Button) findViewById(R.id.btnExit);
-        btnExit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-                System.exit(0);
-            }
-        });
-        // populate the products list using JSON request.
-        new GetProducts().execute("http://192.168.108.218:8080/ultrashop/ws/products");
+    public Products() {
     }
 
     @Override
-    public void finish() {
-        super.finish();
-        overridePendingTransition(0, R.anim.abc_fade_out);
+    public View onCreateView(LayoutInflater layoutInflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = layoutInflater.inflate(R.layout.activity_products, container, false);
+        new GetProducts(getActivity()).execute("http://192.168.108.218:8080/ultrashop/ws/products");
+        return rootView;
     }
-
-    private void initList() {
-        for (int i = 0; i < 10; i++) {
-            productList.add(new Product(i, "Product " + i, (double) Math.round((Math.random() * 801 + 200) * 100) / 100));
-        }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_products, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-   /* private void readProductListJSON() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                JSONArray url = getJSONfromURL("http://192.168.108.213:8080/ultrashop/ws/products");
-                try {
-                    List<Product> productList = parse(url);
-                    productAdapter.swapProductList(productList);
-                } catch (Exception e) {
-                    Log.d("jsonError", "Unable to parse objects with error: " + e.getMessage());
-                }
-            }
-        }).start();
-    }*/
-
-
-    /**
+/**
      * Async task class to get json objects by making HTTP calls
      */
     private class GetProducts extends AsyncTask<String, Void, Void> {
-        @Override
+	Activity thisContext;
+	
+	public GetProducts(Activity context){
+		thisContext=context;       
+	}
+	
+	@Override
         protected void onPreExecute() {
             super.onPreExecute();
             //Showing progress dialog
-            pDialog = new ProgressDialog(Products.this);
-            pDialog.setMessage("Please wait...");
+            pDialog = new ProgressDialog(thisContext);
+            pDialog.setMessage("Loading...");
             pDialog.setCancelable(false);
             pDialog.show();
         }
@@ -146,8 +86,8 @@ public class Products extends Activity {
             //dismiss the progress dialog
             if (pDialog.isShowing())
                 pDialog.dismiss();
-            GridView gridView = (GridView) findViewById(R.id.gridView);
-            productAdapter = new ProductAdapter(productList, Products.this);
+            GridView gridView = (GridView) thisContext.findViewById(R.id.gridView);
+            productAdapter = new ProductAdapter(productList, thisContext);
             gridView.setAdapter(productAdapter);
         }
 
@@ -159,8 +99,6 @@ public class Products extends Activity {
                 try {
                     HttpClient httpclient = new DefaultHttpClient();
                     HttpGet httppget = new HttpGet(url);
-                    //httppost.addHeader(new BasicHeader("Content-Type", "application/json"));
-                    //httppost.addHeader(new BasicHeader("Accept", "application/json"));
                     httppget.setHeader("Content-Type", "application/JSON");
                     httppget.setHeader("Accept", "application/JSON");
                     HttpResponse response = httpclient.execute(httppget);
