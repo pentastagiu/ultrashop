@@ -1,24 +1,86 @@
-app.controller('editStockController', [
-		'$scope',
-		'$location',
-		'productFactory',
-		function($scope, $location, productFactory) {
-			$scope.stock = productFactory.getStock();
+app.controller('editStockController',
+		[
+				'$scope',
+				'$location',
+				'$filter',
+				'productFactory',
+				'supplierFactory',
+				'stockFactory',
+				function($scope, $location, $filter, productFactory,
+						supplierFactory, stockFactory) {
+					$scope.stock = stockFactory.getStock();
 
-			function updateProduct() {
-				productFactory.updateStock($scope.stock).success(
-						function() {
-							$location.path('/stocks');
-						}).error(function() {
-					alert('error');
-				});
-			}
-			;
-			$scope.updateStock = function() {
-				updateProduct();
-			};
-			$scope.cancel = function() {
-				$location.path('/stocks');
-			};
+					getSuppliers();
 
-		} ]);
+					function getSuppliers() {
+						supplierFactory.getSuppliers()
+								.success(
+										function(suppliers) {
+											$scope.suppliers = suppliers;
+											// Find supplier by id.This function
+											// is used to set the
+											// default supplier in the edit
+											// product selector
+											var supplierId = stockFactory
+													.getStock().supplier.id;
+											$scope.stock.supplier = $filter(
+													'filter')($scope.suppliers,
+													{
+														id : supplierId
+													})[0];
+										});
+						productFactory.getProductBySupplier(
+								$scope.stock.supplier.id)
+								.success(
+										function(products) {
+											$scope.products = products;
+											// Find supplier by id.This function
+											// is used to set the
+											// default supplier in the edit
+											// product selector
+											var productId = stockFactory
+													.getStock().product.id;
+											$scope.stock.product = $filter(
+													'filter')($scope.products,
+													{
+														id : productId
+													})[0];
+										}).error(function() {
+									alert('error');
+								});
+					}
+					;
+					$scope.getSuppliers = function() {
+						getSuppliers();
+					};
+					function getProductsBySupplier() {
+						productFactory.getProductBySupplier(
+								$scope.stock.supplier.id).success(
+								function(products) {
+									$scope.products = products;
+								}).error(function() {
+							alert('error');
+						});
+					}
+					;
+					$scope.getProductsBySupplier = function() {
+						alert('changed');
+						getProductsBySupplier();
+					};
+					function updateStock() {
+						stockFactory.updateStock($scope.stock).success(
+								function() {
+									$location.path('/stocks');
+								}).error(function() {
+							alert('error');
+						});
+					}
+					;
+					$scope.updateStock = function() {
+						updateStock();
+					};
+					$scope.cancel = function() {
+						$location.path('/stocks');
+					};
+
+				} ]);

@@ -1,7 +1,4 @@
-app.controller('productController', [
-		'$scope',
-		'$location',
-		'$routeParams',
+app.controller('productController', [ '$scope', '$location', '$routeParams',
 		'productFactory',
 		function($scope, $location, $routeParams, productFactory) {
 
@@ -20,27 +17,21 @@ app.controller('productController', [
 			$scope.getProducts = function() {
 				getProducts();
 			};
-			function addProduct() {
-				productFactory.finishTranzaction($scope.product).success(
-						function() {
-							getProducts();
-							$location.path('/products');
-						}).error(function() {
-				});
-			}
-			;
-			$scope.addProduct = function() {
-				addProduct();
-			};
+
 			function setProduct(product) {
 				productFactory.setProduct(product);
-				$location.path('/products/edit');
+				$location.path('/product/edit');
 
 			}
 			;
+			$scope.deleteProduct = function(product) {
+				productFactory.deleteProduct(product);
+				getProducts();
+			};
 			$scope.setProduct = function(product) {
 				setProduct(product);
 			};
+			
 			$scope.cancel = function() {
 				$location.path('/products');
 			};

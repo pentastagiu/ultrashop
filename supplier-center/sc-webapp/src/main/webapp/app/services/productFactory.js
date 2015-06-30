@@ -6,43 +6,34 @@ app.factory('productFactory', [ '$http', function($http) {
 	productFactory.getProducts = function() {
 		return $http.get(productUrlBase);
 	};
-	productFactory.getProductById = function() {
-		return $http.get(productUrlBase, {
-			params : {
-				user_id : user.id
-			}
-		});
+	productFactory.getProductBySupplier = function(id) {
+		return $http.get(productUrlBase + '/supplierId=' + id);
 	};
 	productFactory.finishTranzaction = function(product) {
+		debugger;
 		return $http.put(productUrlBase, product);
 	};
 	productFactory.updateProduct = function(product) {
 		return $http.post(productUrlBase, product);
 	};
-	
-	
+
+	productFactory.deleteProduct = function(product) {
+		return $http({
+			url : productUrlBase,
+			dataType : "json",
+			method : 'DELETE',
+			data : product,
+			headers : {
+				'Content-Type' : 'application/json'
+			}
+		});
+	};
 	productFactory.setProduct = function(product) {
 		productFactory.product = product;
 	};
 
 	productFactory.getProduct = function() {
 		return productFactory.product;
-	};
-	
-	productFactory.setStock = function(stock) {
-		productFactory.stock = stock;
-	};
-
-	productFactory.getStock = function() {
-		return productFactory.stock;
-	};
-	
-	productFactory.setSupplier = function(supplier) {
-		productFactory.supplier = supplier;
-	};
-
-	productFactory.getSupplier = function() {
-		return productFactory.supplier;
 	};
 
 	return productFactory;

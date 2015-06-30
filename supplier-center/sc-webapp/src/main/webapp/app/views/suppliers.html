@@ -20,13 +20,15 @@
 					<td>{{ supplier.contactDetails }}</td>
 					<td>{{ supplier.email }}</td>
 					<td><a data-ng-click="setSupplier(supplier)"
-						class="btn btn-small btn-primary">edit</a></td>
+						class="btn btn-small btn-primary">edit</a> <a
+						data-ng-click="deleteSupplier(supplier)"
+						class="btn btn-small btn-primary">delete</a></td>
 				</tr>
 			</tbody>
 		</table>
-		<a href="#/addSupplier" class="btn btn-primary" data-role="button">
-			Add Supplier</a>
-		<span data-pagination data-ng-click="pageChanged(currentPage)"
+		<a href="#/supplier/add" class="btn btn-primary" data-role="button">
+			Add Supplier</a> <span data-pagination
+			data-ng-click="pageChanged(currentPage)"
 			data-total-items="totalItems" data-ng-model="currentPage"
 			data-max-size="10" data-boundary-links="true"
 			data-items-per-page="numPerPage" class="pagination-sm"> </span>

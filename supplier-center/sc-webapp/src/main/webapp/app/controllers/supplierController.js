@@ -1,11 +1,13 @@
-app.controller('supplierController', [ '$scope','$location', 'supplierFactory',
-		function($scope,$location, supplierFactory) {
-
-			$scope.suppliers = [];
+app.controller('supplierController', [
+		'$scope',
+		'$location',
+		'supplierFactory',
+		function($scope, $location, supplierFactory) {
 			$scope.supplier = {
-					'name':'',
-					'contactDetails':'',
-					'email':'',
+				"name" : "",
+				"contactDetails" : "",
+				"email" : "",
+				"active" : true
 			};
 			getSuppliers();
 			function getSuppliers() {
@@ -17,7 +19,7 @@ app.controller('supplierController', [ '$scope','$location', 'supplierFactory',
 			$scope.getSuppliers = function() {
 				getSuppliers();
 			};
-			
+
 			function addSupplier() {
 				supplierFactory.finishTranzaction($scope.supplier).success(
 						function() {
@@ -30,15 +32,26 @@ app.controller('supplierController', [ '$scope','$location', 'supplierFactory',
 			$scope.addSupplier = function() {
 				addSupplier();
 			};
-			
+
+			function deleteSupplier(supplier) {
+				supplier.active = false;
+				supplierFactory.deleteSupplier(supplier).success(function() {
+					getSuppliers();
+				});	
+			}
+			;
+			$scope.deleteSupplier = function(supplier) {
+				deleteSupplier(supplier);
+			};
+
 			function setSupplier(supplier) {
 				supplierFactory.setSupplier(supplier);
-				$location.path('/suppliers/edit');
+				$location.path('/supplier/edit');
 
 			}
 			;
 			$scope.setSupplier = function(supplier) {
 				setSupplier(supplier);
 			};
-			
+
 		} ]);

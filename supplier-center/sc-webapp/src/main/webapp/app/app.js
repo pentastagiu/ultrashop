@@ -1,4 +1,5 @@
-var app = angular.module('supplierCenterApp', [ 'ngRoute','LocalStorageModule' ]);
+var app = angular.module('supplierCenterApp',
+		[ 'ngRoute', 'LocalStorageModule' ]);
 app.config([ '$routeProvider', function($routeProvider) {
 
 	$routeProvider.when("/login", {
@@ -17,27 +18,27 @@ app.config([ '$routeProvider', function($routeProvider) {
 		controller : "supplierController",
 		templateUrl : "/suppliercenter/app/views/suppliers.html"
 	});
-	$routeProvider.when("/addProduct", {
-		controller : "productController",
+	$routeProvider.when("/product/add", {
+		controller : "addProductController",
 		templateUrl : "/suppliercenter/app/views/addProduct.html"
 	});
-	$routeProvider.when("/addStock", {
-		controller : "stockController",
+	$routeProvider.when("/stock/add", {
+		controller : "addStockController",
 		templateUrl : "/suppliercenter/app/views/addStock.html"
 	});
-	$routeProvider.when("/addSupplier", {
-		controller : "supplierController",
+	$routeProvider.when("/supplier/add", {
+		controller : "addSupplierController",
 		templateUrl : "/suppliercenter/app/views/addSupplier.html"
 	});
-	$routeProvider.when("/products/edit", {
+	$routeProvider.when("/product/edit", {
 		controller : "editProductController",
 		templateUrl : "/suppliercenter/app/views/editProduct.html"
 	});
-	$routeProvider.when("/suppliers/edit", {
+	$routeProvider.when("/supplier/edit", {
 		controller : "editSupplierController",
 		templateUrl : "/suppliercenter/app/views/editSupplier.html"
 	});
-	$routeProvider.when("/stocks/edit", {
+	$routeProvider.when("/stock/edit", {
 		controller : "editStocksController",
 		templateUrl : "/suppliercenter/app/views/editStocks.html"
 	});

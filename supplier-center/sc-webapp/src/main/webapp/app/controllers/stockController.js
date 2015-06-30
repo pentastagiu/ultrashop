@@ -1,5 +1,5 @@
-app.controller('stockController', [ '$scope', 'stockFactory',
-		function($scope, stockFactory) {
+app.controller('stockController', [ '$scope', '$location','stockFactory',
+		function($scope,$location, stockFactory) {
 
 			$scope.stocks = [];
 			$scope.stocks = {};
@@ -14,7 +14,14 @@ app.controller('stockController', [ '$scope', 'stockFactory',
 			$scope.getStocks = function() {
 				getStocks();
 			};
-			
-			
-			
+
+			$scope.setStock = function(stock) {
+				stockFactory.setStock(stock);
+				$location.path('/stock/edit');
+			};
+
+			$scope.deleteStock = function(stock) {
+				stockFactory.deleteStock(stock);
+				getStocks();
+			};
 		} ]);

@@ -10,7 +10,7 @@
 					<th data-translate>supplier</th>
 					<th data-translate>product</th>
 					<th data-translate>product-amount</th>
-					<th data-translate>edit</th>
+					<th data-translate>actions</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -20,11 +20,12 @@
 					<td>{{ stock.product.name }}</td>
 					<td>{{ stock.amount }}</td>
 					<td><a data-ng-click="setStock(stock)"
-						class="btn btn-small btn-primary">edit</a></td>
+						class="btn btn-small btn-primary">edit</a> <a
+						data-ng-click="deleteStock(stock)" class="btn btn-small btn-primary">delete</a></td>
 				</tr>
 			</tbody>
 		</table>
-		<a href="#/addStock" class="btn btn-primary" data-role="button">
+		<a href="#/stock/add" class="btn btn-primary" data-role="button">
 			Add Stock</a> <span data-pagination
 			data-ng-click="pageChanged(currentPage)"
 			data-total-items="totalItems" data-ng-model="currentPage"
