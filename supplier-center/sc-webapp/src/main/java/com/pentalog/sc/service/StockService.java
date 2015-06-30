@@ -69,4 +69,11 @@ public interface StockService {
      * @return
      */
     public List<Stock> readStocksByPage(int pageIndex, int offset);
+    
+    /**
+     * Return a list of stocks with that product.
+     * @param id
+     * @return
+     */
+    public List<Stock> findByProductId(int id);
 }

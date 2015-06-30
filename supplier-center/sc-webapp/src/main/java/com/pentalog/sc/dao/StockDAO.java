@@ -17,5 +17,12 @@ public interface StockDAO extends JpaRepository<Stock, Integer>{
 	 * @return list of stocks
 	 */
 	List<Stock> findBySupplierId(int id);
+	
+	/**
+	 * Return the stocks containing that product.
+	 * @param product
+	 * @return
+	 */
+	List<Stock> findByProductId(int id);
 }
 

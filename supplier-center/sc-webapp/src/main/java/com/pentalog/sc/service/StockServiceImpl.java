@@ -102,6 +102,11 @@ public class StockServiceImpl implements StockService{
         return page.getContent();
     }
 
+    @Override
+    public List<Stock> findByProductId(int id) {
+        return stockDao.findByProductId(id);
+    }
+
 }
 
 

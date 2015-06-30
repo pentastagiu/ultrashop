@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pentalog.sc.dao.ProductDAO;
 import com.pentalog.sc.model.Product;
+import com.pentalog.sc.model.Stock;
 
 /**
  * Implement the methods from interface. Provides actions regarding products.
@@ -20,6 +21,9 @@ public class ProductServiceImpl implements ProductService {
 
     @Autowired
     private ProductDAO productDao;
+
+    @Autowired
+    private StockService stockService;
 
     @Override
     public List<Product> getProducts() {
@@ -68,8 +72,14 @@ public class ProductServiceImpl implements ProductService {
         productToDelete.setName(product.getName());
         productToDelete.setPrice(product.getPrice());
         productToDelete.setSupplier(product.getSupplier());
-        productDao.delete(productToDelete);
 
+        List<Stock> stocks = stockService.findByProductId(product.getId());
+        for (Stock stock : stocks) {
+            stockService.delete(stock);
+        }
+        
+        productDao.delete(productToDelete);
+        
         return productToDelete;
     }
 
