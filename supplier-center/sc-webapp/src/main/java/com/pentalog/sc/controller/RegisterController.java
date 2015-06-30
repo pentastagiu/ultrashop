@@ -1,6 +1,7 @@
 package com.pentalog.sc.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +13,7 @@ import com.pentalog.sc.model.WrapperUser;
 import com.pentalog.sc.service.UserService;
 
 @Controller
-@RequestMapping(value="/register")
+@RequestMapping(value = "/resources/register")
 public class RegisterController {
 
     /**
@@ -21,7 +22,7 @@ public class RegisterController {
      */
     @Autowired
     private UserService userService;
-    
+
     /**
      * Register a new user
      * 
@@ -29,8 +30,9 @@ public class RegisterController {
      *            user that contains username and password
      * @return the new user
      */
-    @RequestMapping( method = RequestMethod.PUT)
-    public @ResponseBody User register (@RequestBody WrapperUser wUser){
+    @Secured({ "ROLE_ADMIN" })
+    @RequestMapping(method = RequestMethod.PUT)
+    public @ResponseBody User register(@RequestBody WrapperUser wUser) {
         return userService.createUser(wUser);
     }
 }

@@ -54,11 +54,9 @@ public class Order {
      */
     @NotNull
     @Temporal(TemporalType.DATE)
-    // @JsonSerialize(using = CustomDateSerializer.class)
     private Date expectedDate;
 
     @Temporal(TemporalType.DATE)
-    // @JsonSerialize(using = CustomDateSerializer.class)
     private Date deliveredDate;
 
     @NotNull
