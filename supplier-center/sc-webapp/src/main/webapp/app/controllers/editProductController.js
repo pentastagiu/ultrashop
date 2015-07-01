@@ -1,5 +1,9 @@
-app.controller('editProductController', [ '$scope', '$location', '$filter',
-		'productFactory', 'supplierFactory',
+app.controller('editProductController', [
+		'$scope',
+		'$location',
+		'$filter',
+		'productFactory',
+		'supplierFactory',
 		function($scope, $location, $filter, productFactory, supplierFactory) {
 			$scope.product = productFactory.getProduct();
 			getSuppliers();
@@ -23,9 +27,9 @@ app.controller('editProductController', [ '$scope', '$location', '$filter',
 			function updateProduct() {
 				$scope.product.supplier = $scope.supplier;
 				productFactory.updateProduct($scope.product).success(
-				function() {
-					$location.path('/products');
-				}).error(function() {
+						function() {
+							$location.path('/products');
+						}).error(function() {
 				});
 			}
 			;

@@ -1,0 +1,30 @@
+<div class="row">
+	<div class="col-md-6 col-md-offset-3">
+		<form class="form-signin">
+			<h2 class="form-signin-heading">Register order</h2>
+			<h4 class="form-signin-heading">Product:</h4>
+			<select class="form-control" data-ng-model="order.product"
+				data-ng-options="product.name for product in products">
+				<option value="" disabled selected>Select your product</option>
+			</select>
+			<h4 class="form-signin-heading">Quantity:</h4>
+			<input type="text" data-ng-model="order.quantity" class="form-control"
+				placeholder="Insert Quantity" data-required="" data-autofocus="">
+			<h4 class="form-signin-heading">Expected date:</h4>
+			<input type="date" data-ng-model="order.expectedDate" class="form-control"
+				 data-ng-required="date">
+			<div class="control-group">
+				<label class="control-label" for="button1id"></label>
+				<div class="controls">
+					<a data-ng-click="addOrder()" class="btn btn-info">Add
+						order</a> <a data-ng-click="cancel()" class="btn btn-info">Cancel</a>
+				</div>
+			</div>
+		</form>
+		<span data-pagination data-ng-click="pageChanged(currentPage)"
+			data-total-items="totalItems" data-ng-model="currentPage"
+			data-max-size="10" data-boundary-links="true"
+			data-items-per-page="numPerPage" class="pagination-sm"> </span>
+	</div>
+</div>
+

@@ -32,7 +32,6 @@ app.controller('addStockController', [
 			};
 
 			function addStock() {
-				debugger;
 				stockFactory.finishTranzaction($scope.stock).success(
 						function() {
 							$location.path('/stocks');
