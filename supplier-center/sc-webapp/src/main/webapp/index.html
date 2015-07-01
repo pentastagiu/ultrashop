@@ -47,14 +47,16 @@
 					<li data-ng-hide="!authentication.isAuth"><a
 						href="#/suppliers" data-translate><span
 							class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;suppliers</a></li>
+					<li data-ng-hide="!authentication.isAuth"><a href="#/orders"
+						data-translate><span class="glyphicon glyphicon-user"
+							aria-hidden="true"></span>&nbsp;orders</a></li>
 					<li data-ng-hide="!authentication.regRight"><a href="#/signup"
 						data-translate><span class="glyphicon glyphicon-pencil"
 							aria-hidden="true"></span>&nbsp;add operator</a></li>
 					<li data-ng-hide="!authentication.isAuth"><a href=""
 						data-ng-click="logOut()" data-translate><span
 							class="glyphicon glyphicon-log-out" aria-hidden="true"></span>&nbsp;logout</a></li>
-					<li><a class="disabled">
-							{{authentication.userName}}</a></li>
+					<li><a class="disabled"> {{authentication.userName}}</a></li>
 					<li><a data-ng-click="changeLanguage('ro')"
 						class="flag-RO {{locale}}"></a></li>
 					<li><a data-ng-click="changeLanguage('en')"
@@ -115,6 +117,7 @@
 	<script src="app/services/productFactory.js"></script>
 	<script src="app/services/stockFactory.js"></script>
 	<script src="app/services/supplierFactory.js"></script>
+	<script src="app/services/orderFactory.js"></script>
 	<!-- Load controllers -->
 	<script src="app/controllers/homeController.js"></script>
 	<script src="app/controllers/indexController.js"></script>
@@ -123,11 +126,14 @@
 	<script src="app/controllers/productController.js"></script>
 	<script src="app/controllers/stockController.js"></script>
 	<script src="app/controllers/supplierController.js"></script>
+	<script src="app/controllers/orderController.js"></script>
 	<script src="app/controllers/addProductController.js"></script>
 	<script src="app/controllers/addStockController.js"></script>
 	<script src="app/controllers/addSupplierController.js"></script>
+	<script src="app/controllers/addOrderController.js"></script>
 	<script src="app/controllers/editProductController.js"></script>
 	<script src="app/controllers/editStockController.js"></script>
 	<script src="app/controllers/editSupplierController.js"></script>
+	<script src="app/controllers/editOrderController.js"></script>
 </body>
 </html>
