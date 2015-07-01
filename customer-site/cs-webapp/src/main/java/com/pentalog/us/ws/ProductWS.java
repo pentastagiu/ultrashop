@@ -573,4 +573,14 @@ public class ProductWS {
     public void deleteAvailabilityStock(AvailabilityStock availabilityStock) {
         availabilityStockService.deleteAvailabilityStock(availabilityStock);
     }
+    
+    /**
+     * Web service for search
+     */
+    @GET
+    @Path("/search")
+    @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+    public List<Product> searchProduct(String value){
+    	return productService.searchProduct(value);
+    }
 }

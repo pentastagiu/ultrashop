@@ -71,4 +71,11 @@ public interface SupplierService {
      * @return
      */
     public List<Supplier> readSuppliersByPage(int pageIndex, int offset);
+    
+    /**
+     * Synchronize suppliers
+     */
+    public void syncSuppliers ();
+
+
 }

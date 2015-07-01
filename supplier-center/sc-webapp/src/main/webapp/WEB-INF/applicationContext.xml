@@ -70,11 +70,44 @@
 	<tx:annotation-driven transaction-manager="transactionManager"
 		proxy-target-class="false" />
 
+	<!-- sync beans -->
+
+	<bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>resources/job/jobTimeConfig.properties</value>
+		</property>
+	</bean>
+
+	<bean id="job" class="com.pentalog.sc.job.SchedulerJobHandler" />
+
+	<bean id="syncSuppliersBean"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="job" />
+		<property name="targetMethod" value="syncSuppliers" />
+	</bean>
+	<bean id="syncSuppliersTrigger" class="org.springframework.scheduling.quartz.CronTriggerBean">
+		<property name="jobDetail" ref="syncSuppliersBean" />
+		<property name="cronExpression" value="${suppliercenter.sync.suppliers}" />
+	</bean>
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="jobDetails">
+			<list>
+				<ref bean="syncSuppliersBean" />
+			</list>
+		</property>
+		<property name="triggers">
+			<list>
+				<ref bean="syncSuppliersTrigger" />
+			</list>
+		</property>
+	</bean>
 	<!-- Security login -->
 
-  
-	<security:http pattern="/ws/resources/**" entry-point-ref="restAuthenticationEntryPoint"
-		use-expressions="true" auto-config="false" create-session="stateless">
+
+	<security:http pattern="/ws/resources/**"
+		entry-point-ref="restAuthenticationEntryPoint" use-expressions="true"
+		auto-config="false" create-session="stateless">
 		<security:custom-filter ref="authenticationTokenProcessingFilter"
 			position="FORM_LOGIN_FILTER" />
 		<security:intercept-url pattern="/ws/resources/**"
@@ -91,7 +124,7 @@
 	<security:http auto-config="true">
 
 		<!-- Restrict URLs based on role -->
-	
+
 		<security:intercept-url pattern="/products"
 			access="ROLE_OPERATOR, ROLE_ADMIN" />
 		<security:intercept-url pattern="/suppliers"
@@ -119,10 +152,10 @@
 		</security:authentication-provider>
 	</security:authentication-manager>
 
-	 <security:global-method-security
+	<security:global-method-security
 		jsr250-annotations="enabled" pre-post-annotations="enabled"
-		secured-annotations="enabled" /> 
-		
-	
+		secured-annotations="enabled" />
+
+
 
 </beans>

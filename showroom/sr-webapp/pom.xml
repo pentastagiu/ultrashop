@@ -256,10 +256,10 @@
 						</goals>
 						<configuration>
 							<tasks>
-								<delete dir="E:\servers\tomcat-instance-showroom\webapps\showroom"
+								<delete dir="D:\servers\tomcat-instance-showroom\webapps\showroom"
 									includeemptydirs="true" />
-								<delete file="E:\servers\tomcat-instance-showroom\webapps\showroom.war" />
-								<copy file="target/showroom.war" tofile="E:\servers\tomcat-instance-showroom\webapps\showroom.war" />
+								<delete file="D:\servers\tomcat-instance-showroom\webapps\showroom.war" />
+								<copy file="target/showroom.war" tofile="D:\servers\tomcat-instance-showroom\webapps\showroom.war" />
 							</tasks>
 						</configuration>
 					</execution>
