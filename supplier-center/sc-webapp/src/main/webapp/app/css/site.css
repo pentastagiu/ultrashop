@@ -109,3 +109,7 @@ a.disabled {
  cursor: default;
  color: #FFFFFF; 
 }
+
+.table tbody>tr>td.vert-align{
+    vertical-align: middle;
+}

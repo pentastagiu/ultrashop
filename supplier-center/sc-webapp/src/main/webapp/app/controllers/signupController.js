@@ -34,8 +34,12 @@ app
 															$scope.message = "User with the same username already exists";
 														} else {
 															$scope.savedSuccessfully = true;
+															$scope.registration = {
+																	userName : "",
+																	password : "",
+																	confirmPassword : ""
+																};
 															$scope.message = "Operator has been registered successfully";
-						
 														}
 
 													},

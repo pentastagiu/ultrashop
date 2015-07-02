@@ -25,7 +25,7 @@ app.factory('authService', [
 								'Content-Type' : 'application/json'
 							}
 						}).then(function(response) {
-					if (response.data == "")
+					if (response.data == "Incorrect username!")
 						response = "NOT OK";
 					return response;
 				});

@@ -10,11 +10,9 @@ app.controller('loginController', [
 			};
 			$scope.message = "";
 			$scope.savedSuccessfully = false;
-			debugger;
 			$scope.login = function() {
 				authService.login($scope.loginData).then(
 						function(response) {
-							debugger;
 							if (response != "Incorrect username!"
 									&& response != "Incorrect password!"
 									&& response != "")
