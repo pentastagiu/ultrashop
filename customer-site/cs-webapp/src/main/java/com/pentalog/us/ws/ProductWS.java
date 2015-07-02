@@ -128,6 +128,18 @@ public class ProductWS {
     public void putProduct(Product product) {
         productService.putProduct(product);
     }
+    
+    /**
+     * Web service that return list of search product
+     * 
+     * @param value
+     */
+    @POST
+    @Path("/search")
+    @Consumes({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
+    public List<Product> searchProduct(String value) {
+       return productService.searchProduct(value);
+    }
 
     /**
      * Web service that delete product
@@ -572,15 +584,5 @@ public class ProductWS {
     @Consumes({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
     public void deleteAvailabilityStock(AvailabilityStock availabilityStock) {
         availabilityStockService.deleteAvailabilityStock(availabilityStock);
-    }
-    
-    /**
-     * Web service for search
-     */
-    @GET
-    @Path("/search")
-    @Produces({ MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON })
-    public List<Product> searchProduct(String value){
-    	return productService.searchProduct(value);
     }
 }
