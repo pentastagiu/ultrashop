@@ -1,19 +1,30 @@
-app.controller('productController', [ '$scope', '$location', '$routeParams',
+app.controller('productController', [
+		'$scope',
+		'$location',
+		'$routeParams',
 		'productFactory',
 		function($scope, $location, $routeParams, productFactory) {
-
+			$scope.prodPerPage = 10;
+			$scope.currentPage = 1;
 			$scope.products = [];
-			$scope.product = {
-				'name' : '',
-				'price' : ''
-			};
-			getProducts();
-			function getProducts() {
-				productFactory.getProducts().success(function(products) {
-					$scope.products = products;
+			getProductCount();
+			getProducts($scope.currentPage, $scope.prodPerPage);
+			function getProducts(currentPage, prodPerPage) {
+				productFactory.getProducts(currentPage-1, prodPerPage).success(
+						function(products) {
+							$scope.products = products;
+						});
+			}
+			;
+			function getProductCount() {
+				productFactory.getProductCount().success(function(totalItems) {
+					$scope.totalItems = totalItems;
 				});
 			}
 			;
+			$scope.pageChanged = function(currentPage) {
+				getProducts($scope.currentPage, $scope.prodPerPage);
+			};
 			$scope.getProducts = function() {
 				getProducts();
 			};
@@ -31,7 +42,7 @@ app.controller('productController', [ '$scope', '$location', '$routeParams',
 			$scope.setProduct = function(product) {
 				setProduct(product);
 			};
-			
+
 			$scope.cancel = function() {
 				$location.path('/products');
 			};

@@ -1,5 +1,5 @@
 var app = angular.module('supplierCenterApp',
-    [ 'ngRoute', 'LocalStorageModule' ]);
+    [ 'ngRoute', 'LocalStorageModule','ui.bootstrap']);
 app.config([ '$routeProvider', function($routeProvider) {
   
   $routeProvider.when("/home", {
