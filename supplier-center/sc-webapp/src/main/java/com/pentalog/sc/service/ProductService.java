@@ -3,6 +3,7 @@ package com.pentalog.sc.service;
 import java.util.List;
 
 import com.pentalog.sc.model.Product;
+import com.pentalog.sc.model.Supplier;
 
 /**
  * Provides services for rest services.
@@ -62,4 +63,10 @@ public interface ProductService {
      * Read products by page.
      */
     public List<Product> readProductsByPage(int pageIndex, int offset);
+    
+    /**
+     * Generate products for a supplier
+     * @param supplier
+     */
+    public void generateProducts(Supplier supplier);
 }

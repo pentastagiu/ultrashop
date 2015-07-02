@@ -16,6 +16,7 @@ import com.pentalog.sc.service.OrderService;
 
 /**
  * Controller for orders.
+ * 
  * @author Abacioaiei
  *
  */
@@ -25,10 +26,10 @@ public class OrderController {
 
     @Autowired
     private OrderService orderService;
-    
+
     /**
-     * Method that returns a string in json format, that contains all the
-     * orders from database.
+     * Method that returns a string in json format, that contains all the orders
+     * from database.
      * 
      * @return
      */
@@ -41,8 +42,8 @@ public class OrderController {
     }
 
     /**
-     * Method that returns a string in json format, that contains the order
-     * with id in url.
+     * Method that returns a string in json format, that contains the order with
+     * id in url.
      * 
      * @param id
      * @return

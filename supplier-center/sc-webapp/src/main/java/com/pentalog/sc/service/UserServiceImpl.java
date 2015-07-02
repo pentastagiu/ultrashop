@@ -1,10 +1,13 @@
 package com.pentalog.sc.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.pentalog.sc.dao.UserDAO;
 import com.pentalog.sc.model.Authorities;
@@ -141,6 +144,33 @@ public class UserServiceImpl implements UserService {
             userToUpdate.setToken(user.getToken());
         }
         return userToUpdate;
+    }
+
+    @Override
+    public List<User> findByAuthority(Authority authority) {
+
+        List<Authorities> authorities = authoritiesService
+                .findByAuthority(authority);
+        List<User> users = new ArrayList<User>();
+        for (Authorities auth : authorities) {
+            users.add(userDao.findByUsername(auth.getUsername()));
+        }
+
+        return users;
+
+    }
+
+    @Override
+    @Transactional
+    public User deleteOperator(User user) {
+        User userToDelete = new User();
+        userToDelete.setId(user.getId());
+        userToDelete.setToken(user.getToken());
+        userToDelete.setUsername(user.getUsername());
+        userToDelete.setUsersalt(user.getUsersalt());
+        userDao.delete(userToDelete);
+        authoritiesService.delete(authoritiesService.getAuthorityByUsername(user.getUsername()));
+        return userToDelete;
     }
 
 }

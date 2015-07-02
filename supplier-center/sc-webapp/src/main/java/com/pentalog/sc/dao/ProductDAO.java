@@ -18,5 +18,12 @@ public interface ProductDAO extends JpaRepository<Product, Integer> {
      * @return
      */
     List<Product> findBySupplierId(int id);
+    
+    /**
+     * The products with the same name.
+     * @param name
+     * @return
+     */
+    List<Product> findByName(String name);
 
 }
