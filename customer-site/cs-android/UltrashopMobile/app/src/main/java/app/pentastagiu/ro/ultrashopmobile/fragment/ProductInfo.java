@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.ConsoleMessage;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -37,7 +38,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import app.pentastagiu.ro.ultrashopmobile.ProductPresentation;
-import app.pentastagiu.ro.ultrashopmobile.ProductPresentationAdapter;
+import app.pentastagiu.ro.ultrashopmobile.adapter.ProductPresentationAdapter;
 import app.pentastagiu.ro.ultrashopmobile.R;
 import app.pentastagiu.ro.ultrashopmobile.model.Product;
 import app.pentastagiu.ro.ultrashopmobile.model.ProductDescription;
@@ -54,19 +55,21 @@ public class ProductInfo extends Fragment {
     String productId;
     private List<ProductPresentation> productPresentations;
 
+    public ProductInfo() {
+    }
+
     public ProductInfo(String id) {
         productId = id;
     }
 
     @Override
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = layoutInflater.inflate(R.layout.activity_product_info, container, false);
-        new GetProductDescription(getActivity()).execute("http://192.168.108.131:8080/ultrashop/ws/products/descriptions/product/" + productId,
-                "http://192.168.108.131:8080/ultrashop/ws/products/images/product/" + productId,
-                "http://192.168.108.131:8080/ultrashop/ws/products/presentations/product/" + productId);
+        View rootView = layoutInflater.inflate(R.layout.fragment_product_info, container, false);
+        new GetProductDescription(getActivity()).execute(getString(R.string.product_description_address) + productId,
+                getString(R.string.product_images_address) + productId,
+                getString(R.string.product_presentation_address) + productId);
         return rootView;
     }
-
 
     /**
      * Async task class to get json objects by making HTTP calls
@@ -96,16 +99,16 @@ public class ProductInfo extends Fragment {
                 JSONArray urlProductPresentations = getJSONArrayFromURL(args[2]);
                 if (urlProductDescription != null) {
                     if (!urlProductDescription.toString().isEmpty()) {
-                        pId=Integer.parseInt(productId);
+                        pId = Integer.parseInt(productId);
                         productDescription = parseDescriptionFromJson(urlProductDescription);
                         pImageCount = parseImageCountFromJson(urlImgCount);
                         productPresentations = parsePresentationsFromJson(urlProductPresentations);
-                        LinearLayout layout = (LinearLayout) context.findViewById(R.id.pInfoImageList);
+                      /*  LinearLayout layout = (LinearLayout) context.findViewById(R.id.pInfoImageList);
                         for (int i = 1; i <= pImageCount; i++) {
                             ImageView imageView = new ImageView(context);
                             imageView.setId(i);
                             imageView.setPadding(4, 2, 4, 2);
-                            String urldisplay = "http://192.168.108.131:90/images/" + pId + "/" + i + ".jpg";
+                            String urldisplay = "http://192.168.108.218:90/images/" + pId + "/" + i + ".jpg";
                             Bitmap productImage = null;
                             try {
                                 InputStream in = new java.net.URL(urldisplay).openStream();
@@ -117,10 +120,7 @@ public class ProductInfo extends Fragment {
                             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                             imageView.setAdjustViewBounds(true);
                             addLayoutImageView(layout, imageView);
-                        }
-                        ListView listView = (ListView) context.findViewById(R.id.pInfoListView);
-                        productAdapter = new ProductPresentationAdapter(productPresentations, context);
-                        addListDescriptionsView(listView, productAdapter);
+                        }*/
                     } else {
                         productDescription = new ProductDescription();
                         productDescription.setDescription("No description available.");
@@ -135,79 +135,28 @@ public class ProductInfo extends Fragment {
             return null;
         }
 
-        private void addLayoutImageView(final LinearLayout layout, final ImageView imageView) {
-            context.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    layout.addView(imageView);
-                }
-            });
-        }
-
-        private void addListDescriptionsView(final ListView view, final ProductPresentationAdapter adapter) {
-            context.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    view.setAdapter(adapter);
-                    view.setVisibility(View.VISIBLE);
-                    //setListViewHeightBasedOnChildren(view);
-                    view.setOnTouchListener(new View.OnTouchListener() {
-                        @Override
-                        public boolean onTouch(View v, MotionEvent event) {
-                            v.getParent().requestDisallowInterceptTouchEvent(true);
-                            return false;
-                            //return (event.getAction() == MotionEvent.ACTION_MOVE);
-                        }
-                    });
-                }
-            });
-        }
-
-        /**
-         * Method for Setting the Height of the ListView dynamically.
-         * Hack to fix the issue of not showing all the items of the ListView
-         * when placed inside a ScrollView
-         */
-        private void setListViewHeightBasedOnChildren(ListView listView) {
-            ListAdapter listAdapter = listView.getAdapter();
-            if (listAdapter == null)
-                return;
-
-            int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
-            int totalHeight = 0;
-            View view = null;
-            for (int i = 0; i < listAdapter.getCount(); i++) {
-                view = listAdapter.getView(i, view, listView);
-                if (i == 0)
-                    view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewGroup.LayoutParams.WRAP_CONTENT));
-
-                view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-                totalHeight += view.getMeasuredHeight();
-            }
-            ViewGroup.LayoutParams params = listView.getLayoutParams();
-            params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-            listView.setLayoutParams(params);
-            listView.requestLayout();
-        }
-
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
             //dismiss the progress dialog
             if (pDialog.isShowing())
                 pDialog.dismiss();
-            TextView productInfoView = (TextView) context.findViewById(R.id.pInfo);
-            TextView productDescriptionView = (TextView) context.findViewById(R.id.pInfoDescription);
             if (!productDescription.getDescription().equals("No description available.")) {
-                productInfoView.setText(productDescription.getProduct().getName() + "\n" + productDescription.getProduct().getPrice());
-                productDescriptionView.setText("Description:\n" + productDescription.getDescription());
-                productInfoView.setVisibility(View.VISIBLE);
-                context.findViewById(R.id.pInfoBtnAddToCart).setVisibility(View.VISIBLE);
-                productDescriptionView.setVisibility(View.VISIBLE);
-                context.findViewById(R.id.pInfoImageList).setVisibility(View.VISIBLE);
+                ListView listView = (ListView) getActivity().findViewById(R.id.pInfoListView);
+                productAdapter = new ProductPresentationAdapter(productPresentations, pImageCount, productDescription, pId, getActivity());
+                listView.setAdapter(productAdapter);
+                listView.setVisibility(View.VISIBLE);
+                //setListViewHeightBasedOnChildren(view);
+               /* listView.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        v.getParent().requestDisallowInterceptTouchEvent(true);
+                        return false;
+                        //return (event.getAction() == MotionEvent.ACTION_MOVE);
+                    }
+                });*/
             } else {
-                productDescriptionView.setVisibility(View.VISIBLE);
-                productDescriptionView.setText(productDescription.getDescription());
+
             }
         }
 

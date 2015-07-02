@@ -44,20 +44,21 @@ public class Products extends Fragment {
     @Override
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = layoutInflater.inflate(R.layout.activity_products, container, false);
-        new GetProducts(getActivity()).execute("http://192.168.108.131:8080/ultrashop/ws/products");
+        new GetProducts(getActivity()).execute("http://192.168.108.218:8080/ultrashop/ws/products");
         return rootView;
     }
-/**
+
+    /**
      * Async task class to get json objects by making HTTP calls
      */
     private class GetProducts extends AsyncTask<String, Void, Void> {
-	Activity thisContext;
-	
-	public GetProducts(Activity context){
-		thisContext=context;       
-	}
-	
-	@Override
+        Activity thisContext;
+
+        public GetProducts(Activity context) {
+            thisContext = context;
+        }
+
+        @Override
         protected void onPreExecute() {
             super.onPreExecute();
             //Showing progress dialog

@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -23,7 +24,7 @@ import android.widget.Toast;
 import java.io.InputStream;
 import java.util.List;
 
-import app.pentastagiu.ro.ultrashopmobile.DownloadImageTask;
+import app.pentastagiu.ro.ultrashopmobile.asyncTask.DownloadImageTask;
 import app.pentastagiu.ro.ultrashopmobile.R;
 import app.pentastagiu.ro.ultrashopmobile.fragment.ProductInfo;
 import app.pentastagiu.ro.ultrashopmobile.model.Product;
@@ -103,7 +104,7 @@ public class ProductAdapter extends ArrayAdapter<Product> {
         holder.productNameView.setText(product.getName());
         holder.priceView.setText("" + product.getPrice());
         holder.productId = product.getId();
-        new DownloadImageTask(holder.imageView).execute("http://192.168.108.131:90/images/" + product.getId() + "/1.jpg");
+        new DownloadImageTask(holder.imageView).execute("http://192.168.108.218:90/images/" + product.getId() + "/1.jpg");
         return view;
     }
 

@@ -1,4 +1,4 @@
-package app.pentastagiu.ro.ultrashopmobile;
+package app.pentastagiu.ro.ultrashopmobile.asyncTask;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -7,6 +7,8 @@ import android.util.Log;
 import android.widget.ImageView;
 
 import java.io.InputStream;
+
+import app.pentastagiu.ro.ultrashopmobile.R;
 
 /**
  * Created by Razvan on 30/06/2015.

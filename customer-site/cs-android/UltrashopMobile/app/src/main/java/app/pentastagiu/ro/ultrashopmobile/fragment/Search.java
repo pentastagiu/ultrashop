@@ -47,7 +47,7 @@ public class Search extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rooView = inflater.inflate(R.layout.fragment_search, container, false);
         //all products are listed
-        new SearchProducts(getActivity()).execute("http://192.168.108.131:8080/ultrashop/ws/products");
+        new SearchProducts(getActivity()).execute("http://192.168.108.218:8080/ultrashop/ws/products");
         return rooView;
     }
 /**
