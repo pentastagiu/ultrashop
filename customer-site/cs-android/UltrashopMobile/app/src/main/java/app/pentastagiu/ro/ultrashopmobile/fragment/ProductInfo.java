@@ -61,9 +61,9 @@ public class ProductInfo extends Fragment {
     @Override
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = layoutInflater.inflate(R.layout.activity_product_info, container, false);
-        new GetProductDescription(getActivity()).execute("http://192.168.108.218:8080/ultrashop/ws/products/descriptions/product/" + productId,
-                "http://192.168.108.218:8080/ultrashop/ws/products/images/product/" + productId,
-                "http://192.168.108.218:8080/ultrashop/ws/products/presentations/product/" + productId);
+        new GetProductDescription(getActivity()).execute("http://192.168.108.131:8080/ultrashop/ws/products/descriptions/product/" + productId,
+                "http://192.168.108.131:8080/ultrashop/ws/products/images/product/" + productId,
+                "http://192.168.108.131:8080/ultrashop/ws/products/presentations/product/" + productId);
         return rootView;
     }
 
@@ -105,7 +105,7 @@ public class ProductInfo extends Fragment {
                             ImageView imageView = new ImageView(context);
                             imageView.setId(i);
                             imageView.setPadding(4, 2, 4, 2);
-                            String urldisplay = "http://192.168.108.218:90/images/" + pId + "/" + i + ".jpg";
+                            String urldisplay = "http://192.168.108.131:90/images/" + pId + "/" + i + ".jpg";
                             Bitmap productImage = null;
                             try {
                                 InputStream in = new java.net.URL(urldisplay).openStream();

@@ -88,7 +88,7 @@ public class ProductPresentationAdapter extends ArrayAdapter<ProductPresentation
         holder.title.setText(productPresentation.getTitle());
         holder.description.setText(productPresentation.getDescription());
         holder.imageSrc = productPresentation.getImageSrc();
-        new DownloadImageTask(holder.imageView).execute("http://192.168.108.218:90/images/" + productPresentation.getProduct().getId() + "/" + holder.imageSrc);
+        new DownloadImageTask(holder.imageView).execute("http://192.168.108.131:90/images/" + productPresentation.getProduct().getId() + "/" + holder.imageSrc);
         return view;
     }
 

@@ -2,14 +2,15 @@ package app.pentastagiu.ro.ultrashopmobile.fragment;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ListView;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -26,45 +27,40 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import app.pentastagiu.ro.ultrashopmobile.model.Product;
-import app.pentastagiu.ro.ultrashopmobile.adapter.ProductAdapter;
 import app.pentastagiu.ro.ultrashopmobile.R;
+import app.pentastagiu.ro.ultrashopmobile.adapter.ProductAdapter;
+import app.pentastagiu.ro.ultrashopmobile.model.Product;
 
 /**
- * Created by deni on 6/29/2015.
+ * Created by deni on 7/1/2015.
  */
-public class Products extends Fragment {
-    ProgressDialog pDialog;
+public class Search extends Fragment {
+
     private List<Product> productList = new ArrayList<Product>();
     private ProductAdapter productAdapter;
 
-    public Products() {
+    public Search() {
+
     }
 
     @Override
-    public View onCreateView(LayoutInflater layoutInflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = layoutInflater.inflate(R.layout.activity_products, container, false);
-        new GetProducts(getActivity()).execute("http://192.168.108.131:8080/ultrashop/ws/products");
-        return rootView;
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rooView = inflater.inflate(R.layout.fragment_search, container, false);
+        //all products are listed
+        new SearchProducts(getActivity()).execute("http://192.168.108.131:8080/ultrashop/ws/products");
+        return rooView;
     }
 /**
+ *
+ */
+    /**
      * Async task class to get json objects by making HTTP calls
      */
-    private class GetProducts extends AsyncTask<String, Void, Void> {
-	Activity thisContext;
-	
-	public GetProducts(Activity context){
-		thisContext=context;       
-	}
-	
-	@Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            //Showing progress dialog
-            pDialog = new ProgressDialog(thisContext);
-            pDialog.setMessage("Loading...");
-            pDialog.setCancelable(false);
-            pDialog.show();
+    private class SearchProducts extends AsyncTask<String, Void, Void> {
+        Activity thisContext;
+
+        public SearchProducts(Activity context) {
+            thisContext = context;
         }
 
         @Override
@@ -83,14 +79,10 @@ public class Products extends Fragment {
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
-            //dismiss the progress dialog
-            if (pDialog.isShowing())
-                pDialog.dismiss();
             GridView gridView = (GridView) thisContext.findViewById(R.id.gridView);
             productAdapter = new ProductAdapter(productList, thisContext);
             gridView.setAdapter(productAdapter);
         }
-
         public JSONArray getJSONfromURL(String url) {
             InputStream is = null;
             String result = "";
@@ -133,7 +125,6 @@ public class Products extends Fragment {
             }
             return jArray;
         }
-
         private List<Product> parseFromJson(JSONArray jsonObjects) throws JSONException {
             ArrayList<Product> products = new ArrayList<Product>();
 

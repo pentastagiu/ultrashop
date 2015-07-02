@@ -2,18 +2,22 @@
     <string name="app_name">UltrashopMobile</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="hint">Search products</string>
 
     <string-array name="nav_drawer_items">
         <item>Products</item>
+        <item>Search</item>
         <item>Cart</item>
         <item>Exit</item>
     </string-array>
 
     <array name="nav_drawer_icons">
         <item>@drawable/ic_products</item>
+        <item>@drawable/ic_search</item>
         <item>@drawable/ic_cart</item>
         <item>@android:drawable/ic_lock_power_off</item>
     </array>
 
     <string name="desc_list_item_icon">Item Icon</string>
+    <string name="desc_search_icon">Search Icon</string>
 </resources>

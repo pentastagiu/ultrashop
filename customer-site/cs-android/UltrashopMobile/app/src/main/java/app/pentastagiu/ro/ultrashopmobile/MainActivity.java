@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import app.pentastagiu.ro.ultrashopmobile.adapter.NavDrawerListAdapter;
 import app.pentastagiu.ro.ultrashopmobile.fragment.Cart;
 import app.pentastagiu.ro.ultrashopmobile.fragment.Products;
+import app.pentastagiu.ro.ultrashopmobile.fragment.Search;
 import app.pentastagiu.ro.ultrashopmobile.model.NavDrawerItem;
 
 /**
@@ -60,10 +61,12 @@ public class MainActivity extends ActionBarActivity {
         //adding nav drawer items to array
         //home
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
-        //Cart
+        //Search
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
-        //Exit
+        //Cart
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
+        //Exit
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));
 
         navMenuIcons.recycle();
 
@@ -119,9 +122,12 @@ public class MainActivity extends ActionBarActivity {
                 fragment = new Products();
                 break;
             case 1:
-                fragment = new Cart();
+                fragment = new Search();
                 break;
             case 2:
+                fragment = new Cart();
+                break;
+            case 3:
                 finish();
                 System.exit(0);
             default:
