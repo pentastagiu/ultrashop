@@ -318,7 +318,7 @@ public class ProductServiceImpl implements ProductService {
         List<SolrInputDocument> docs = new ArrayList<SolrInputDocument>();
         SolrInputDocument doc = null;
         Calendar calendar = Calendar.getInstance();
-        calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE) - 2);
+        calendar.set(Calendar.HOUR, calendar.get(Calendar.HOUR) - 10);
         Timestamp timeStamp = new Timestamp(calendar.getTimeInMillis());
         if (solrServer == null) {
             solrServer = initializeServer();
