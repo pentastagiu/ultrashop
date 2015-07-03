@@ -104,15 +104,7 @@ public class ProductPresentationAdapter extends ArrayAdapter<ProductPresentation
                 ImageView imageView = new ImageView(context);
                 imageView.setId(i);
                 imageView.setPadding(4, 2, 4, 2);
-                String urldisplay = "http://192.168.108.218:90/images/" + pId + "/" + i + ".jpg";
-                    /*Bitmap productImage = null;
-                    try {
-                        InputStream in = new java.net.URL(urldisplay).openStream();
-                        productImage = BitmapFactory.decodeStream(in);
-                    } catch (Exception e) {
-                        Log.e("imgError", "Error downloading image: ", e);
-                    }
-                    imageView.setImageBitmap(productImage);*/
+                String urldisplay = "http://192.168.108.131:90/images/" + pId + "/" + i + ".jpg";
                 new DownloadImageTask(imageView).execute(urldisplay);
                 imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                 imageView.setAdjustViewBounds(true);
@@ -139,14 +131,6 @@ public class ProductPresentationAdapter extends ArrayAdapter<ProductPresentation
 
         return view;
     }
-
- /*   private void addLayoutImageView(final LinearLayout layout, final ImageView imageView) {
-        context.runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                layout.addView(imageView);
-            }
-        });*/
 
     public void swapProductPresentationList(List<ProductPresentation> products) {
         clear();

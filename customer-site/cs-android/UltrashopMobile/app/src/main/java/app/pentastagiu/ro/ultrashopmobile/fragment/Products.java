@@ -44,7 +44,7 @@ public class Products extends Fragment {
     @Override
     public View onCreateView(LayoutInflater layoutInflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = layoutInflater.inflate(R.layout.activity_products, container, false);
-        new GetProducts(getActivity()).execute("http://192.168.108.218:8080/ultrashop/ws/products");
+        new GetProducts(getActivity()).execute("http://192.168.108.131:8080/ultrashop/ws/products");
         return rootView;
     }
 

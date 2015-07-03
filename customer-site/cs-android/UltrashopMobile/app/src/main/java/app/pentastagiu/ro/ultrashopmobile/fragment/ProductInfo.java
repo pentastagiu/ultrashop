@@ -103,24 +103,6 @@ public class ProductInfo extends Fragment {
                         productDescription = parseDescriptionFromJson(urlProductDescription);
                         pImageCount = parseImageCountFromJson(urlImgCount);
                         productPresentations = parsePresentationsFromJson(urlProductPresentations);
-                      /*  LinearLayout layout = (LinearLayout) context.findViewById(R.id.pInfoImageList);
-                        for (int i = 1; i <= pImageCount; i++) {
-                            ImageView imageView = new ImageView(context);
-                            imageView.setId(i);
-                            imageView.setPadding(4, 2, 4, 2);
-                            String urldisplay = "http://192.168.108.218:90/images/" + pId + "/" + i + ".jpg";
-                            Bitmap productImage = null;
-                            try {
-                                InputStream in = new java.net.URL(urldisplay).openStream();
-                                productImage = BitmapFactory.decodeStream(in);
-                            } catch (Exception e) {
-                                Log.e("imgError", "Error downloading image: ", e);
-                            }
-                            imageView.setImageBitmap(productImage);
-                            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
-                            imageView.setAdjustViewBounds(true);
-                            addLayoutImageView(layout, imageView);
-                        }*/
                     } else {
                         productDescription = new ProductDescription();
                         productDescription.setDescription("No description available.");
@@ -146,15 +128,6 @@ public class ProductInfo extends Fragment {
                 productAdapter = new ProductPresentationAdapter(productPresentations, pImageCount, productDescription, pId, getActivity());
                 listView.setAdapter(productAdapter);
                 listView.setVisibility(View.VISIBLE);
-                //setListViewHeightBasedOnChildren(view);
-               /* listView.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        v.getParent().requestDisallowInterceptTouchEvent(true);
-                        return false;
-                        //return (event.getAction() == MotionEvent.ACTION_MOVE);
-                    }
-                });*/
             } else {
 
             }
@@ -271,7 +244,6 @@ public class ProductInfo extends Fragment {
 
         private List<ProductPresentation> parsePresentationsFromJson(JSONArray jsonObjects) throws JSONException {
             ArrayList<ProductPresentation> productPresentations = new ArrayList<ProductPresentation>();
-            //JSONArray jsonObjects = jsonObject.getJSONArray("products");
 
             for (int i = 0; i < jsonObjects.length(); i++) {
                 JSONObject jsonProductPresentaion = jsonObjects.getJSONObject(i);
