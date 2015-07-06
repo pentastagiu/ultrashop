@@ -1,8 +1,6 @@
-<project 
-	xmlns="http://maven.apache.org/POM/4.0.0" 
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
-	
+
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.pentalog</groupId>
 	<artifactId>ultrashop</artifactId>
@@ -10,9 +8,9 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ultrashop Maven Webapp</name>
 	<url>http://maven.apache.org</url>
-	
+
 	<dependencies>
-	
+
 		<!-- JUnit dependency -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -35,7 +33,7 @@
 			<artifactId>javax.persistence</artifactId>
 			<version>2.1.0</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
@@ -66,7 +64,7 @@
 			<artifactId>spring-context-support</artifactId>
 			<version>4.0.5.RELEASE</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
@@ -129,13 +127,13 @@
 			<artifactId>eclipselink</artifactId>
 			<version>2.5.0</version>
 		</dependency>
-		
-		  <!-- Solrj dependencies -->
-        <dependency>
-            <groupId>org.apache.solr</groupId>
-            <artifactId>solr-solrj</artifactId>
-            <version>4.10.3</version>
-        </dependency>
+
+		<!-- Solrj dependencies -->
+		<dependency>
+			<groupId>org.apache.solr</groupId>
+			<artifactId>solr-solrj</artifactId>
+			<version>4.10.3</version>
+		</dependency>
 
 		<!-- OJDBC dependencies -->
 		<dependency>
@@ -172,7 +170,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-	
+
 		<!-- Quartz dependencies -->
 		<dependency>
 			<groupId>quartz</groupId>
@@ -191,22 +189,29 @@
 			<artifactId>quartz-jobs</artifactId>
 			<version>2.2.1</version>
 		</dependency>
-	
+
 		<!-- Client dependencies -->
 		<dependency>
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-client</artifactId>
 			<version>1.18.3</version>
 		</dependency>
-		
+
 		<!-- Json dependencies -->
 		<dependency>
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-json</artifactId>
 			<version>1.18.3</version>
 		</dependency>
+
+		<!-- Jsoup -->
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>1.7.1</version>
+		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<finalName>ultrashop</finalName>
 		<plugins>
@@ -229,7 +234,8 @@
 						</goals>
 						<configuration>
 							<tasks>
-								<delete dir="D:\servers\apache-tomcat\webapps\ultrashop" includeemptydirs="true" />
+								<delete dir="D:\servers\apache-tomcat\webapps\ultrashop"
+									includeemptydirs="true" />
 								<delete file="D:\servers\apache-tomcat\webapps\ultrashop.war" />
 								<copy file="target/ultrashop.war" tofile="D:\servers\apache-tomcat\webapps\ultrashop.war" />
 							</tasks>
@@ -239,5 +245,5 @@
 			</plugin>
 		</plugins>
 	</build>
-	
+
 </project>
