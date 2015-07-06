@@ -55,4 +55,5 @@ public interface AuthoritiesService {
      * @return
      */
     Authorities delete(Authorities authorities);
+
 }

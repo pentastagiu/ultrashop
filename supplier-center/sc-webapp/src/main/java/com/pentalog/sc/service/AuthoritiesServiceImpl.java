@@ -77,5 +77,4 @@ public class AuthoritiesServiceImpl implements AuthoritiesService {
 
         return authorities;
     }
-
 }

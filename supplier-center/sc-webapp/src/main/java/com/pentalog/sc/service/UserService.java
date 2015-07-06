@@ -64,4 +64,11 @@ public interface UserService {
     List<User> findByAuthority(Authority authority);
     
     User deleteOperator(User user);
+    
+    /**
+     * Change password for a user.
+     * @param user
+     * @return
+     */
+    User changePassword(WrapperUser user);
 }

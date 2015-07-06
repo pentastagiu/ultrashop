@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pentalog.sc.model.Authorities.Authority;
 import com.pentalog.sc.model.User;
+import com.pentalog.sc.model.WrapperUser;
 import com.pentalog.sc.service.UserService;
 
 /**
@@ -36,5 +37,11 @@ public class UserController {
     public @ResponseBody User deleteOperator(@RequestBody User user) {
 
         return userService.deleteOperator(user);
+    }
+    
+    @Secured({"ROLE_ADMIN","ROLE_OPERATOR"})
+    @RequestMapping(value = "/changePassword", method = RequestMethod.POST)
+    public @ResponseBody User updateUser(@RequestBody WrapperUser wrapperUser){
+        return userService.changePassword(wrapperUser);
     }
 }

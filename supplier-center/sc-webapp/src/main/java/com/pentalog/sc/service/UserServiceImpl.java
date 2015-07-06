@@ -169,8 +169,28 @@ public class UserServiceImpl implements UserService {
         userToDelete.setUsername(user.getUsername());
         userToDelete.setUsersalt(user.getUsersalt());
         userDao.delete(userToDelete);
-        authoritiesService.delete(authoritiesService.getAuthorityByUsername(user.getUsername()));
+        authoritiesService.delete(authoritiesService
+                .getAuthorityByUsername(user.getUsername()));
         return userToDelete;
+    }
+
+    @Override
+    @Transactional
+    public User changePassword(WrapperUser user) {
+        User userToUpdate = userDao.findByUsername(user.getUsername());
+        if (userToUpdate != null) {
+            userToUpdate.setUsername(user.getUsername());
+            String token = user.getUsername().concat(user.getPassword())
+                    .concat(userToUpdate.getUsersalt());
+            try {
+                String runtimeToken = md5Util.generateMd5(token);
+                userToUpdate.setToken(runtimeToken);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        return userToUpdate;
     }
 
 }
