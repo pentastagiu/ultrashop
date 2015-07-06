@@ -15,7 +15,7 @@ app.controller('productDescriptionController', [ '$scope', 'productDescriptionFa
 	function getProductImagery() {
 		productDescriptionFactory.getProductImagery($scope.product).success(function(imagery) {
 			for(var i = 2 ; i <= imagery.numberOfImages ; i++) {
-				$scope.imagesSrc.push("http://"+$scope.host+":90/images/"+$scope.product.id+"/"+i+".jpg");
+				$scope.imagesSrc.push("http://res.cloudinary.com/ultrashop/sr-content/images/"+$scope.product.id+"/"+i+".jpg");
 			}
 		});
 	}
@@ -50,12 +50,12 @@ app.controller('productDescriptionController', [ '$scope', 'productDescriptionFa
 				}
 				sectionDetail.title = presentation[i].title;
 				if(i%2 == 0) {
-					sectionDetail.left = '<img src="http://' + $scope.host + ':90/images/' + $scope.product.id + '/' + presentation[i].imageSrc + '">';
+					sectionDetail.left = '<img src="http://res.cloudinary.com/ultrashop/sr-content/images/' + $scope.product.id + '/' + presentation[i].imageSrc + '">';
 					sectionDetail.right = '<h6>'+ presentation[i].description +'</h6>';
 				}
 				else {
 					sectionDetail.left = '<h6>'+ presentation[i].description +'</h6>';
-					sectionDetail.right = '<img src="http://' + $scope.host + ':90/images/' + $scope.product.id + '/' + presentation[i].imageSrc + '">';
+					sectionDetail.right = '<img src="http://res.cloudinary.com/ultrashop/sr-content/images/' + $scope.product.id + '/' + presentation[i].imageSrc + '">';
 				}
 				$scope.productPresentation.push(sectionDetail);
 			}
