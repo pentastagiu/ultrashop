@@ -6,10 +6,10 @@ app.controller('editProductController', [
 		'supplierFactory',
 		function($scope, $location, $filter, productFactory, supplierFactory) {
 			$scope.product = productFactory.getProduct();
-			getSuppliers();
+			getAllSuppliers();
 
-			function getSuppliers() {
-				supplierFactory.getSuppliers().success(function(suppliers) {
+			function getAllSuppliers() {
+				supplierFactory.getAllSuppliers().success(function(suppliers) {
 					$scope.suppliers = suppliers;
 					// Find supplier by id.This function is used to set the
 					// default supplier in the edit product selector
@@ -20,10 +20,6 @@ app.controller('editProductController', [
 				});
 			}
 			;
-			$scope.getSuppliers = function() {
-				getSuppliers();
-			};
-
 			function updateProduct() {
 				$scope.product.supplier = $scope.supplier;
 				productFactory.updateProduct($scope.product).success(

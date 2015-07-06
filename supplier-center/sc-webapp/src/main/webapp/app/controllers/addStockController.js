@@ -7,9 +7,9 @@ app.controller('addStockController', [
 		function($scope, $location, stockFactory, supplierFactory,
 				productFactory) {
 			$scope.supplier = {};
-			getSuppliers();
-			function getSuppliers() {
-				supplierFactory.getSuppliers().success(function(suppliers) {
+			getAllSuppliers();
+			function getAllSuppliers() {
+				supplierFactory.getAllSuppliers().success(function(suppliers) {
 					$scope.suppliers = suppliers;
 				});
 
@@ -27,9 +27,6 @@ app.controller('addStockController', [
 			$scope.getProductsBySupplier = function() {
 				getProductsBySupplier();
 			};
-			$scope.getSuppliers = function() {
-				getSuppliers();
-			};
 
 			function addStock() {
 				stockFactory.finishTranzaction($scope.stock).success(
@@ -46,5 +43,4 @@ app.controller('addStockController', [
 			$scope.cancel = function() {
 				$location.path('/stocks');
 			};
-
 		} ]);

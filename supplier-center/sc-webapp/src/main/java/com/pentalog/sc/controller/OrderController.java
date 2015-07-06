@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.pentalog.sc.model.Order;
+import com.pentalog.sc.model.Product;
 import com.pentalog.sc.service.OrderService;
 
 /**
@@ -82,5 +83,18 @@ public class OrderController {
     @RequestMapping(method = RequestMethod.DELETE)
     public @ResponseBody Order deleteProduct(@RequestBody Order order) {
         return orderService.delete(order);
+    }
+    
+    /**
+     * Return the entities according to url parameters.
+     * 
+     * @return
+     */
+    @Secured({ "ROLE_OPERATOR", "ROLE_ADMIN" })
+    @RequestMapping(value = "/pageIndex={pageIndex}/offset={offset}", method = RequestMethod.GET)
+    public @ResponseBody List<Order> readOrdersByPage(
+            @PathVariable("pageIndex") int pageIndex,
+            @PathVariable("offset") int offset) {
+        return orderService.readOrdersByPage(pageIndex, offset);
     }
 }

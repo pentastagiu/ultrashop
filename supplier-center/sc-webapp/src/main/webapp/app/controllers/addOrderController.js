@@ -1,9 +1,9 @@
 app.controller('addOrderController', [ '$scope', '$location', 'orderFactory',
 		'productFactory',
 		function($scope, $location, orderFactory, productFactory) {
-			getProducts();
-			function getProducts() {
-				productFactory.getProducts().success(function(products) {
+			getAllProducts();
+			function getAllProducts() {
+				productFactory.getAllProducts().success(function(products) {
 					$scope.products = products;
 				});
 			}

@@ -3,6 +3,8 @@ package com.pentalog.sc.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,7 +15,7 @@ import com.pentalog.sc.model.Order;
 public class OrderServiceImpl implements OrderService {
 
     @Autowired
-   private OrderDAO orderDao;
+    private OrderDAO orderDao;
 
     @Override
     public List<Order> getOrders() {
@@ -29,7 +31,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order create(Order order) {
-  
+
         return orderDao.save(order);
     }
 
@@ -59,9 +61,16 @@ public class OrderServiceImpl implements OrderService {
         orderToDelete.setExpectedDate(order.getExpectedDate());
         orderToDelete.setStatus(order.getStatus());
         orderDao.delete(orderToDelete);
-        
+
         return orderToDelete;
-                
+
+    }
+
+    @Override
+    public List<Order> readOrdersByPage(int pageIndex, int offset) {
+        PageRequest request = new PageRequest(pageIndex, offset);
+        Page<Order> page = orderDao.findAll(request);
+        return page.getContent();
     }
 
 }

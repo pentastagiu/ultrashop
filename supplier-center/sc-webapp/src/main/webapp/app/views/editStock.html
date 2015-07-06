@@ -8,9 +8,10 @@
 				data-ng-change="getProductsBySupplier()">
 			</select>
 			<h4 class="form-signin-heading">Product:</h4>
-			<select name="country" class="form-control"
+			<select class="form-control" 
 				data-ng-model="stock.product"
-				data-ng-options="product.name for product in products" required>
+				data-ng-options="product.name for product in products"
+				required>
 				<option value="" disabled selected
 					data-ng-show="stock.product == undefined">Select your
 					product</option>
@@ -26,9 +27,5 @@
 				</div>
 			</div>
 		</form>
-		<span data-pagination data-ng-click="pageChanged(currentPage)"
-			data-total-items="totalItems" data-ng-model="currentPage"
-			data-max-size="10" data-boundary-links="true"
-			data-items-per-page="numPerPage" class="pagination-sm"> </span>
 	</div>
 </div>

@@ -1,20 +1,30 @@
-app.controller('stockController', [ '$scope', '$location','stockFactory',
-		function($scope,$location, stockFactory) {
-
+app.controller('stockController', [
+		'$scope',
+		'$location',
+		'stockFactory',
+		function($scope, $location, stockFactory) {
+			getStockCount();
+			$scope.stockPerPage = 10;
+			$scope.currentPage = 1;
 			$scope.stocks = [];
 			$scope.stocks = {};
-			getStocks();
+			getStocks($scope.currentPage, $scope.stockPerPage);
 
-			function getStocks() {
-				stockFactory.getStocks().success(function(stocks) {
-					$scope.stocks = stocks;
-				});
+			function getStocks(currentPage, stocksPerPage) {
+				stockFactory.getStocks(currentPage - 1, stocksPerPage).success(
+						function(stocks) {
+							$scope.stocks = stocks;
+						});
 			}
 			;
 			$scope.getStocks = function() {
-				getStocks();
+				getStocks($scope.currentPage, $scope.stockPerPage);
 			};
-
+			function getStockCount() {
+				stockFactory.getStockCount().success(function(totalItems) {
+					$scope.totalItems = totalItems;
+				});
+			}
 			$scope.setStock = function(stock) {
 				stockFactory.setStock(stock);
 				$location.path('/stock/edit');
@@ -22,6 +32,9 @@ app.controller('stockController', [ '$scope', '$location','stockFactory',
 
 			$scope.deleteStock = function(stock) {
 				stockFactory.deleteStock(stock);
-				getStocks();
+				getStocks($scope.currentPage, $scope.stockPerPage);
+			};
+			$scope.pageChanged = function(currentPage) {
+				getStocks($scope.currentPage, $scope.stockPerPage);
 			};
 		} ]);

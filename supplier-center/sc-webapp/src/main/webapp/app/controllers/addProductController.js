@@ -1,4 +1,4 @@
-app.controller('addProductController', [
+		app.controller('addProductController', [
 		'$scope',
 		'$location',
 		'productFactory',
@@ -11,17 +11,13 @@ app.controller('addProductController', [
 				"email" : "",
 				"active" : true
 			};
-			getSuppliers();
-			function getSuppliers() {
-				supplierFactory.getSuppliers().success(function(suppliers) {
+			getAllSuppliers();
+			function getAllSuppliers() {
+				supplierFactory.getAllSuppliers().success(function(suppliers) {
 					$scope.suppliers = suppliers;
 				});
 			}
 			;
-			$scope.getSuppliers = function() {
-				getSuppliers();
-			};
-
 			function addProduct() {
 				$scope.product.supplier = $scope.supplier;
 				productFactory.finishTranzaction($scope.product).success(

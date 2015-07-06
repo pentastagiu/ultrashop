@@ -2,6 +2,14 @@
 	<div class="col-md-2">&nbsp;</div>
 	<div class="col-md-8">
 		<p>Suppliers</p>
+		<div class="padding">
+			<select class="btn-xs" data-ng-model="supPerPage"
+				data-ng-change="pageChanged(currentPage)">
+				<option value="5" selected>5</option>
+				<option value="10">10</option>
+				<option value="15">15</option>
+			</select>
+		</div>
 		<table
 			class="table table-striped table-bordered table-hover table-condensed">
 			<thead>
@@ -15,11 +23,13 @@
 			</thead>
 			<tbody>
 				<tr data-ng-repeat="supplier in suppliers">
-					<td class="vert-align">{{ $index+1 }}</td>
+					<td class="vert-align">{{ ($index + 1) + (currentPage - 1) *
+						prodPerPage}}</td>
 					<td class="vert-align">{{ supplier.name }}</td>
 					<td class="vert-align">{{ supplier.contactDetails }}</td>
 					<td class="vert-align">{{ supplier.email }}</td>
-					<td class="vert-align"><a data-ng-click="setSupplier(supplier)"
+					<td class="vert-align"><a
+						data-ng-click="setSupplier(supplier)"
 						class="btn btn-small btn-primary">edit</a> <a
 						data-ng-click="deleteSupplier(supplier)"
 						class="btn btn-small btn-primary">delete</a></td>
@@ -27,11 +37,10 @@
 			</tbody>
 		</table>
 		<a href="#/supplier/add" class="btn btn-primary" data-role="button">
-			Add Supplier</a> <span data-pagination
-			data-ng-click="pageChanged(currentPage)"
-			data-total-items="totalItems" data-ng-model="currentPage"
-			data-max-size="10" data-boundary-links="true"
-			data-items-per-page="numPerPage" class="pagination-sm"> </span>
+			Add Supplier</a>
+		<pagination data-total-items="totalItems" rotate="false" max-size="5"
+			boundary-links="true" items-per-page="supPerPage"
+			data-ng-model="currentPage" ng-change="pageChanged(currentPage)"></pagination>
 	</div>
 	<div class="col-md-2">&nbsp;</div>
 </div>

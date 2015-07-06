@@ -1,39 +1,48 @@
-app.factory('supplierFactory', [ '$http', function($http) {
+app.factory('supplierFactory', [
+		'$http',
+		function($http) {
 
-	var supplierFactory = {};
+			var supplierFactory = {};
 
-	var productUrlBase = '/suppliercenter/ws/resources/suppliers';
-	supplierFactory.getSuppliers = function() {
-		return $http.get(productUrlBase);
-	};
-	supplierFactory.getSuppliersById = function(supplierId) {
-		return $http.get(productUrlBase + '/' + supplierId);
-	};
-	supplierFactory.finishTranzaction = function(supplier) {
-		return $http.put(productUrlBase, supplier);
-	};
-	supplierFactory.updateSupplier = function(supplier) {
+			var supplierUrlBase = '/suppliercenter/ws/resources/suppliers';
+			supplierFactory.getAllSuppliers = function() {
+				return $http.get(supplierUrlBase);
+			};
+			supplierFactory.getSuppliers = function(currentPage, supPerPage) {
+				return $http.get(supplierUrlBase + '/pageIndex=' + currentPage
+						+ '/offset=' + supPerPage);
+			};
+			supplierFactory.getSuppliersById = function(supplierId) {
+				return $http.get(supplierUrlBase + '/' + supplierId);
+			};
+			supplierFactory.getSupplierCount = function() {
+				return $http.get(supplierUrlBase + '/count');
+			};
+			supplierFactory.finishTranzaction = function(supplier) {
+				return $http.put(supplierUrlBase, supplier);
+			};
+			supplierFactory.updateSupplier = function(supplier) {
 
-		return $http.post(productUrlBase, supplier);
-	};
-	supplierFactory.deleteSupplier = function(supplier) {
+				return $http.post(supplierUrlBase, supplier);
+			};
+			supplierFactory.deleteSupplier = function(supplier) {
+				debugger;
+				return $http({
+					url : supplierUrlBase,
+					dataType : "json",
+					method : 'DELETE',
+					data : supplier,
+					headers : {
+						'Content-Type' : 'application/json'
+					}
+				});
+			};
+			supplierFactory.setSupplier = function(supplier) {
+				supplierFactory.supplier = supplier;
+			};
 
-		return $http({
-			url : productUrlBase,
-			dataType : "json",
-			method : 'DELETE',
-			data : supplier,
-			headers : {
-				'Content-Type' : 'application/json'
-			}
-		});
-	};
-	supplierFactory.setSupplier = function(supplier) {
-		supplierFactory.supplier = supplier;
-	};
-
-	supplierFactory.getSupplier = function() {
-		return supplierFactory.supplier;
-	};
-	return supplierFactory;
-} ]);
+			supplierFactory.getSupplier = function() {
+				return supplierFactory.supplier;
+			};
+			return supplierFactory;
+		} ]);

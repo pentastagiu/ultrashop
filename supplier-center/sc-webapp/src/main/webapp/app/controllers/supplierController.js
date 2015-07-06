@@ -3,45 +3,39 @@ app.controller('supplierController', [
 		'$location',
 		'supplierFactory',
 		function($scope, $location, supplierFactory) {
+			getSupplierCount();
+			$scope.supPerPage = 10;
+			$scope.currentPage = 1;
 			$scope.supplier = {
 				"name" : "",
 				"contactDetails" : "",
 				"email" : "",
 				"active" : true
 			};
-			getSuppliers();
-			function getSuppliers() {
-				supplierFactory.getSuppliers().success(function(suppliers) {
-					$scope.suppliers = suppliers;
-				});
+			getSuppliers($scope.currentPage, $scope.supPerPage);
+			function getSuppliers(currentPage, suppliersPerPage) {
+				supplierFactory.getSuppliers(currentPage - 1, suppliersPerPage)
+						.success(function(suppliers) {
+							$scope.suppliers = suppliers;
+						});
 			}
 			;
-			$scope.getSuppliers = function() {
-				getSuppliers();
-			};
-
-			function addSupplier() {
-				supplierFactory.finishTranzaction($scope.supplier).success(
-						function() {
-							getSuppliers();
-							$location.path('/suppliers');
-						}).error(function() {
+			function getSupplierCount() {
+				supplierFactory.getSupplierCount().success(function(totalItems) {
+					$scope.totalItems = totalItems;
 				});
 			}
-			;
-			$scope.addSupplier = function() {
-				addSupplier();
-			};
 
 			function deleteSupplier(supplier) {
-				supplier.active = false;
+				//supplier.active = false;
 				supplierFactory.deleteSupplier(supplier).success(function() {
-					getSuppliers();
-				});	
+					getSuppliers($scope.currentPage, $scope.supPerPage);
+				});
 			}
 			;
 			$scope.deleteSupplier = function(supplier) {
 				deleteSupplier(supplier);
+				getSuppliers($scope.currentPage, $scope.supPerPage);
 			};
 
 			function setSupplier(supplier) {
@@ -52,6 +46,9 @@ app.controller('supplierController', [
 			;
 			$scope.setSupplier = function(supplier) {
 				setSupplier(supplier);
+			};
+			$scope.pageChanged = function(currentPage) {
+				getSuppliers($scope.currentPage, $scope.supPerPage);
 			};
 
 		} ]);

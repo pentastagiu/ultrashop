@@ -13,10 +13,10 @@ app.controller('editOrderController', [
 			};
 			$scope.order = orderFactory.getOrder();
 
-			getProducts();
+			getAllProducts();
 
-			function getProducts() {
-				productFactory.getProducts().success(function(products) {
+			function getAllProducts() {
+				productFactory.getAllProducts().success(function(products) {
 					$scope.products = products;
 
 					// Find supplier by id.This function is used to set
