@@ -102,9 +102,9 @@ public class ProductAdapter extends ArrayAdapter<Product> {
         });
 
         holder.productNameView.setText(product.getName());
-        holder.priceView.setText("" + product.getPrice());
+        holder.priceView.setText(product.getPrice()+" RON");
         holder.productId = product.getId();
-        new DownloadImageTask(holder.imageView).execute("http://192.168.108.131:90/images/" + product.getId() + "/1.jpg");
+        new DownloadImageTask(holder.imageView).execute("http://res.cloudinary.com/ultrashop/sr-content/images/" + product.getId() + "/1.jpg");
         return view;
     }
 

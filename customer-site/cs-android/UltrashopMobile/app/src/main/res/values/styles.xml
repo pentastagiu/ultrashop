@@ -11,4 +11,7 @@
         <item name="android:background">?android:attr/listDivider</item>
     </style>
 
+    <style name="ButtonAddToCart">
+        <item name="android:shadowRadius">2</item>
+    </style>
 </resources>

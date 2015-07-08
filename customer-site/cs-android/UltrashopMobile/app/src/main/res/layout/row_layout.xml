@@ -20,32 +20,36 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/imgProduct"
+        android:layout_marginLeft="10sp"
+        android:elegantTextHeight="false"
+        android:maxLines="3"
+        android:minLines="3"
         android:text="Product name"
+        android:textColor="#ff000000"
         android:textSize="18sp"
-        android:textStyle="bold"
-        android:textColor="#ff000000" />
-
+        android:textStyle="bold" />
+    <!--
+            android:layout_gravity="center"
+            android:gravity="center"-->
 
     <TextView
         android:id="@+id/price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/name"
-        android:layout_gravity="center"
-        android:gravity="center"
+        android:layout_marginLeft="10sp"
         android:text="Price"
-        android:textSize="14sp"
-        android:textStyle="italic"
-        android:textColor="#ff020202" />
+        android:textColor="#ffff0507"
+        android:textSize="16sp"
+        android:textStyle="bold|italic" />
 
     <Button
         android:id="@+id/btnAddToCart"
         android:layout_width="100sp"
-        android:layout_height="wrap_content"
+        android:layout_height="30sp"
         android:layout_below="@id/price"
-        android:layout_marginLeft="10sp"
-        android:background="#3ef"
+        android:layout_marginLeft="9sp"
+        android:background="@drawable/btn_add_to_cart"
         android:text="Add to cart"
         android:textStyle="bold" />
-
 </RelativeLayout>

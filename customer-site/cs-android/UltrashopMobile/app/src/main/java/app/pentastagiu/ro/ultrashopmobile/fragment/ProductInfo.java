@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -35,7 +36,10 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 import app.pentastagiu.ro.ultrashopmobile.ProductPresentation;
 import app.pentastagiu.ro.ultrashopmobile.adapter.ProductPresentationAdapter;
@@ -248,7 +252,7 @@ public class ProductInfo extends Fragment {
             for (int i = 0; i < jsonObjects.length(); i++) {
                 JSONObject jsonProductPresentaion = jsonObjects.getJSONObject(i);
 
-                Integer id = jsonProductPresentaion.getInt("id");
+                Integer id =jsonProductPresentaion.getInt("id");
                 String description = jsonProductPresentaion.getString("description");
                 String title = jsonProductPresentaion.getString("title");
                 Integer section = jsonProductPresentaion.getInt("section");

@@ -95,7 +95,7 @@ public class ProductPresentationAdapter extends ArrayAdapter<ProductPresentation
             holder.title.setText(productPresentation.getTitle());
             holder.description.setText(productPresentation.getDescription());
             holder.imageSrc = productPresentation.getImageSrc();
-            new DownloadImageTask(holder.imageView).execute("http://192.168.108.131:90/images/" + productPresentation.getProduct().getId() + "/" + holder.imageSrc);
+            new DownloadImageTask(holder.imageView).execute("http://res.cloudinary.com/ultrashop/sr-content/images/" + productPresentation.getProduct().getId() + "/" + holder.imageSrc);
             view.setTag(holder);
         } else {
             view = inflater.inflate(R.layout.product_info_item1, null);
@@ -104,7 +104,7 @@ public class ProductPresentationAdapter extends ArrayAdapter<ProductPresentation
                 ImageView imageView = new ImageView(context);
                 imageView.setId(i);
                 imageView.setPadding(4, 2, 4, 2);
-                String urldisplay = "http://192.168.108.131:90/images/" + pId + "/" + i + ".jpg";
+                String urldisplay = "http://res.cloudinary.com/ultrashop/sr-content/images/" + pId + "/" + i + ".jpg";
                 new DownloadImageTask(imageView).execute(urldisplay);
                 imageView.setScaleType(ImageView.ScaleType.FIT_XY);
                 imageView.setAdjustViewBounds(true);
