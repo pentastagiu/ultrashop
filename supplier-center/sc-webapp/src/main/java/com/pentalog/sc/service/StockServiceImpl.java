@@ -91,7 +91,6 @@ public class StockServiceImpl implements StockService{
 
     @Override
     public long count() {
-    
         return stockDao.count();
     }
 

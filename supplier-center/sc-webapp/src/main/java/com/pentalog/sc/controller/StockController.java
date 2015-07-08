@@ -112,4 +112,15 @@ public class StockController {
             @PathVariable("offset") int offset) {
         return stockService.readStocksByPage(pageIndex, offset);
     }
+    
+    /**
+     * Count the entitites that are inactive.
+     * 
+     * @return
+     */
+    @Secured({ "ROLE_OPERATOR", "ROLE_ADMIN" })
+    @RequestMapping(value = "/count", method = RequestMethod.GET)
+    public @ResponseBody long count() {
+        return stockService.count();
+    }
 }

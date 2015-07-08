@@ -97,4 +97,15 @@ public class OrderController {
             @PathVariable("offset") int offset) {
         return orderService.readOrdersByPage(pageIndex, offset);
     }
+    
+    /**
+     * Count the entitites that are inactive.
+     * 
+     * @return
+     */
+    @Secured({ "ROLE_OPERATOR", "ROLE_ADMIN" })
+    @RequestMapping(value = "/count", method = RequestMethod.GET)
+    public @ResponseBody long count() {
+        return orderService.count();
+    }
 }

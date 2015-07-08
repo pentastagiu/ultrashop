@@ -1,5 +1,6 @@
 package com.pentalog.sc.service;
 
+import java.util.Date;
 import java.util.List;
 
 import com.pentalog.sc.model.Order;
@@ -49,4 +50,16 @@ public interface OrderService {
      * Read orders by page.
      */
     public List<Order> readOrdersByPage(int pageIndex, int offset);
+    
+    /**
+     * Method that updates status for all placed orders
+     */
+    void checkForDelivredOrders(Date lastDateChecked);
+    
+    public boolean compareCurrentDateLastDate(Date lastDateChecked, Order order);
+
+    /**
+     * Return the number of entities from database.
+     */
+    public long count();
 }

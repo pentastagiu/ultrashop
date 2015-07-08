@@ -1,5 +1,7 @@
 package com.pentalog.sc.service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.pentalog.sc.dao.OrderDAO;
 import com.pentalog.sc.model.Order;
+import com.pentalog.sc.model.Order.Status;
 
 @Service("orderService")
 public class OrderServiceImpl implements OrderService {
@@ -33,6 +36,13 @@ public class OrderServiceImpl implements OrderService {
     public Order create(Order order) {
 
         return orderDao.save(order);
+    }
+    
+    boolean needToUpdateStock;
+    
+    @Override
+    public long count() {
+        return orderDao.count();
     }
 
     @Override
@@ -71,6 +81,34 @@ public class OrderServiceImpl implements OrderService {
         PageRequest request = new PageRequest(pageIndex, offset);
         Page<Order> page = orderDao.findAll(request);
         return page.getContent();
+    }
+    
+    @Override
+    public void checkForDelivredOrders(Date lastDateChecked)
+    {   
+        List<Order> orders = new ArrayList<>();
+        orders = orderDao.findByStatus(Status.DELIVERED);
+        for(Order o : orders){
+            compareCurrentDateLastDate(lastDateChecked, o);
+            if (needToUpdateStock){
+                
+            }
+        }
+    }
+    
+    public boolean compareCurrentDateLastDate(Date lastDateChecked, Order order) {
+        Date currentDate = new Date();
+        currentDate.getTime();
+        int returnStatus = 0;
+       
+        returnStatus = currentDate.compareTo(lastDateChecked);
+
+        if (returnStatus < 0) 
+            needToUpdateStock = true;
+        else
+            needToUpdateStock = false;
+     
+        return needToUpdateStock;
     }
 
 }
