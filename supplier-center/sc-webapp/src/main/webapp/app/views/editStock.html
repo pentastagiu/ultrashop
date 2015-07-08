@@ -1,24 +1,23 @@
 <div class="row">
 	<div class="col-md-6 col-md-offset-3">
 		<form class="form-signin">
-			<h2 class="form-signin-heading">Add stock</h2>
+			<h2 class="form-signin-heading">Edit stock</h2>
 			<h4 class="form-signin-heading">Supplier:</h4>
 			<select class="form-control" data-ng-model="stock.supplier"
 				data-ng-options="supplier.name for supplier in suppliers"
 				data-ng-change="getProductsBySupplier()">
 			</select>
 			<h4 class="form-signin-heading">Product:</h4>
-			<select class="form-control" 
-				data-ng-model="stock.product"
-				data-ng-options="product.name for product in products"
-				required>
+			<select class="form-control" data-ng-model="stock.product"
+				data-ng-options="product.name for product in products" required>
 				<option value="" disabled selected
 					data-ng-show="stock.product == undefined">Select your
 					product</option>
 			</select>
 			<h4 class="form-signin-heading">Product amount:</h4>
-			<input type="text" data-ng-model="stock.amount" class="form-control"
-				placeholder="Insert product amount" data-autofocus="" required>
+			<input type="text" data-ng-model="stock.amount"
+				style="text-align: right;"  class="form-control" data-autofocus=""
+				required placeholder="Insert product amount">
 			<div class="control-group">
 				<label class="control-label" for="button1id"></label>
 				<div class="controls">

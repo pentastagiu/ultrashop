@@ -8,20 +8,21 @@
 				<option value="" disabled selected>Select your product</option>
 			</select>
 			<h4 class="form-signin-heading">Quantity:</h4>
-			<input type="text" data-ng-model="order.quantity" class="form-control"
-				placeholder="Insert Quantity" data-required="" data-autofocus="">
+			<input type="text" style="text-align: right;" data-ng-model="order.quantity"
+				class="form-control" placeholder="Insert Quantity" data-required=""
+				data-autofocus="">
 			<h4 class="form-signin-heading">Expected date:</h4>
-			<input type="date" data-ng-model="order.expectedDate" class="form-control"
-				 data-ng-required="date">
+			<input type="date" data-ng-model="order.expectedDate"
+				class="form-control" data-ng-required="date">
 			<div class="control-group">
 				<label class="control-label" for="button1id"></label>
 				<div class="controls">
-					<a data-ng-click="addOrder()" class="btn btn-info">Add
-						order</a> <a data-ng-click="cancel()" class="btn btn-info">Cancel</a>
+					<a data-ng-click="addOrder()" class="btn btn-info">Add order</a> <a
+						data-ng-click="cancel()" class="btn btn-info">Cancel</a>
 				</div>
 			</div>
 		</form>
-		
+
 	</div>
 </div>
 

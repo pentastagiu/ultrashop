@@ -59,8 +59,8 @@ app.config([ '$routeProvider', function($routeProvider) {
 		templateUrl : "/suppliercenter/app/views/editSupplier.html"
 	});
 	$routeProvider.when("/stock/edit", {
-		controller : "editStocksController",
-		templateUrl : "/suppliercenter/app/views/editStocks.html"
+		controller : "editStockController",
+		templateUrl : "/suppliercenter/app/views/editStock.html"
 	});
 	$routeProvider.when("/order/edit", {
 		controller : "editOrderController",

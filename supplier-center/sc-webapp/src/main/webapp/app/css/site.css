@@ -58,12 +58,12 @@ body {
 	border-top-right-radius: 0;
 }
 
-.borderless tbody tr td, .borderless tbody tr th, .borderless thead tr th,
-	.borderless tfoot tr th {
+.borderless tbody tr td,.borderless tbody tr th,.borderless thead tr th,.borderless tfoot tr th
+	{
 	border: none;
 }
 
-.flag-GB, .flag-FR, .flag-RO {
+.flag-GB,.flag-FR,.flag-RO {
 	margin-right: 15px;
 	margin-left: 15px;
 	margin-top: 15px;
@@ -100,20 +100,29 @@ body {
 
 .form-signin {
 	max-width: 330px;
-	paddin
-	g: 15px;
+	paddin g: 15px;
 	margin: 0 auto;
 }
 
 a.disabled {
- pointer-events: none;
- cursor: default;
- color: #FFFFFF; 
+	pointer-events: none;
+	cursor: default;
+	color: #FFFFFF;
 }
 
-.table tbody>tr>td.vert-align{
-    vertical-align: middle;
+.table tbody>tr>td.vert-align {
+	vertical-align: middle;
 }
+
 div.padding {
-	 padding:10px 0px;
+	padding: 10px 0px;
+}
+
+/* webkit solution */
+::-webkit-input-placeholder {
+	text-align: left;
+}
+/* mozilla solution */
+input:-moz-placeholder {
+	text-align: left;
 }

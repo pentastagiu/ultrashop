@@ -7,11 +7,11 @@
 				data-ng-options="product.name for product in products">
 			</select>
 			<h4 class="form-signin-heading">Quantity:</h4>
-			<input type="text" data-ng-model="order.quantity"
-				class="form-control" data-required="" data-autofocus="">
+			<input type="text" style="text-align: right;"
+				data-ng-model="order.quantity" class="form-control" data-required=""
+				data-autofocus="" placeholder="Insert product quantity">
 			<h4 class="form-signin-heading">Expected date:</h4>
-			<input type="date"
-				data-ng-init="order.expectedDate"
+			<input type="date" data-ng-init="order.expectedDate"
 				data-ng-model="order.expectedDate" class="form-control"
 				data-ng-required="date">
 			<h4 class="form-signin-heading">Status:</h4>

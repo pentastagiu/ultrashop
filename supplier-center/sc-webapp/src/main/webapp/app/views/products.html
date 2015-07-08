@@ -14,10 +14,12 @@
 			class="table table-striped table-bordered table-hover table-condensed">
 			<thead>
 				<tr>
-					<th class="vert-align" data-translate>No</th>
+					<th class="vert-align" style="width: 5%; height: 39px"
+						data-translate>No</th>
 					<th class="vert-align" data-translate>Name</th>
-					<th class="vert-align" data-translate>Price</th>
-					<th class="vert-align" data-translate>Actions</th>
+					<th class="vert-align" style="width: 20%" data-translate>Price</th>
+					<th class="vert-align" style="width: 20%" data-translate>Actions
+					</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -27,9 +29,11 @@
 					<td class="vert-align">{{ product.name }}</td>
 					<td class="vert-align">{{ product.price }}</td>
 					<td class="vert-align"><a data-ng-click="setProduct(product)"
-						class="btn btn-small btn-primary">edit</a> <a
+						class="btn btn-xs btn-primary"><span
+							class="glyphicon glyphicon-pencil"></span>&nbsp;edit</a> <a
 						data-ng-click="deleteProduct(product)"
-						class="btn btn-small btn-primary">delete</a></td>
+						class="btn btn-xs btn-primary"><span
+							class="glyphicon glyphicon-trash"></span>&nbsp;delete</a></td>
 				</tr>
 			</tbody>
 		</table>

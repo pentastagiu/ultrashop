@@ -16,7 +16,7 @@ app.factory('supplierFactory', [
 				return $http.get(supplierUrlBase + '/' + supplierId);
 			};
 			supplierFactory.getSupplierCount = function() {
-				return $http.get(supplierUrlBase + '/count');
+				return $http.get(supplierUrlBase + '/count-active');
 			};
 			supplierFactory.finishTranzaction = function(supplier) {
 				return $http.put(supplierUrlBase, supplier);
