@@ -108,7 +108,7 @@ public class SupplierServiceImpl implements SupplierService {
 	public List<Supplier> readSuppliersByPage(int pageIndex, int offset) {
 
 		PageRequest request = new PageRequest(pageIndex, offset);
-		Page<Supplier> page = supplierDao.findAll(request);
+		Page<Supplier> page = supplierDao.findByActive(request);
 		return page.getContent();
 
 	}
