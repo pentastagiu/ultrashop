@@ -3,6 +3,7 @@ package com.pentalog.sc.service;
 import java.util.List;
 
 import com.pentalog.sc.model.Order;
+import com.pentalog.sc.model.Product;
 
 public interface OrderService {
 
@@ -43,4 +44,9 @@ public interface OrderService {
      * @return
      */
     public Order delete(Order order);
+
+    /**
+     * Read orders by page.
+     */
+    public List<Order> readOrdersByPage(int pageIndex, int offset);
 }

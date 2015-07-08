@@ -1,36 +1,44 @@
-app.factory('stockFactory', [ '$http', function($http) {
-	var stockFactory = {};
+app.factory('stockFactory', [
+		'$http',
+		function($http) {
+			var stockFactory = {};
 
-	var productUrlBase = '/suppliercenter/ws/resources/stocks';
-	stockFactory.getStocks = function() {
-		return $http.get(productUrlBase);
-	};
+			var stockUrlBase = '/suppliercenter/ws/resources/stocks';
+			stockFactory.getAllStocks = function() {
+				return $http.get(stockUrlBase);
+			};
+			stockFactory.getStocks = function(currentPage, stockPerPage) {
+				return $http.get(stockUrlBase + '/pageIndex=' + currentPage
+						+ '/offset=' + stockPerPage);
+			};
+			stockFactory.getStockCount = function() {
+				return $http.get(stockUrlBase + '/count');
+			};
+			stockFactory.finishTranzaction = function(stock) {
+				return $http.put(stockUrlBase, stock);
+			};
+			stockFactory.updateStock = function(stock) {
+				return $http.post(stockUrlBase, stock);
+			};
+			stockFactory.deleteStock = function(stock) {
+				return $http({
+					url : stockUrlBase,
+					dataType : "json",
+					method : 'DELETE',
+					data : stock,
+					headers : {
+						'Content-Type' : 'application/json'
+					}
+				});
+			};
 
-	stockFactory.finishTranzaction = function(stock) {
-		return $http.put(productUrlBase, stock);
-	};
-	stockFactory.updateStock = function(stock) {
-		return $http.post(productUrlBase, stock);
-	};
-	stockFactory.deleteStock = function(stock) {
-		return $http({
-			url : productUrlBase,
-			dataType : "json",
-			method : 'DELETE',
-			data : stock,
-			headers : {
-				'Content-Type' : 'application/json'
-			}
-		});
-	};
+			stockFactory.setStock = function(stock) {
+				stockFactory.stock = stock;
+			};
 
-	stockFactory.setStock = function(stock) {
-		stockFactory.stock = stock;
-	};
+			stockFactory.getStock = function() {
+				return stockFactory.stock;
+			};
 
-	stockFactory.getStock = function() {
-		return stockFactory.stock;
-	};
-
-	return stockFactory;
-} ]);
+			return stockFactory;
+		} ]);

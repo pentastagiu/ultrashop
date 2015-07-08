@@ -4,8 +4,10 @@ app.factory('productFactory', [
 
 			var productFactory = {};
 			var productUrlBase = '/suppliercenter/ws/resources/products';
+			productFactory.getAllProducts = function() {
+				return $http.get(productUrlBase);
+			};
 			productFactory.getProducts = function(currentPage, prodPerPage) {
-				debugger;
 				return $http.get(productUrlBase + '/pageIndex=' + currentPage
 						+ '/offset=' + prodPerPage);
 			};

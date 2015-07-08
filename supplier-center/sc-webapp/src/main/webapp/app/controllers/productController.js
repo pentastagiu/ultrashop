@@ -10,8 +10,8 @@ app.controller('productController', [
 			getProductCount();
 			getProducts($scope.currentPage, $scope.prodPerPage);
 			function getProducts(currentPage, prodPerPage) {
-				productFactory.getProducts(currentPage-1, prodPerPage).success(
-						function(products) {
+				productFactory.getProducts(currentPage - 1, prodPerPage)
+						.success(function(products) {
 							$scope.products = products;
 						});
 			}
@@ -25,10 +25,6 @@ app.controller('productController', [
 			$scope.pageChanged = function(currentPage) {
 				getProducts($scope.currentPage, $scope.prodPerPage);
 			};
-			$scope.getProducts = function() {
-				getProducts();
-			};
-
 			function setProduct(product) {
 				productFactory.setProduct(product);
 				$location.path('/product/edit');
@@ -37,7 +33,7 @@ app.controller('productController', [
 			;
 			$scope.deleteProduct = function(product) {
 				productFactory.deleteProduct(product);
-				getProducts();
+				getProducts($scope.currentPage, $scope.prodPerPage);
 			};
 			$scope.setProduct = function(product) {
 				setProduct(product);

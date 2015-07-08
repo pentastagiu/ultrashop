@@ -10,10 +10,10 @@ app.controller('editStockController',
 						supplierFactory, stockFactory) {
 					$scope.stock = stockFactory.getStock();
 
-					getSuppliers();
+					getAllSuppliers();
 
-					function getSuppliers() {
-						supplierFactory.getSuppliers()
+					function getAllSuppliers() {
+						supplierFactory.getAllSuppliers()
 								.success(
 										function(suppliers) {
 											$scope.suppliers = suppliers;
@@ -50,9 +50,6 @@ app.controller('editStockController',
 								});
 					}
 					;
-					$scope.getSuppliers = function() {
-						getSuppliers();
-					};
 					function getProductsBySupplier() {
 						productFactory.getProductBySupplier(
 								$scope.stock.supplier.id).success(
@@ -82,5 +79,4 @@ app.controller('editStockController',
 					$scope.cancel = function() {
 						$location.path('/stocks');
 					};
-
 				} ]);
