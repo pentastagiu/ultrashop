@@ -16,7 +16,6 @@ app
 								password : "",
 								confirmPassword : ""
 							};
-
 							$scope.signUp = function() {
 								if ($scope.registration.userName.length < 4)
 									$scope.message = "Username must be at least 4 characters!";

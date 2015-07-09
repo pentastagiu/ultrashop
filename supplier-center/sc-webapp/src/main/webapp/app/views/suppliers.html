@@ -14,22 +14,22 @@
 			class="table table-striped table-bordered table-hover table-condensed">
 			<thead>
 				<tr>
-					<th class="vert-align" data-translate
+					<th data-translate
 						style="width: 5%; height: 39px">No</th>
-					<th class="vert-align" data-translate>Name</th>
-					<th class="vert-align" data-translate>Details</th>
-					<th class="vert-align" data-translate>Email</th>
-					<th class="vert-align" data-translate style="width: 20%">Edit</th>
+					<th data-translate>Name</th>
+					<th data-translate>Details</th>
+					<th data-translate>Email</th>
+					<th data-translate style="width: 20%">Edit</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr data-ng-repeat="supplier in suppliers">
 					<td class="vert-align">{{ ($index + 1) + (currentPage - 1) *
 						supPerPage}}</td>
-					<td class="vert-align">{{ supplier.name }}</td>
-					<td class="vert-align">{{ supplier.contactDetails }}</td>
-					<td class="vert-align">{{ supplier.email }}</td>
-					<td class="vert-align"><a
+					<td>{{ supplier.name }}</td>
+					<td>{{ supplier.contactDetails }}</td>
+					<td>{{ supplier.email }}</td>
+					<td><a
 						data-ng-click="setSupplier(supplier)"
 						class="btn btn-xs btn-primary"><span
 							class="glyphicon glyphicon-pencil"></span>&nbsp;edit</a> <a

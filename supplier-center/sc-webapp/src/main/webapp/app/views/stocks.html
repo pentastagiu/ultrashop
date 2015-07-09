@@ -14,22 +14,22 @@
 			class="table table-striped table-bordered table-hover table-condensed">
 			<thead>
 				<tr>
-					<th class="vert-align" style="width: 5%; height: 39px"
+					<th style="width: 5%; height: 39px"
 						data-translate>No</th>
-					<th class="vert-align" data-translate>Supplier</th>
-					<th class="vert-align" data-translate>Product</th>
-					<th class="vert-align" data-translate>Amount</th>
-					<th class="vert-align" data-translate style="width: 20%">Actions</th>
+					<th data-translate>Supplier</th>
+					<th data-translate>Product</th>
+					<th data-translate>Amount</th>
+					<th data-translate style="width: 20%">Actions</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr data-ng-repeat="stock in stocks">
-					<td class="vert-align">{{( $index + 1) + (currentPage - 1) *
+					<td>{{( $index + 1) + (currentPage - 1) *
 						stockPerPage}}</td>
-					<td class="vert-align">{{ stock.supplier.name }}</td>
-					<td class="vert-align">{{ stock.product.name }}</td>
-					<td class="vert-align">{{ stock.amount }}</td>
-					<td class="vert-align"><a data-ng-click="setStock(stock)"
+					<td>{{ stock.supplier.name }}</td>
+					<td>{{ stock.product.name }}</td>
+					<td>{{ stock.amount }}</td>
+					<td><a data-ng-click="setStock(stock)"
 						class="btn btn-xs btn-primary"><span
 							class="glyphicon glyphicon-pencil"></span>&nbsp;edit</a> <a
 						data-ng-click="deleteStock(stock)" class="btn btn-xs btn-primary"><span

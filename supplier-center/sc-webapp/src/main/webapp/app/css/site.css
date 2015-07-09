@@ -58,12 +58,12 @@ body {
 	border-top-right-radius: 0;
 }
 
-.borderless tbody tr td,.borderless tbody tr th,.borderless thead tr th,.borderless tfoot tr th
-	{
+.borderless tbody tr td, .borderless tbody tr th, .borderless thead tr th,
+	.borderless tfoot tr th {
 	border: none;
 }
 
-.flag-GB,.flag-FR,.flag-RO {
+.flag-GB, .flag-FR, .flag-RO {
 	margin-right: 15px;
 	margin-left: 15px;
 	margin-top: 15px;
@@ -110,8 +110,10 @@ a.disabled {
 	color: #FFFFFF;
 }
 
-.table tbody>tr>td.vert-align {
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td,
+	.table>tbody>tr>td, .table>tfoot>tr>td {
 	vertical-align: middle;
+	text-align: center;
 }
 
 div.padding {
