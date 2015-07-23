@@ -5,6 +5,13 @@ app.controller('editProductController', [
 		'productFactory',
 		'supplierFactory',
 		function($scope, $location, $filter, productFactory, supplierFactory) {
+			$scope.limit = 30;
+			$scope.accept = {};
+			hasNextChunk = true, queryString = '';
+			var i = 0;
+			$scope.requestMoreItems = function() {
+				$scope.limit += 10;
+			};
 			$scope.product = productFactory.getProduct();
 			getAllSuppliers();
 
@@ -13,15 +20,15 @@ app.controller('editProductController', [
 					$scope.suppliers = suppliers;
 					// Find supplier by id.This function is used to set the
 					// default supplier in the edit product selector
-					var supplierId = productFactory.getProduct().supplier.id;
-					$scope.supplier = $filter('filter')($scope.suppliers, {
-						id : supplierId
-					})[0];
+					// var supplierId = productFactory.getProduct().supplier.id;
+					// $scope.supplier = $filter('filter')($scope.suppliers, {
+					// id : supplierId
+					// })[0];
 				});
 			}
 			;
 			function updateProduct() {
-				$scope.product.supplier = $scope.supplier;
+				delete $scope.order.product._uiSelectChoiceDisabled;
 				productFactory.updateProduct($scope.product).success(
 						function() {
 							$location.path('/products');

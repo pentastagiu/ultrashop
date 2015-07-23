@@ -3,17 +3,26 @@
 		<form class="form-signin">
 			<h2 class="form-signin-heading">Add product</h2>
 			<h4 class="form-signin-heading">Supplier:</h4>
-			<select class="form-control" data-ng-model="supplier"
+			<!-- <select class="form-control" data-ng-model="supplier"
 				data-ng-options="supplier.name for supplier in suppliers">
 				<option value="" disabled selected>Select your option</option>
-			</select>
+			</select> -->
+			<ui-select ng-model="$parent.product.supplier" theme="bootstrap"
+				reach-infinity="requestMoreItems()"> <ui-select-match
+				placeholder="Select a supplier">
+			{{$select.selected.name}} </ui-select-match> <ui-select-choices
+				refresh="refreshList($select.search)" refresh-delay="250"
+				repeat="supplier in suppliers | limitTo:limit | filter: {name: $select.search}"
+				ui-disable-choice="collection.disabled"> <span>
+				{{supplier.name}} </span> </ui-select-choices> </ui-select>
+				
 			<h4 class="form-signin-heading">Name:</h4>
 			<input type="text" data-ng-model="product.name" class="form-control"
 				placeholder="Insert Name" data-required="" data-autofocus="">
 			<h4 class="form-signin-heading">Price:</h4>
 			<input type="text" style="text-align: right;"
-				data-ng-model="product.price" placeholder="Insert price" class="form-control"
-				data-ng-required="number">
+				data-ng-model="product.price" placeholder="Insert price"
+				class="form-control" data-ng-required="number">
 			<div class="control-group">
 				<label class="control-label" for="button1id"></label>
 				<div class="controls">

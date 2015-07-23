@@ -3,9 +3,17 @@
 		<form class="form-signin">
 			<h2 class="form-signin-heading">Edit product</h2>
 			<h4 class="form-signin-heading">Supplier:</h4>
-			<select class="form-control" data-ng-model="supplier"
+			<!-- <select class="form-control" data-ng-model="supplier"
 				data-ng-options="supplier.name for supplier in suppliers">
-			</select>
+			</select> -->
+			<ui-select ng-model="$parent.product.supplier" theme="bootstrap"
+				reach-infinity="requestMoreItems()"> <ui-select-match
+				placeholder="Select a supplier">
+			{{$select.selected.name}} </ui-select-match> <ui-select-choices
+				refresh="refreshList($select.search)" refresh-delay="250"
+				repeat="supplier in suppliers | limitTo:limit | filter: {name: $select.search}"
+				ui-disable-choice="collection.disabled"> <span>
+				{{supplier.name}} </span> </ui-select-choices> </ui-select>
 			<h4 class="form-signin-heading">Name:</h4>
 			<input type="text" data-ng-model="product.name" class="form-control"
 				placeholder="Name" data-required="" data-autofocus="">

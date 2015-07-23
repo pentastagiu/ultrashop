@@ -15,6 +15,16 @@
 <link href="app/css/bootstrap.min.css" rel="stylesheet" />
 <link rel="stylesheet"
 	href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="http://cdnjs.cloudflare.com/ajax/libs/select2/3.4.5/select2.css">
+
+<!--
+    Selectize theme
+    Less versions are available at https://github.com/brianreavis/selectize.js/tree/master/dist/less
+  -->
+<link rel="stylesheet"
+	href="http://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.8.5/css/selectize.default.css">
+<link rel="stylesheet" href="app/css/select.css">
 <link href="app/css/site.css" rel="stylesheet" />
 </head>
 <body>
@@ -91,13 +101,13 @@
 
 	<!-- 3rd party libraries -->
 	<script
-		src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
+		src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular.min.js"></script>
 	<script
-		src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-route.min.js"></script>
+		src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.18/angular-route.min.js"></script>
 	<script
 		src="http://code.angularjs.org/1.0.0rc10/angular-cookies-1.0.0rc10.js"></script>
 	<script src="app/scripts/angular-local-storage.min.js"></script>
-	<script src="http://code.angularjs.org/1.2.16/angular-resource.js"></script>
+	<script src="http://code.angularjs.org/1.2.18/angular-resource.js"></script>
 	<script
 		src="http://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.1.js"></script>
 	<script
@@ -111,6 +121,8 @@
 
 	<!-- Load app main script -->
 	<script src="app/app.js"></script>
+	<script src="app/scripts/select.js"></script>
+	<script src="app/scripts/ui-select-infinity.js"></script>
 	<!-- Load services -->
 	<script src="app/services/authInterceptorService.js"></script>
 	<script src="app/services/authService.js"></script>

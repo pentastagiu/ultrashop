@@ -6,6 +6,12 @@ app.controller('editOrderController', [
 		'orderFactory',
 		function($scope, $filter, $location, productFactory, orderFactory) {
 			// $scope.supplier = supplierFactory.getSupplier();
+			$scope.limit = 30;
+			hasNextChunk = true, queryString = '';
+			var i = 0;
+			$scope.requestMoreItems = function() {
+				$scope.limit += 10;
+			};
 
 			$scope.orders = {
 				status : [ 'PLACED', 'WAITING_ARRIVAL', 'ARRIVED', 'DELIVERED',
@@ -19,19 +25,20 @@ app.controller('editOrderController', [
 				productFactory.getAllProducts().success(function(products) {
 					$scope.products = products;
 
-					// Find supplier by id.This function is used to set
-					// the
-					// default supplier in the edit product selector
-					var orderId = orderFactory.getOrder().product.id;
-					$scope.order.product = $filter('filter')($scope.products, {
-						id : orderId
-					})[0];
+//					// Find supplier by id.This function is used to set
+//					// the
+//					// default supplier in the edit product selector
+//					var orderId = orderFactory.getOrder().product.id;
+//					$scope.order.product = $filter('filter')($scope.products, {
+//						id : orderId
+//					})[0];
 
 				});
 			}
 
 			function updateOrder() {
 				debugger;
+				delete $scope.order.product._uiSelectChoiceDisabled;
 				if ($scope.order.status === 'DELIVERED'
 						&& $scope.order.deliveredDate === null) {
 					debugger;

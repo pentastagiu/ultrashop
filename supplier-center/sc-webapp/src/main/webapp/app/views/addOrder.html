@@ -3,14 +3,22 @@
 		<form class="form-signin">
 			<h2 class="form-signin-heading">Register order</h2>
 			<h4 class="form-signin-heading">Product:</h4>
-			<select class="form-control" data-ng-model="order.product"
+			<!-- 	<select class="form-control" data-ng-model="order.product"
 				data-ng-options="product.name for product in products">
 				<option value="" disabled selected>Select your product</option>
-			</select>
+			</select> -->
+			<ui-select ng-model="$parent.order.product"  theme="bootstrap"
+				reach-infinity="requestMoreItems()"> <ui-select-match
+				placeholder="Select a product">
+			{{$select.selected.name}} </ui-select-match> <ui-select-choices
+				refresh="refreshList($select.search)" refresh-delay="250"
+				repeat="product in products | limitTo:limit | filter: {name: $select.search}"
+				ui-disable-choice="collection.disabled"> <span>
+				{{product.name}} </span> </ui-select-choices> </ui-select>
 			<h4 class="form-signin-heading">Quantity:</h4>
-			<input type="text" style="text-align: right;" data-ng-model="order.quantity"
-				class="form-control" placeholder="Insert Quantity" data-required=""
-				data-autofocus="">
+			<input type="text" style="text-align: right;"
+				data-ng-model="order.quantity" class="form-control"
+				placeholder="Insert Quantity" required data-autofocus="">
 			<h4 class="form-signin-heading">Expected date:</h4>
 			<input type="date" data-ng-model="order.expectedDate"
 				class="form-control" data-ng-required="date">

@@ -1,5 +1,6 @@
-var app = angular.module('supplierCenterApp', [ 'ngRoute',
-		'LocalStorageModule', 'ui.bootstrap' ]);
+var app = angular.module('supplierCenterApp',
+		[ 'ngRoute', 'LocalStorageModule', 'ui.bootstrap', 'ui.select',
+				'ui-select-infinity' ]);
 app.config([ '$routeProvider', function($routeProvider) {
 
 	$routeProvider.when("/home", {
@@ -67,9 +68,9 @@ app.config([ '$routeProvider', function($routeProvider) {
 		templateUrl : "/suppliercenter/app/views/editOrder.html"
 	});
 
-	/*$routeProvider.otherwise({
-		redirectTo : "/home"
-	});*/
+	/*
+	 * $routeProvider.otherwise({ redirectTo : "/home" });
+	 */
 } ]);
 app.run([ 'authService', function(authService) {
 	authService.fillAuthData();
@@ -77,4 +78,36 @@ app.run([ 'authService', function(authService) {
 app.config(function($httpProvider) {
 
 	$httpProvider.interceptors.push('authInterceptorService');
+});
+app.filter('propsFilter', function() {
+	return function(items, props) {
+		var out = [];
+
+		if (angular.isArray(items)) {
+			items
+					.forEach(function(item) {
+						var itemMatches = false;
+
+						var keys = Object.keys(props);
+						for (var i = 0; i < keys.length; i++) {
+							var prop = keys[i];
+							var text = props[prop].toLowerCase();
+							if (item[prop].toString().toLowerCase().indexOf(
+									text) !== -1) {
+								itemMatches = true;
+								break;
+							}
+						}
+
+						if (itemMatches) {
+							out.push(item);
+						}
+					});
+		} else {
+			// Let the output be the input untouched
+			out = items;
+		}
+
+		return out;
+	}
 });

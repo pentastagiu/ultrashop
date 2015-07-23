@@ -1,15 +1,15 @@
-		app.controller('addProductController', [
+app.controller('addProductController', [
 		'$scope',
 		'$location',
 		'productFactory',
 		'supplierFactory',
 		function($scope, $location, productFactory, supplierFactory) {
-
-			$scope.supplier = {
-				"name" : "",
-				"contactDetails" : "",
-				"email" : "",
-				"active" : true
+			$scope.limit = 30;
+			$scope.accept = {};
+			hasNextChunk = true, queryString = '';
+			var i = 0;
+			$scope.requestMoreItems = function() {
+				$scope.limit += 10;
 			};
 			getAllSuppliers();
 			function getAllSuppliers() {
@@ -19,7 +19,7 @@
 			}
 			;
 			function addProduct() {
-				$scope.product.supplier = $scope.supplier;
+				delete $scope.product.supplier._uiSelectChoiceDisabled;
 				productFactory.finishTranzaction($scope.product).success(
 						function() {
 							$location.path('/products');
